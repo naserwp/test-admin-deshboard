@@ -21,6 +21,9 @@ export default function MarketingNav() {
         <a href="#faq" className="hover:text-slate-900">
           FAQ
         </a>
+        <Link href="/blog" className="hover:text-slate-900">
+          Blog
+        </Link>
       </div>
       <div className="flex items-center gap-3">
         <Link href="/auth/login" className="btn btn-secondary">

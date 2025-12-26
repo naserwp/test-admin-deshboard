@@ -1,8 +1,15 @@
 import Link from "next/link";
 import MarketingNav from "@/app/components/MarketingNav";
 import MarketingFooter from "@/app/components/MarketingFooter";
+import { prisma } from "@/app/lib/prisma";
 
-export default function Home() {
+export default async function Home() {
+  const latestPosts = await prisma.blogPost.findMany({
+    where: { status: "PUBLISHED" },
+    orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+    take: 3
+  });
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-6xl px-6">
@@ -350,6 +357,76 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                  Blog
+                </p>
+                <h2 className="mt-2 text-3xl font-semibold">
+                  Read the latest updates
+                </h2>
+                <p className="mt-2 text-slate-600">
+                  Product tips, compliance guidance, and document workflows
+                  tailored for virtual offices.
+                </p>
+              </div>
+              <Link href="/blog" className="btn btn-secondary">
+                Visit the blog
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {latestPosts.map((post) => (
+                <article key={post.id} className="card flex h-full flex-col p-6">
+                  {post.coverImageUrl && (
+                    <img
+                      src={post.coverImageUrl}
+                      alt={post.title}
+                      className="h-36 w-full rounded-xl object-cover"
+                    />
+                  )}
+                  <div className="mt-4 flex flex-1 flex-col gap-3">
+                    <div className="flex flex-wrap gap-2 text-xs font-semibold text-indigo-700">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-indigo-50 px-2 py-1"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-900">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-slate-600">{post.excerpt}</p>
+                    <div className="mt-auto flex items-center justify-between text-xs text-slate-500">
+                      <span>
+                        {post.publishedAt
+                          ? new Date(post.publishedAt).toLocaleDateString()
+                          : "Draft"}
+                      </span>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="text-indigo-600 hover:text-indigo-700"
+                      >
+                        Read more →
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              ))}
+              {latestPosts.length === 0 && (
+                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500">
+                  Blog posts will appear here once published.
+                </div>
+              )}
             </div>
           </div>
         </section>

@@ -70,4 +70,25 @@
   .table-base td {
     @apply px-4 py-3;
   }
+
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6 {
+    @apply mt-6 text-slate-900 font-semibold;
+  }
+
+  .blog-content p {
+    @apply mt-4 text-slate-700 leading-relaxed;
+  }
+
+  .blog-content ul {
+    @apply mt-4 list-disc space-y-2 pl-5 text-slate-700;
+  }
+
+  .blog-content a {
+    @apply text-indigo-600 underline underline-offset-2 hover:text-indigo-700;
+  }
 }
