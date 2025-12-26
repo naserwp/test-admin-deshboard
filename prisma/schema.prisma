@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 enum Role {
   ADMIN
   USER
@@ -22,6 +24,8 @@ model User {
   userId       String   @unique
   passwordHash String
   role         Role     @default(USER)
+  email        String? @unique
+  imageUrl     String?
   createdAt    DateTime @default(now())
   files        File[]   @relation("UploadedFiles")
   assignments  Assignment[]

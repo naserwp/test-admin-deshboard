@@ -3,6 +3,7 @@ import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
 import Link from "next/link";
+import Avatar from "@/app/components/Avatar";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -15,10 +16,13 @@ export default async function DashboardPage() {
     include: { file: true },
     orderBy: { createdAt: "desc" }
   });
-
+  const label = session.user.userId || session.user.email || "User";
+  const imageUrl = (session.user as any).imageUrl;
+  
   return (
     <div>
       <TopNav role={session.user.role} />
+      
       <div className="mx-auto max-w-5xl px-6 py-8">
         <h1 className="mb-6 text-2xl font-semibold">Your PDFs</h1>
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
