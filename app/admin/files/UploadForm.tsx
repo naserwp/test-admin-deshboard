@@ -42,7 +42,7 @@ export default function UploadForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-slate-200 bg-white p-6">
+    <form onSubmit={handleSubmit} className="card space-y-4 p-6">
       <div className="space-y-1">
         <label className="text-sm font-medium">Title</label>
         <input value={title} onChange={(event) => setTitle(event.target.value)} required />
@@ -58,7 +58,7 @@ export default function UploadForm() {
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
       {message && <p className="text-sm text-green-600">{message}</p>}
-      <button type="submit" className="bg-slate-900 text-white" disabled={loading}>
+      <button type="submit" className="btn btn-primary" disabled={loading}>
         {loading ? "Uploading..." : "Upload"}
       </button>
     </form>

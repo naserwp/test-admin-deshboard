@@ -6,6 +6,7 @@ import { rateLimit } from "@/app/lib/rateLimit";
 
 const schema = z.object({
   userId: z.string().min(3),
+  email: z.string().email().optional(),
   password: z.string().min(8)
 });
 

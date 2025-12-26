@@ -2,14 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-slate-50 text-slate-900;
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply border border-slate-200 rounded-md px-3 py-2 text-sm text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200;
+  }
 }
 
-input, select, textarea {
-  @apply border border-slate-300 rounded-md px-3 py-2 text-sm;
-}
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
 
-button {
-  @apply rounded-md px-4 py-2 text-sm font-medium;
+  .btn-primary {
+    @apply bg-slate-900 text-white hover:bg-slate-800;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-slate-700 border border-slate-200 hover:border-slate-300 hover:text-slate-900;
+  }
+
+  .btn-muted {
+    @apply bg-slate-100 text-slate-700 hover:bg-slate-200;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .card-muted {
+    @apply rounded-2xl border border-slate-200 bg-slate-50;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-warning {
+    @apply bg-amber-100 text-amber-700;
+  }
+
+  .badge-info {
+    @apply bg-indigo-100 text-indigo-700;
+  }
+
+  .table-base {
+    @apply w-full text-left text-sm;
+  }
+
+  .table-base thead {
+    @apply bg-slate-50 text-slate-500;
+  }
+
+  .table-base th {
+    @apply px-4 py-3 text-xs font-semibold uppercase tracking-wide;
+  }
+
+  .table-base td {
+    @apply px-4 py-3;
+  }
 }

@@ -13,9 +13,11 @@ export default async function AdminUsersPage() {
     orderBy: { createdAt: "desc" }
   });
 
+  const userName = session.user.userId ?? "Admin";
+
   return (
     <div>
-      <TopNav role={session.user.role} />
+      <TopNav role={session.user.role} userName={userName} />
       <div className="mx-auto max-w-5xl px-6 py-8">
         <h1 className="mb-6 text-2xl font-semibold">Users</h1>
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">

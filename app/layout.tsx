@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin PDF Dashboard",
-  description: "Secure PDF assignments"
+  title: "Virtual Office Documents",
+  description: "Virtual Office Management for secure document workflows."
 };
 
 export default function RootLayout({

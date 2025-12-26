@@ -83,7 +83,7 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-slate-200 bg-white p-6 space-y-4">
+      <div className="card space-y-4 p-6">
         <div className="space-y-1">
           <label className="text-sm font-medium">Select file</label>
           <select
@@ -115,40 +115,42 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
         </div>
         {error && <p className="text-sm text-red-600">{error}</p>}
         {message && <p className="text-sm text-green-600">{message}</p>}
-        <button className="bg-slate-900 text-white" onClick={handleAssign}>
+        <button className="btn btn-primary" onClick={handleAssign}>
           Assign
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-slate-100 text-slate-600">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        <table className="table-base">
+          <thead>
             <tr>
-              <th className="px-4 py-3">User</th>
-              <th className="px-4 py-3">File</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Action</th>
+              <th>User</th>
+              <th>File</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {assignments.map((assignment) => (
-              <tr key={assignment.id} className="border-t border-slate-200">
-                <td className="px-4 py-3 font-medium">{assignment.user.userId}</td>
-                <td className="px-4 py-3 text-slate-600">{assignment.file.title}</td>
-                <td className="px-4 py-3">
+              <tr key={assignment.id} className="border-t border-slate-100">
+                <td className="font-semibold text-slate-900">
+                  {assignment.user.userId}
+                </td>
+                <td className="text-slate-600">{assignment.file.title}</td>
+                <td>
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                    className={`badge ${
                       assignment.status === "UNLOCKED"
-                        ? "bg-emerald-100 text-emerald-700"
-                        : "bg-amber-100 text-amber-700"
+                        ? "badge-success"
+                        : "badge-warning"
                     }`}
                   >
                     {assignment.status}
                   </span>
                 </td>
-                <td className="px-4 py-3">
+                <td>
                   <button
-                    className="bg-slate-200 text-slate-700"
+                    className="btn btn-secondary px-3 py-1 text-xs"
                     onClick={() => toggleStatus(assignment.id)}
                   >
                     Toggle

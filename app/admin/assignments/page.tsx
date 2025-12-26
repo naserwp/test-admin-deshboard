@@ -27,9 +27,11 @@ export default async function AdminAssignmentsPage() {
     })
   ]);
 
+  const userName = session.user.userId ?? "Admin";
+
   return (
     <div>
-      <TopNav role={session.user.role} />
+      <TopNav role={session.user.role} userName={userName} />
       <div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         <h1 className="text-2xl font-semibold">Assignments</h1>
         <AssignmentsClient
