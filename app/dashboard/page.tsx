@@ -3,11 +3,7 @@ import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
 import Link from "next/link";
-<<<<<<< HEAD
 import Avatar from "@/app/components/Avatar";
-=======
-import { getAvatarColor, getInitials } from "@/app/lib/avatar";
->>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -20,24 +16,9 @@ export default async function DashboardPage() {
     include: { file: true },
     orderBy: { createdAt: "desc" }
   });
-<<<<<<< HEAD
-  const label = session.user.userId || session.user.email || "User";
-  const imageUrl = (session.user as any).imageUrl;
-  
-  return (
-    <div>
-      <TopNav role={session.user.role} />
-      
-      <div className="mx-auto max-w-5xl px-6 py-8">
-        <h1 className="mb-6 text-2xl font-semibold">Your PDFs</h1>
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-100 text-slate-600">
-=======
 
-  const userName = session.user.userId ?? "User";
-  const avatarColor = getAvatarColor(userName);
-  const initials = getInitials(userName);
+  const userName = session.user.userId || session.user.email || "User";
+  const imageUrl = (session.user as any).imageUrl;
   const unlockedCount = assignments.filter(
     (assignment) => assignment.status === "UNLOCKED"
   ).length;
@@ -45,15 +26,15 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav
+        role={session.user.role}
+        userName={userName}
+        imageUrl={imageUrl}
+      />
       <div className="mx-auto max-w-6xl px-6 py-10">
         <div className="flex flex-wrap items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <span
-              className={`flex h-14 w-14 items-center justify-center rounded-2xl text-lg font-semibold text-white ${avatarColor}`}
-            >
-              {initials}
-            </span>
+            <Avatar label={userName} imageUrl={imageUrl} size={56} />
             <div>
               <p className="text-sm text-slate-500">Welcome back</p>
               <h1 className="text-2xl font-semibold text-slate-900">
@@ -95,7 +76,6 @@ export default async function DashboardPage() {
           </div>
           <table className="table-base">
             <thead>
->>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
               <tr>
                 <th>#</th>
                 <th>Title</th>

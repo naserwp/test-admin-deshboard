@@ -1,8 +1,14 @@
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import { prisma } from "./prisma";
 import { rateLimit } from "./rateLimit";
+
+const googleEnabled =
+  process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED === "true" &&
+  !!process.env.GOOGLE_CLIENT_ID &&
+  !!process.env.GOOGLE_CLIENT_SECRET;
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -71,6 +77,14 @@ export const authOptions: NextAuthOptions = {
         } as any;
       },
     }),
+    ...(googleEnabled
+      ? [
+          Google({
+            clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? ""
+          })
+        ]
+      : [])
   ],
 
   callbacks: {
