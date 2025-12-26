@@ -1,36 +1,86 @@
-import { prisma } from "@/app/lib/prisma";
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "@/app/lib/auth";
+// import TopNav from "@/app/components/TopNav";
+// import AdminUsersClient from "./AdminUsersClient";
+
+// export default async function AdminUsersPage() {
+//   const session = await getServerSession(authOptions);
+
+//   // Basic auth guard
+//   if (!session?.user?.id) {
+//     return null;
+//   }
+
+//   // Optional: admin-only guard (recommended)
+//   if (session.user.role !== "ADMIN") {
+//     return (
+//       <div>
+//         <TopNav role={session.user.role} userName={session.user.userId ?? "User"} />
+//         <div className="mx-auto max-w-5xl px-6 py-10">
+//           <div className="rounded-lg border bg-white p-6 text-sm">
+//             You do not have permission to view this page.
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   const userName = session.user.userId ?? session.user.email ?? "Admin";
+
+//   return (
+//     <div>
+//       <TopNav role={session.user.role} userName={userName} />
+//       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
+//         <div>
+//           <h1 className="text-2xl font-semibold">Admin • Users</h1>
+//           <p className="text-sm text-slate-600">Create and manage user accounts.</p>
+//         </div>
+
+//         {/* Client UI that calls /api/admin/users */}
+//         <AdminUsersClient />
+//       </div>
+//     </div>
+//   );
+// }
+
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import TopNav from "@/app/components/TopNav";
-import AdminUsersClient from "./users-client";
+import AdminUsersClient from "./AdminUsersClient";
 
 export default async function AdminUsersPage() {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id || session.user.role !== "ADMIN") {
+
+  if (!session?.user?.id) {
     return null;
   }
 
-  const users = await prisma.user.findMany({
-    orderBy: { createdAt: "desc" },
-    select: { id: true, userId: true, role: true, createdAt: true }
-  });
+  if (session.user.role !== "ADMIN") {
+    return (
+      <div>
+        <TopNav role={session.user.role} userName={session.user.userId ?? "User"} />
+        <div className="mx-auto max-w-5xl px-6 py-10">
+          <div className="rounded-lg border bg-white p-6 text-sm">
+            You do not have permission to view this page.
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  const userName = session.user.userId || session.user.email || "Admin";
-  const imageUrl = (session.user as any).imageUrl;
-  const initialUsers = users.map((user) => ({
-    ...user,
-    createdAt: user.createdAt.toISOString()
-  }));
+  const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <TopNav
-        role={session.user.role}
-        userName={userName}
-        imageUrl={imageUrl}
-      />
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <AdminUsersClient initialUsers={initialUsers} />
+    <div>
+      <TopNav role={session.user.role} userName={userName} />
+      <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold">Admin • Users</h1>
+          <p className="text-sm text-slate-600">Create and manage user accounts.</p>
+        </div>
+
+        <AdminUsersClient />
       </div>
     </div>
   );
