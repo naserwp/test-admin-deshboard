@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum AssignmentStatus {
+  LOCKED
+  UNLOCKED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  files        File[]   @relation("UploadedFiles")
+  assignments  Assignment[]
+}
+
+model File {
+  id                String   @id @default(cuid())
+  title             String
+  originalName      String
+  storedName        String
+  mimeType          String
+  size              Int
+  createdAt         DateTime @default(now())
+  uploadedByAdminId String
+  uploadedByAdmin   User     @relation("UploadedFiles", fields: [uploadedByAdminId], references: [id])
+  assignments       Assignment[]
+}
+
+model Assignment {
+  id        String           @id @default(cuid())
+  userId    String
+  fileId    String
+  status    AssignmentStatus @default(LOCKED)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  file File @relation(fields: [fileId], references: [id])
+
+  @@unique([userId, fileId])
+}
