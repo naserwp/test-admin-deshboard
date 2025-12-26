@@ -37,6 +37,9 @@ export default function TopNav({ role, userName, imageUrl }: TopNavProps) {
               <Link href="/admin/assignments" className="hover:text-slate-900">
                 Assignments
               </Link>
+              <Link href="/admin/blog" className="hover:text-slate-900">
+                Blog
+              </Link>
             </div>
           )}
         </div>
