@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-<<<<<<< HEAD
 import Avatar from "@/app/components/Avatar";
-
-=======
-import { getAvatarColor, getInitials } from "@/app/lib/avatar";
->>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
 
 type TopNavProps = {
   role: string;
@@ -16,24 +11,7 @@ type TopNavProps = {
 };
 
 export default function TopNav({ role, userName, imageUrl }: TopNavProps) {
-  const avatarColor = getAvatarColor(userName);
-  const initials = getInitials(userName);
-
   return (
-<<<<<<< HEAD
-    <div className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard" className="text-lg font-semibold">
-          PDF Dashboard
-        </Link>
-        {role === "ADMIN" && (
-          
-          <div className="flex gap-3 text-sm text-slate-600">
-            <Link href="/admin">Admin</Link>
-            <Link href="/admin/users">Users</Link>
-            <Link href="/admin/files">Files</Link>
-            <Link href="/admin/assignments">Assignments</Link>
-=======
     <div className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-6">
@@ -64,26 +42,13 @@ export default function TopNav({ role, userName, imageUrl }: TopNavProps) {
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden items-center gap-3 text-sm text-slate-600 sm:flex">
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={userName}
-                className="h-9 w-9 rounded-full object-cover"
-              />
-            ) : (
-              <span
-                className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold text-white ${avatarColor}`}
-              >
-                {initials}
-              </span>
-            )}
+            <Avatar label={userName} imageUrl={imageUrl} size={36} />
             <div>
               <p className="text-xs uppercase tracking-wide text-slate-400">
                 {role === "ADMIN" ? "Admin" : "Workspace"}
               </p>
               <p className="font-semibold text-slate-800">{userName}</p>
             </div>
->>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/auth/login" })}
@@ -93,18 +58,6 @@ export default function TopNav({ role, userName, imageUrl }: TopNavProps) {
           </button>
         </div>
       </div>
-<<<<<<< HEAD
-      
-
-      
-      <button
-        onClick={() => signOut({ callbackUrl: "/auth/login" })}
-        className="bg-slate-900 text-white"
-      >
-        Sign out
-      </button>
-=======
->>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
     </div>
   );
 }

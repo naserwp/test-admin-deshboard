@@ -2,7 +2,7 @@ import { prisma } from "@/app/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import TopNav from "@/app/components/TopNav";
-import { getAvatarColor, getInitials } from "@/app/lib/avatar";
+import Avatar from "@/app/components/Avatar";
 
 export default async function AdminPage() {
   const session = await getServerSession(authOptions);
@@ -16,21 +16,20 @@ export default async function AdminPage() {
     prisma.assignment.count()
   ]);
 
-  const userName = session.user.userId ?? "Admin";
-  const avatarColor = getAvatarColor(userName);
-  const initials = getInitials(userName);
+  const userName = session.user.userId || session.user.email || "Admin";
+  const imageUrl = (session.user as any).imageUrl;
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav
+        role={session.user.role}
+        userName={userName}
+        imageUrl={imageUrl}
+      />
       <div className="mx-auto max-w-6xl px-6 py-10">
         <div className="flex flex-wrap items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <span
-              className={`flex h-14 w-14 items-center justify-center rounded-2xl text-lg font-semibold text-white ${avatarColor}`}
-            >
-              {initials}
-            </span>
+            <Avatar label={userName} imageUrl={imageUrl} size={56} />
             <div>
               <p className="text-sm text-slate-500">Admin workspace</p>
               <h1 className="text-2xl font-semibold text-slate-900">
