@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import Avatar from "@/app/components/Avatar";
+
 
 type TopNavProps = {
   role: string;
@@ -15,6 +17,7 @@ export default function TopNav({ role }: TopNavProps) {
           PDF Dashboard
         </Link>
         {role === "ADMIN" && (
+          
           <div className="flex gap-3 text-sm text-slate-600">
             <Link href="/admin">Admin</Link>
             <Link href="/admin/users">Users</Link>
@@ -23,6 +26,9 @@ export default function TopNav({ role }: TopNavProps) {
           </div>
         )}
       </div>
+      
+
+      
       <button
         onClick={() => signOut({ callbackUrl: "/auth/login" })}
         className="bg-slate-900 text-white"
