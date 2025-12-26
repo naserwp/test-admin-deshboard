@@ -1,6 +1,6 @@
-# Admin PDF Dashboard
+# Virtual Office Documents
 
-A production-ready Next.js App Router application for securely assigning PDF files to users, with role-based access controls for admins.
+A production-ready Next.js App Router application for securely managing office documents, with role-based access controls for admins.
 
 ## Tech Stack
 
@@ -62,6 +62,23 @@ npx prisma db seed
 ```bash
 npm run dev
 ```
+
+## Environment Configuration
+
+| Variable | Description |
+| --- | --- |
+| `DATABASE_URL` | PostgreSQL connection string. |
+| `NEXTAUTH_SECRET` | Secret for NextAuth sessions. |
+| `NEXTAUTH_URL` | Base URL for NextAuth callbacks. |
+| `NEXT_PUBLIC_GOOGLE_AUTH_ENABLED` | Feature flag to show the Google sign-in UI. |
+
+## Manual Test Checklist
+
+- Landing page renders sections and CTA buttons.
+- Sign in page shows Google button and credential form.
+- Sign up page accepts user ID, email, and password.
+- User dashboard loads assignments and shows status badges.
+- Admin overview displays counts and navigation links.
 
 ## Seeded Admin
 

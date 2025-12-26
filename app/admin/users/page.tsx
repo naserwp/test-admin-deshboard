@@ -126,7 +126,10 @@ export default function AdminUsersPage() {
     await fetchUsers();
   }
 
+  const userName = session.user.userId ?? "Admin";
+
   return (
+<<<<<<< HEAD
     <div className="p-6 space-y-6">
       <h1 className="text-xl font-semibold">Admin • Users</h1>
 
@@ -141,6 +144,40 @@ export default function AdminUsersPage() {
             onChange={(e) => setNewUserId(e.target.value)}
             placeholder="e.g. user001"
           />
+=======
+    <div>
+      <TopNav role={session.user.role} userName={userName} />
+      <div className="mx-auto max-w-5xl px-6 py-8">
+        <h1 className="mb-6 text-2xl font-semibold">Users</h1>
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-100 text-slate-600">
+              <tr>
+                <th className="px-4 py-3">User ID</th>
+                <th className="px-4 py-3">Role</th>
+                <th className="px-4 py-3">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id} className="border-t border-slate-200">
+                  <td className="px-4 py-3 font-medium">{user.userId}</td>
+                  <td className="px-4 py-3 text-slate-600">{user.role}</td>
+                  <td className="px-4 py-3 text-slate-600">
+                    {user.createdAt.toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+              {users.length === 0 && (
+                <tr>
+                  <td className="px-4 py-6 text-center text-slate-500" colSpan={3}>
+                    No users yet.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+>>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
         </div>
 
         <div className="space-y-1">

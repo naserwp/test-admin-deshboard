@@ -6,8 +6,13 @@ import { rateLimit } from "@/app/lib/rateLimit";
 
 const schema = z.object({
   userId: z.string().min(3),
+<<<<<<< HEAD
   email: z.string().email(),
   password: z.string().min(8),
+=======
+  email: z.string().email().optional(),
+  password: z.string().min(8)
+>>>>>>> origin/codex/implement-phase-1-ui/ux-for-virtual-office
 });
 
 function getIp(request: Request) {
