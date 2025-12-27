@@ -31,7 +31,7 @@ export default function RootLayout({
 
             <div className="relative z-10 min-h-screen">
               {children}
-              <div className="fixed bottom-6 right-4 z-50 md:bottom-8 md:right-8">
+              <div className="fixed left-4 top-1/2 z-50 -translate-y-1/2 md:left-8">
                 <ThemeToggle />
               </div>
             </div>

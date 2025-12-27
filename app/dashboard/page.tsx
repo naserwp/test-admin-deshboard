@@ -184,11 +184,72 @@ export default async function DashboardPage() {
 
       {/* Background accents */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-200/40 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-emerald-200/40 blur-3xl" />
+        <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-200/40 blur-3xl dark:bg-indigo-900/30" />
+        <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-emerald-200/40 blur-3xl dark:bg-emerald-900/30" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-10">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 pt-14 pb-10 space-y-8">
+        {/* AI banner */}
+        <section className="relative mb-8 overflow-hidden rounded-3xl border border-slate-200/80 bg-slate-900 shadow-soft-xl ring-1 ring-slate-900/10 dark:border-slate-800 dark:ring-white/5">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center opacity-70 dark:opacity-60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/60 to-sky-900/60 dark:from-slate-950/90 dark:via-slate-900/70 dark:to-sky-900/70" />
+          <div className="relative grid gap-6 px-6 py-10 sm:px-10 sm:py-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-200">
+                AI-powered virtual office
+              </p>
+              <h2 className="text-3xl font-semibold leading-tight text-white sm:text-4xl">
+                Keep every document protected, searchable, and ready for your team.
+              </h2>
+              <p className="max-w-2xl text-sm text-slate-200 sm:text-base">
+                Smart insights surface the right files, automate access, and keep your audits clean.
+                Your gray-blue workspace is built for clarity in any mode.
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm text-slate-200">
+                <span className="rounded-full bg-white/10 px-3 py-1">Auto-tagged docs</span>
+                <span className="rounded-full bg-white/10 px-3 py-1">Secure sharing</span>
+                <span className="rounded-full bg-white/10 px-3 py-1">Live status</span>
+              </div>
+            </div>
+            <div className="relative flex items-center justify-end">
+              <div className="relative overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-4 backdrop-blur">
+                <div className="flex items-start gap-3 text-white">
+                  <div className="h-10 w-10 rounded-2xl bg-sky-500/80 ring-2 ring-white/30" />
+                  <div>
+                    <p className="text-sm font-semibold">AI Assistant</p>
+                    <p className="text-xs text-slate-100/90">
+                      “Summarized 3 policy updates and flagged 2 pending approvals.”
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-xs text-slate-100">
+                  <p className="font-semibold">Workspace Pulse</p>
+                  <div className="mt-2 grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <p className="text-lg font-semibold">24</p>
+                      <p className="text-[11px] uppercase tracking-wide text-slate-200/80">
+                        unlocked
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-lg font-semibold">8</p>
+                      <p className="text-[11px] uppercase tracking-wide text-slate-200/80">
+                        pending
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-lg font-semibold">3</p>
+                      <p className="text-[11px] uppercase tracking-wide text-slate-200/80">
+                        alerts
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Hero */}
         <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur-md shadow-sm">
           <div className="flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
