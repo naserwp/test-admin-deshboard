@@ -24,26 +24,26 @@ export default async function FileViewerPage({
   return (
     <div className="min-h-[calc(100vh-80px)]">
       {/* Viewer header bar */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 shadow-sm backdrop-blur">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
         <div className="min-w-0">
           <p className="text-xs text-slate-500">Document viewer</p>
-          <h1 className="truncate text-sm font-semibold text-slate-900">
+          <h1 className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
             {file.title}
           </h1>
-          <p className="truncate text-xs text-slate-500">{file.originalName}</p>
+          <p className="truncate text-xs text-slate-500 dark:text-slate-300">{file.originalName}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
           <Link
             href="/dashboard"
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.98]"
+            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
           >
             ← Back
           </Link>
 
           <a
             href={`/api/files/${file.id}/download`}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.98]"
+            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
           >
             Download
           </a>

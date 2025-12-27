@@ -1,7 +1,7 @@
 import Link from "next/link";
 import MarketingNav from "@/app/components/MarketingNav";
-import MarketingFooter from "@/app/components/MarketingFooter";
 import { prisma } from "@/app/lib/prisma";
+import MarketingFooter from "@/app/components/MarketingFooter";
 
 export default async function Home() {
   const latestPosts = await prisma.blogPost.findMany({
@@ -11,23 +11,23 @@ export default async function Home() {
   });
 
   return (
-    <div className="bg-white">
+    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
       <div className="mx-auto max-w-6xl px-6">
         <MarketingNav />
       </div>
 
       <main>
-        <section className="bg-gradient-to-br from-white via-slate-50 to-indigo-50">
+        <section className="bg-gradient-to-br from-white via-slate-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
           <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-6">
-              <p className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700">
+              <p className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:bg-slate-800 dark:text-slate-100">
                 Virtual Office Documents
               </p>
-              <h1 className="text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl">
+              <h1 className="text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl dark:text-slate-100">
                 Keep every office document organized, secure, and instantly
                 accessible.
               </h1>
-              <p className="text-lg text-slate-600">
+              <p className="text-lg text-slate-600 dark:text-slate-200">
                 Virtual Office Management is the modern document hub for remote
                 teams. Centralize policies, client files, and workflows with
                 clear access controls, audit-ready trails, and a polished
@@ -41,25 +41,25 @@ export default async function Home() {
                   Book a demo
                 </Link>
               </div>
-              <div className="flex flex-wrap gap-8 text-sm text-slate-500">
+              <div className="flex flex-wrap gap-8 text-sm text-slate-500 dark:text-slate-300">
                 <div>
-                  <p className="text-xl font-semibold text-slate-900">98%</p>
+                  <p className="text-xl font-semibold text-slate-900 dark:text-slate-100">98%</p>
                   <p>faster document retrieval</p>
                 </div>
                 <div>
-                  <p className="text-xl font-semibold text-slate-900">40+</p>
+                  <p className="text-xl font-semibold text-slate-900 dark:text-slate-100">40+</p>
                   <p>integrations ready</p>
                 </div>
                 <div>
-                  <p className="text-xl font-semibold text-slate-900">24/7</p>
+                  <p className="text-xl font-semibold text-slate-900 dark:text-slate-100">24/7</p>
                   <p>secure access monitoring</p>
                 </div>
               </div>
             </div>
-            <div className="card p-6 shadow-xl">
+            <div className="card p-6 shadow-xl dark:shadow-none">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-slate-600">
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-200">
                     Today&apos;s activity
                   </p>
                   <span className="badge badge-info">Live</span>
@@ -84,7 +84,7 @@ export default async function Home() {
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3"
+                      className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/60"
                     >
                       <div>
                         <p className="font-semibold text-slate-800">
@@ -100,9 +100,9 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="card-muted flex items-center justify-between px-4 py-3 text-sm text-slate-600">
+                <div className="card-muted flex items-center justify-between px-4 py-3 text-sm text-slate-600 dark:text-slate-200">
                   <span>Team storage usage</span>
-                  <span className="font-semibold text-slate-900">68%</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">68%</span>
                 </div>
               </div>
             </div>
@@ -159,7 +159,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="how-it-works" className="bg-slate-50 py-16">
+        <section id="how-it-works" className="bg-slate-50 py-16 dark:bg-slate-900/40">
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 lg:grid-cols-3">
               {[
@@ -253,7 +253,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="pricing" className="bg-slate-50 py-16">
+        <section id="pricing" className="bg-slate-50 py-16 dark:bg-slate-900/40">
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-8 lg:grid-cols-[0.6fr_0.4fr] lg:items-center">
               <div className="space-y-4">
@@ -320,7 +320,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="faq" className="bg-slate-50 py-16">
+        <section id="faq" className="bg-slate-50 py-16 dark:bg-slate-900/40">
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-6 lg:grid-cols-[0.4fr_0.6fr]">
               <div>

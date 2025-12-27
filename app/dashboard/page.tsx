@@ -175,7 +175,7 @@ export default async function DashboardPage() {
   const lockedCount = assignments.length - unlockedCount;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="relative min-h-screen text-slate-900 dark:text-slate-100">
       <TopNav
         role={session.user.role}
         userName={userName}
@@ -211,22 +211,12 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              {/* Choose ONE based on your project routing */}
-              <Link
-                href="/account"
-                className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
-              >
-                Manage Account
-              </Link>
-
-              <Link
-                href="/auth/logout"
-                className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50"
-              >
-                Sign out
-              </Link>
-            </div>
+            <Link
+              href="/account"
+              className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
+            >
+              Manage Account
+            </Link>
           </div>
 
           {/* Quick stats */}

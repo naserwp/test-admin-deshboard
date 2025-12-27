@@ -24,7 +24,7 @@ export default async function AdminBlogPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="relative min-h-screen text-slate-900 dark:text-slate-100">
       <TopNav
         role={session.user.role}
         userName={userName}
