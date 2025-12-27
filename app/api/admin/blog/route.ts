@@ -29,6 +29,12 @@ const parseTags = (value: string) =>
     .map((tag) => tag.trim())
     .filter(Boolean);
 
+const parseCategories = (value: string) =>
+  value
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+
 const parsePublishedAt = (value?: string | null) => {
   if (!value) return null;
   const date = new Date(value);
@@ -48,12 +54,22 @@ export async function POST(request: Request) {
   const excerpt = formData.get("excerpt")?.toString().trim() || "";
   const content = formData.get("content")?.toString().trim() || "";
   const tagsInput = formData.get("tags")?.toString() || "";
+  const categoriesInput = formData.get("categories")?.toString() || "";
   const metaTitle = formData.get("metaTitle")?.toString().trim() || null;
   const metaDescription =
     formData.get("metaDescription")?.toString().trim() || null;
+  const metaImageUrl = formData.get("metaImageUrl")?.toString().trim() || null;
+  const videoUrlInput = formData.get("videoUrl")?.toString().trim() || null;
+  const customPublished = formData.get("customPublished")?.toString().trim() || null;
   const statusInput = formData.get("status")?.toString() || "DRAFT";
   const publishedAtInput = formData.get("publishedAt")?.toString() || "";
+  const seoScoreInput = formData.get("seoScore")?.toString();
+  const humanScoreInput = formData.get("humanScore")?.toString();
+  const readMinutesOverrideInput = formData.get("readMinutesOverride")?.toString();
+  const tocOverride = formData.get("tocOverride")?.toString().trim() || null;
   const coverImage = formData.get("coverImage");
+  const coverImageUrlInput = formData.get("coverImageUrl")?.toString().trim() || "";
+  const videoFile = formData.get("videoFile");
 
   if (!title || !slugInput || !excerpt || !content) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -71,12 +87,25 @@ export async function POST(request: Request) {
 
   const status = statusInput === "PUBLISHED" ? "PUBLISHED" : "DRAFT";
   const tags = parseTags(tagsInput);
+  const categories = parseCategories(categoriesInput);
   const publishedAt =
     status === "PUBLISHED"
       ? parsePublishedAt(publishedAtInput) || new Date()
       : null;
+  const seoScore =
+    typeof seoScoreInput === "string"
+      ? Math.min(100, Math.max(0, parseInt(seoScoreInput, 10) || 0))
+      : estimateSeo(title, metaDescription, content, tags, categories);
+  const humanScore =
+    typeof humanScoreInput === "string"
+      ? Math.min(100, Math.max(0, parseInt(humanScoreInput, 10) || 0))
+      : estimateHuman(content);
+  const readMinutesOverride =
+    typeof readMinutesOverrideInput === "string"
+      ? Math.max(1, parseInt(readMinutesOverrideInput, 10) || 0)
+      : null;
 
-  let coverImageUrl: string | null = null;
+  let coverImageUrl: string | null = coverImageUrlInput || null;
 
   if (coverImage instanceof File && coverImage.size > 0) {
     if (!coverImage.type.startsWith("image/")) {
@@ -95,6 +124,23 @@ export async function POST(request: Request) {
     coverImageUrl = `/uploads/blog/${filename}`;
   }
 
+  let uploadedVideoUrl: string | null = null;
+  if (videoFile instanceof File && videoFile.size > 0) {
+    if (!videoFile.type.startsWith("video/")) {
+      return NextResponse.json({ error: "Video file must be a video" }, { status: 400 });
+    }
+    if (videoFile.size > 20 * 1024 * 1024) {
+      return NextResponse.json({ error: "Video must be under 20MB" }, { status: 400 });
+    }
+    const bytes = Buffer.from(await videoFile.arrayBuffer());
+    const filename = `${Date.now()}-${safeBaseName(videoFile.name)}`;
+    const uploadDir = path.join(process.cwd(), "public", "uploads", "videos");
+    await fs.mkdir(uploadDir, { recursive: true });
+    const diskPath = path.join(uploadDir, filename);
+    await fs.writeFile(diskPath, bytes);
+    uploadedVideoUrl = `/uploads/videos/${filename}`;
+  }
+
   const post = await prisma.blogPost.create({
     data: {
       title,
@@ -105,6 +151,14 @@ export async function POST(request: Request) {
       metaTitle,
       metaDescription,
       coverImageUrl,
+      metaImageUrl: metaImageUrl || coverImageUrl,
+      categories,
+      videoUrl: uploadedVideoUrl || videoUrlInput,
+      customPublished,
+      readMinutesOverride,
+      tocOverride,
+      seoScore,
+      humanScore,
       status,
       publishedAt,
       authorId: session.user.id
@@ -118,7 +172,22 @@ export async function POST(request: Request) {
       slug: post.slug,
       status: post.status,
       publishedAt: post.publishedAt ? post.publishedAt.toISOString() : null,
-      createdAt: post.createdAt.toISOString()
+      createdAt: post.createdAt.toISOString(),
+      seoScore: post.seoScore,
+      humanScore: post.humanScore
     }
   });
 }
+const estimateSeo = (title: string, metaDescription: string | null, content: string, tags: string[], categories: string[]) => {
+  const titleScore = Math.min(40, Math.max(0, title.length / 2));
+  const descScore = Math.min(30, Math.max(0, (metaDescription || "").length / 3));
+  const headingScore = Math.min(20, content.split("#").length * 3);
+  const tagScore = Math.min(10, Math.max(tags.length, categories.length) * 2);
+  return Math.min(100, Math.round(titleScore + descScore + headingScore + tagScore));
+};
+
+const estimateHuman = (content: string) => {
+  const sentences = content.split(".").length;
+  const shortLines = content.split("\n").filter((l) => l.length < 120).length;
+  return Math.min(100, Math.round((sentences + shortLines) * 2));
+};

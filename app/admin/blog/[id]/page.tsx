@@ -39,7 +39,9 @@ export default async function AdminBlogEditPage({
         <EditBlogForm
           post={{
             ...post,
-            publishedAt: post.publishedAt?.toISOString() || null
+            publishedAt: post.publishedAt?.toISOString() || null,
+            readMinutesOverride: post.readMinutesOverride,
+            tocOverride: post.tocOverride
           }}
         />
       </div>

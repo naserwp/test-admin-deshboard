@@ -70,9 +70,17 @@ model BlogPost {
   excerpt         String
   content         String
   coverImageUrl   String?
+  metaImageUrl    String?
   metaTitle       String?
   metaDescription String?
   tags            String[]
+  categories      String[]   @default([])
+  videoUrl        String?
+  readMinutesOverride Int?
+  tocOverride     String?
+  seoScore        Int        @default(0)
+  humanScore      Int        @default(0)
+  customPublished String?
   publishedAt     DateTime?
   status          PostStatus @default(DRAFT)
   createdAt       DateTime   @default(now())

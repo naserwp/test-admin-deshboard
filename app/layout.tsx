@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
+import CursorGlow from "@/app/components/CursorGlow";
 
 export const metadata: Metadata = {
   title: "Virtual Office Documents",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen text-slate-900 dark:text-slate-100">
         <ThemeProvider>
+          <CursorGlow />
           <div className="relative isolate min-h-screen overflow-hidden">
             <div
               className="pointer-events-none absolute inset-0 -z-20 bg-soft-grid opacity-70 dark:opacity-40"

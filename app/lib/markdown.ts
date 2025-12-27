@@ -8,6 +8,13 @@ const escapeHtml = (input: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
 const renderInlineMarkdown = (line: string) => {
   let output = line;
   output = output.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
@@ -39,9 +46,9 @@ export const renderMarkdown = (markdown: string) => {
         inList = false;
       }
       const level = headingMatch[1].length;
-      html.push(
-        `<h${level}>${renderInlineMarkdown(headingMatch[2])}</h${level}>`
-      );
+      const headingText = renderInlineMarkdown(headingMatch[2]);
+      const id = slugify(headingMatch[2]);
+      html.push(`<h${level} id="${id}">${headingText}</h${level}>`);
       return;
     }
 
