@@ -17,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen text-slate-900 dark:text-slate-100">
+      <body
+        className="min-h-screen text-slate-900 dark:text-slate-100"
+        suppressHydrationWarning
+      >
         <ThemeProvider>
           <CursorGlow />
           <div className="relative isolate min-h-screen overflow-hidden">

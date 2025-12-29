@@ -24,13 +24,13 @@ export default function LeadsPage() {
           cache: "no-store",
         });
 
+        const data = await response.json().catch(() => null);
         if (!response.ok) {
-          throw new Error("Unable to load lead jobs.");
+          throw new Error(data?.error || "Unable to load lead jobs.");
         }
 
-        const data = await response.json();
         if (isMounted) {
-          setJobs(Array.isArray(data) ? data : data.jobs ?? []);
+          setJobs(Array.isArray(data) ? data : data?.jobs ?? []);
         }
       } catch (error) {
         if (isMounted) {

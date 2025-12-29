@@ -8,6 +8,7 @@ type UserRow = {
   role: "ADMIN" | "USER";
   createdAt: string;
   email?: string | null;
+  canRequestLeads?: boolean;
 };
 
 export default function AdminUsersClient() {
@@ -20,6 +21,11 @@ export default function AdminUsersClient() {
   const [newEmail, setNewEmail] = useState(""); // optional if your API supports email
   const [newPassword, setNewPassword] = useState("");
   const [newRole, setNewRole] = useState<"USER" | "ADMIN">("USER");
+  const [newCanRequestLeads, setNewCanRequestLeads] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editRole, setEditRole] = useState<"USER" | "ADMIN">("USER");
+  const [editPassword, setEditPassword] = useState("");
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   async function fetchUsers() {
     setError("");
@@ -41,7 +47,12 @@ export default function AdminUsersClient() {
     setLoading(true);
     setError("");
 
-    const payload: any = { userId: newUserId, password: newPassword, role: newRole };
+    const payload: any = {
+      userId: newUserId,
+      password: newPassword,
+      role: newRole,
+      canRequestLeads: newCanRequestLeads,
+    };
 
     // NOTE: Only send email if you implemented it in your API + Prisma
     if (newEmail.trim()) payload.email = newEmail.trim();
@@ -63,6 +74,7 @@ export default function AdminUsersClient() {
     setNewEmail("");
     setNewPassword("");
     setNewRole("USER");
+    setNewCanRequestLeads(false);
     setLoading(false);
     await fetchUsers();
   }
@@ -77,6 +89,51 @@ export default function AdminUsersClient() {
       setError(data.error || "Delete failed");
       return;
     }
+    await fetchUsers();
+  }
+
+  async function onToggleLeadsAccess(user: UserRow) {
+    setError("");
+    const res = await fetch(`/api/admin/users/${user.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ canRequestLeads: !user.canRequestLeads }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setError(data.error || "Update failed");
+      return;
+    }
+    await fetchUsers();
+  }
+
+  function startEdit(user: UserRow) {
+    setEditingId(user.id);
+    setEditRole(user.role);
+    setEditPassword("");
+  }
+
+  async function onSaveEdit(user: UserRow) {
+    setSavingId(user.id);
+    setError("");
+    const payload: any = { role: editRole };
+    if (editPassword.trim()) {
+      payload.password = editPassword.trim();
+    }
+
+    const res = await fetch(`/api/admin/users/${user.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setSavingId(null);
+      setError(data.error || "Update failed");
+      return;
+    }
+    setEditingId(null);
+    setSavingId(null);
     await fetchUsers();
   }
 
@@ -143,6 +200,15 @@ export default function AdminUsersClient() {
             </div>
           </div>
 
+          <label className="flex items-center gap-2 text-sm text-slate-600">
+            <input
+              type="checkbox"
+              checked={newCanRequestLeads}
+              onChange={(e) => setNewCanRequestLeads(e.target.checked)}
+            />
+            Allow lead requests
+          </label>
+
           <div>
             <button
               disabled={loading}
@@ -173,6 +239,7 @@ export default function AdminUsersClient() {
                 <th className="text-left px-4 py-3">User ID</th>
                 <th className="text-left px-4 py-3">Email</th>
                 <th className="text-left px-4 py-3">Role</th>
+                <th className="text-left px-4 py-3">Leads access</th>
                 <th className="text-left px-4 py-3">Created</th>
                 <th className="text-left px-4 py-3">Actions</th>
               </tr>
@@ -187,20 +254,79 @@ export default function AdminUsersClient() {
                       {u.role}
                     </span>
                   </td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => onToggleLeadsAccess(u)}
+                      className={[
+                        "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset",
+                        u.canRequestLeads
+                          ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+                          : "bg-slate-100 text-slate-600 ring-slate-200",
+                      ].join(" ")}
+                    >
+                      {u.canRequestLeads ? "Enabled" : "Disabled"}
+                    </button>
+                  </td>
                   <td className="px-4 py-3 text-slate-600">
                     {new Date(u.createdAt).toLocaleString()}
                   </td>
                   <td className="px-4 py-3">
-                    <button className="text-red-600 hover:underline" onClick={() => onDelete(u.id)}>
-                      Delete
-                    </button>
+                    <div className="flex flex-wrap gap-3 text-xs font-semibold">
+                      {editingId === u.id ? (
+                        <>
+                          <select
+                            className="rounded-md border border-slate-300 px-2 py-1 text-xs"
+                            value={editRole}
+                            onChange={(e) => setEditRole(e.target.value as any)}
+                          >
+                            <option value="USER">USER</option>
+                            <option value="ADMIN">ADMIN</option>
+                          </select>
+                          <input
+                            type="password"
+                            placeholder="New password"
+                            value={editPassword}
+                            onChange={(e) => setEditPassword(e.target.value)}
+                            className="rounded-md border border-slate-300 px-2 py-1 text-xs"
+                          />
+                          <button
+                            onClick={() => onSaveEdit(u)}
+                            className="text-emerald-700 hover:underline"
+                            disabled={savingId === u.id}
+                          >
+                            {savingId === u.id ? "Saving..." : "Save"}
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="text-slate-500 hover:underline"
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className="text-slate-700 hover:underline"
+                            onClick={() => startEdit(u)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="text-red-600 hover:underline"
+                            onClick={() => onDelete(u.id)}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
 
               {!users.length ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
                     No users found.
                   </td>
                 </tr>

@@ -10,11 +10,14 @@ export default async function AdminPage() {
     return null;
   }
 
-  const [userCount, fileCount, assignmentCount] = await Promise.all([
-    prisma.user.count(),
-    prisma.file.count(),
-    prisma.assignment.count()
-  ]);
+  const [userCount, fileCount, assignmentCount, leadJobCount, leadResultCount] =
+    await Promise.all([
+      prisma.user.count(),
+      prisma.file.count(),
+      prisma.assignment.count(),
+      prisma.leadJob.count(),
+      prisma.leadResult.count(),
+    ]);
 
   const userName = session.user.userId || session.user.email || "Admin";
   const imageUrl = (session.user as any).imageUrl;
@@ -50,11 +53,12 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-4">
           {[
             { label: "Active users", value: userCount },
             { label: "Documents stored", value: fileCount },
-            { label: "Assignments", value: assignmentCount }
+            { label: "Assignments", value: assignmentCount },
+            { label: "Lead jobs", value: leadJobCount }
           ].map((stat) => (
             <div key={stat.label} className="card p-6">
               <p className="text-sm text-slate-500">{stat.label}</p>
@@ -77,6 +81,7 @@ export default async function AdminPage() {
               <li>• Review locked files that need approval.</li>
               <li>• Assign onboarding packets to new hires.</li>
               <li>• Export audit logs before quarterly review.</li>
+              <li>• Monitor lead jobs and results quality.</li>
             </ul>
           </div>
           <div className="card-muted p-6">
@@ -93,9 +98,20 @@ export default async function AdminPage() {
                 <span className="badge badge-info">5 items</span>
               </div>
               <div className="flex items-center justify-between">
+                <span>Lead results collected</span>
+                <span className="font-semibold text-slate-900">
+                  {leadResultCount}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
                 <span>Storage usage</span>
                 <span className="font-semibold text-slate-900">72%</span>
               </div>
+            </div>
+            <div className="mt-6">
+              <a href="/admin/leads" className="btn btn-secondary w-full">
+                Review lead jobs
+              </a>
             </div>
           </div>
         </div>

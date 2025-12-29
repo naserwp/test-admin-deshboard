@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -9,15 +9,45 @@ const BUSINESS_SIZES = ["Any", "1-10", "11-50", "51-200", "200+"];
 export default function NewLeadJobPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [canRequestLeads, setCanRequestLeads] = useState(true);
+  const [permissionChecked, setPermissionChecked] = useState(false);
   const [formData, setFormData] = useState({
     keyword: "",
     context: "",
     country: "US",
     state: "",
     city: "",
-    businessSize: "Any",
+    size: "Any",
     leadsTarget: 50,
   });
+
+  useEffect(() => {
+    let mounted = true;
+    const loadPermission = async () => {
+      try {
+        const response = await fetch("/api/account/me", { cache: "no-store" });
+        const data = await response.json().catch(() => null);
+        if (mounted) {
+          const role = data?.user?.role;
+          setCanRequestLeads(role === "ADMIN" || Boolean(data?.user?.canRequestLeads));
+        }
+      } catch {
+        if (mounted) {
+          setCanRequestLeads(false);
+        }
+      } finally {
+        if (mounted) {
+          setPermissionChecked(true);
+        }
+      }
+    };
+
+    loadPermission();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -38,6 +68,10 @@ export default function NewLeadJobPage() {
       toast.error("Keyword is required to create a lead job.");
       return;
     }
+    if (!canRequestLeads) {
+      toast.error("Your account is not approved to request leads yet.");
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -49,7 +83,10 @@ export default function NewLeadJobPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create lead job.");
+        const payload = await response.json().catch(() => null);
+        const message =
+          payload?.error || payload?.message || "Failed to create lead job.";
+        throw new Error(message);
       }
 
       toast.success("Lead job created successfully.");
@@ -77,6 +114,13 @@ export default function NewLeadJobPage() {
           leads.
         </p>
       </header>
+
+      {!permissionChecked ? null : !canRequestLeads ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+          Your account is not approved to request leads yet. Please ask an
+          admin to enable lead access.
+        </div>
+      ) : null}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <section className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm">
@@ -177,8 +221,8 @@ export default function NewLeadJobPage() {
                 Business size
               </span>
               <select
-                name="businessSize"
-                value={formData.businessSize}
+                name="size"
+                value={formData.size}
                 onChange={handleChange}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
               >
@@ -212,7 +256,7 @@ export default function NewLeadJobPage() {
           </p>
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !canRequestLeads}
             className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
           >
             {isSubmitting ? "Creating..." : "Create lead job"}

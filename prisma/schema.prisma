@@ -24,6 +24,14 @@ enum PostStatus {
   PUBLISHED
 }
 
+enum LeadJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  QUEUED
+}
+
 model User {
   id           String   @id @default(cuid())
   userId       String   @unique
@@ -31,10 +39,14 @@ model User {
   role         Role     @default(USER)
   email        String? @unique
   imageUrl     String?
+  canRequestLeads Boolean @default(false)
   createdAt    DateTime @default(now())
   files        File[]   @relation("UploadedFiles")
   assignments  Assignment[]
   blogPosts    BlogPost[]
+  leadJobs     LeadJob[]
+  leadAudits   LeadAudit[]
+  leadAuditLogs LeadAuditLog[]
 }
 
 model File {
@@ -87,4 +99,102 @@ model BlogPost {
   updatedAt       DateTime   @updatedAt
   authorId        String?
   author          User?      @relation(fields: [authorId], references: [id])
+}
+
+model LeadJob {
+  id          String        @id @default(cuid())
+  userId      String
+  keyword     String
+  context     String?
+  country     String?
+  state       String?
+  city        String?
+  businessSize String?
+  industry    String?
+  size        String?
+  leadsTarget Int
+  status      LeadJobStatus @default(PENDING)
+  progress    Int           @default(0)
+  safeMode    Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id])
+  results     LeadResult[]
+  audits      LeadAudit[]
+  auditLogs   LeadAuditLog[]
+
+  @@index([userId, createdAt])
+}
+
+model LeadResult {
+  id           String   @id @default(cuid())
+  jobId        String
+  businessName String
+  industry     String?
+  website      String?
+  phone        String?
+  email        String?
+  addressLine1 String?
+  addressLine2 String?
+  street       String?
+  city         String?
+  state        String?
+  postalCode   String?
+  postcode     String?
+  country      String?
+  source       String
+  sourceUrl    String?
+  contactFirstName String?
+  contactLastName  String?
+  contactRole      String?
+  contactEmail     String?
+  ownerName        String?
+  ein              String?
+  businessCapital  String?
+  employeeCount    Int?
+  confidence   Float?
+  notes        String?
+  isHidden     Boolean  @default(false)
+  isArchived   Boolean  @default(false)
+  rawJson      Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  job          LeadJob  @relation(fields: [jobId], references: [id])
+
+  @@index([jobId, createdAt])
+}
+
+model LeadAudit {
+  id           String   @id @default(cuid())
+  userId       String
+  jobId        String?
+  provider     String
+  status       String
+  requestCount Int      @default(1)
+  resultsCount Int      @default(0)
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  job  LeadJob? @relation(fields: [jobId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([jobId, createdAt])
+}
+
+model LeadAuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  jobId      String?
+  action     String
+  providerId String
+  count      Int      @default(0)
+  meta       Json?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  job  LeadJob? @relation(fields: [jobId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([jobId, createdAt])
 }

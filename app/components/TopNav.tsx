@@ -41,8 +41,21 @@ export default function TopNav({ role, userName, imageUrl }: TopNavProps) {
               >
                 Assignments
               </Link>
+              <Link href="/admin/leads" className="hover:text-slate-900 dark:hover:text-white">
+                Leads
+              </Link>
               <Link href="/admin/blog" className="hover:text-slate-900 dark:hover:text-white">
                 Blog
+              </Link>
+            </div>
+          )}
+          {role !== "ADMIN" && (
+            <div className="hidden items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-300 md:flex">
+              <Link href="/dashboard" className="hover:text-slate-900 dark:hover:text-white">
+                Dashboard
+              </Link>
+              <Link href="/leads" className="hover:text-slate-900 dark:hover:text-white">
+                Leads
               </Link>
             </div>
           )}

@@ -15,6 +15,7 @@ export async function GET() {
         email: true,
         role: true,
         imageUrl: true,
+        canRequestLeads: true,
       },
     });
 

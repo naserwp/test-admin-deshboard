@@ -17,7 +17,7 @@ export async function GET() {
 
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "desc" },
-    select: { id: true, userId: true, role: true, createdAt: true },
+    select: { id: true, userId: true, role: true, createdAt: true, email: true, canRequestLeads: true },
   });
 
   return NextResponse.json({ users });
@@ -34,6 +34,8 @@ export async function POST(req: Request) {
   const userId = String(body.userId || "").trim();
   const password = String(body.password || "");
   const role = body.role === "ADMIN" ? "ADMIN" : "USER";
+  const email = String(body.email || "").trim() || null;
+  const canRequestLeads = Boolean(body.canRequestLeads);
 
   if (userId.length < 3) return NextResponse.json({ error: "userId must be at least 3 characters" }, { status: 400 });
   if (password.length < 6) return NextResponse.json({ error: "password must be at least 6 characters" }, { status: 400 });
@@ -44,8 +46,8 @@ export async function POST(req: Request) {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = await prisma.user.create({
-    data: { userId, passwordHash, role },
-    select: { id: true, userId: true, role: true, createdAt: true },
+    data: { userId, passwordHash, role, email, canRequestLeads },
+    select: { id: true, userId: true, role: true, createdAt: true, email: true, canRequestLeads: true },
   });
 
   return NextResponse.json({ user }, { status: 201 });

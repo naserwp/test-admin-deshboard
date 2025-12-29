@@ -8,11 +8,12 @@ export interface LeadJob {
   country?: string;
   state?: string | null;
   city?: string | null;
-  businessSize?: string | null;
+  size?: string | null;
   leadsTarget?: number | null;
   context?: string | null;
   createdAt?: string;
   status?: string;
+  progress?: number | null;
 }
 
 interface LeadCardProps {
@@ -20,6 +21,9 @@ interface LeadCardProps {
 }
 
 export default function LeadCard({ job }: LeadCardProps) {
+  const progressValue =
+    job.status === "COMPLETED" ? 100 : Math.max(0, job.progress ?? 0);
+
   return (
     <Link
       href={`/leads/${job.id}`}
@@ -45,7 +49,16 @@ export default function LeadCard({ job }: LeadCardProps) {
           {job.country ?? "US"}
         </p>
         <p>
-          Target: {job.leadsTarget ?? 50} leads · Size: {job.businessSize ?? "Any"}
+          Target: {job.leadsTarget ?? 50} leads · Size: {job.size ?? "Any"}
+        </p>
+        <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-sky-400"
+            style={{ width: `${Math.min(progressValue, 100)}%` }}
+          />
+        </div>
+        <p className="mt-1 text-xs text-slate-400">
+          {progressValue}% complete
         </p>
       </div>
       <div className="flex items-center justify-between text-xs text-slate-400">
