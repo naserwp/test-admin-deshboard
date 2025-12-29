@@ -25,6 +25,9 @@ export default function MarketingNav() {
         <Link href="/blog" className="hover:text-slate-900 dark:hover:text-white">
           Blog
         </Link>
+        <Link href="/changelog" className="hover:text-slate-900 dark:hover:text-white">
+          Changelog
+        </Link>
       </div>
       <div className="flex items-center gap-2">
         <ThemeToggle compact />

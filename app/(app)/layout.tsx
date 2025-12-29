@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/app/lib/auth";
 import TopNav from "@/app/components/TopNav";
 import Footer from "@/app/components/Footer";
+import GlobalLogo from "@/app/components/GlobalLogo";
 
 export default async function AppLayout({
   children,
@@ -18,6 +19,10 @@ export default async function AppLayout({
 
   const userName = session.user.userId || session.user.email || "User";
   const imageUrl = (session.user as any).imageUrl;
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
 
   return (
     <div className="relative isolate flex min-h-screen flex-col overflow-hidden">
@@ -35,13 +40,20 @@ export default async function AppLayout({
           role={session.user.role}
           userName={userName}
           imageUrl={imageUrl}
+          impersonatorUserId={impersonatorUserId}
         />
 
         <main className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 sm:px-6 py-8">
           <div className="surface-section flex-1 p-6 sm:p-8">{children}</div>
         </main>
 
-        <Footer />
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 pb-6">
+          <div className="mb-3 flex items-center gap-2 text-xs text-slate-500">
+            <GlobalLogo className="scale-90" />
+            <span>Virtual Office Management · Secure workspace and AI-enriched leads</span>
+          </div>
+          <Footer />
+        </div>
       </div>
     </div>
   );

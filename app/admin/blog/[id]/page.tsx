@@ -17,6 +17,11 @@ export default async function AdminBlogEditPage({
     return null;
   }
 
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
+
   const post = await prisma.blogPost.findUnique({
     where: { id: params.id }
   });
@@ -34,6 +39,7 @@ export default async function AdminBlogEditPage({
         role={session.user.role}
         userName={userName}
         imageUrl={imageUrl}
+        impersonatorUserId={impersonatorUserId}
       />
       <div className="mx-auto max-w-5xl px-6 py-10">
         <EditBlogForm

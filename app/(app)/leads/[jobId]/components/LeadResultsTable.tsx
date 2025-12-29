@@ -144,7 +144,10 @@ export default function LeadResultsTable({ jobId, results }: LeadResultsTablePro
 
   const formatConfidence = (value?: number | null) => {
     if (value === null || value === undefined) return "-";
-    return `${Math.round(value * 100)}%`;
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return "-";
+    const scaled = numeric > 1 ? numeric : numeric * 100;
+    return `${Math.round(Math.min(Math.max(scaled, 0), 100))}%`;
   };
 
   const buildTags = (result: LeadResult) => {

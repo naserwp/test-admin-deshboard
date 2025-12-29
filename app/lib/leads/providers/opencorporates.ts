@@ -57,7 +57,7 @@ const opencorporatesProvider: LeadProvider<NormalizedLead> = {
         },
         source: "opencorporates",
         sourceUrl: company?.opencorporates_url ?? null,
-        confidence: 0.45,
+        confidence: 55,
         raw: company,
       }));
   },

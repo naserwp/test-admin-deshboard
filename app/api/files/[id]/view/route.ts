@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import fs from "fs";
 import path from "path";
@@ -11,10 +11,11 @@ function firstExisting(paths: string[]) {
 }
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const file = await prisma.file.findUnique({ where: { id: params.id } });
+  const { id } = await params;
+  const file = await prisma.file.findUnique({ where: { id } });
   if (!file) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   // ✅ আপনার প্রোজেক্টে ফাইলগুলো "uploads/" ফোল্ডারে আছে (public না)

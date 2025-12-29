@@ -32,7 +32,7 @@ const wikidataProvider: LeadProvider<WikidataRawResult> = {
       address: raw.address ?? null,
       source: "wikidata",
       sourceUrl: raw.entityUrl ?? null,
-      confidence: 0.35,
+      confidence: 40,
       raw,
     };
   },

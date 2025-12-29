@@ -17,11 +17,20 @@ export default async function AdminLeadJobPage({
     return null;
   }
 
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
+
   const { jobId } = await Promise.resolve(params);
   if (!jobId) {
     return (
       <div>
-        <TopNav role={session.user.role} userName={session.user.userId ?? "Admin"} />
+        <TopNav
+          role={session.user.role}
+          userName={session.user.userId ?? "Admin"}
+          impersonatorUserId={impersonatorUserId}
+        />
         <div className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-600">
           Lead job not found.
         </div>
@@ -32,7 +41,11 @@ export default async function AdminLeadJobPage({
   if (session.user.role !== "ADMIN") {
     return (
       <div>
-        <TopNav role={session.user.role} userName={session.user.userId ?? "User"} />
+        <TopNav
+          role={session.user.role}
+          userName={session.user.userId ?? "User"}
+          impersonatorUserId={impersonatorUserId}
+        />
         <div className="mx-auto max-w-5xl px-6 py-10">
           <div className="rounded-lg border bg-white p-6 text-sm">
             You do not have permission to view this page.
@@ -53,7 +66,11 @@ export default async function AdminLeadJobPage({
   if (!job) {
     return (
       <div>
-        <TopNav role={session.user.role} userName={session.user.userId ?? "Admin"} />
+        <TopNav
+          role={session.user.role}
+          userName={session.user.userId ?? "Admin"}
+          impersonatorUserId={impersonatorUserId}
+        />
         <div className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-600">
           Lead job not found.
         </div>
@@ -66,7 +83,11 @@ export default async function AdminLeadJobPage({
 
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav
+        role={session.user.role}
+        userName={userName}
+        impersonatorUserId={impersonatorUserId}
+      />
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>

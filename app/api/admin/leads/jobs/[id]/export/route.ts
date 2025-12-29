@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
@@ -12,15 +12,9 @@ function requireAdmin(session: any) {
   return { ok: true as const };
 }
 
-async function resolveParams(
-  params: { id: string } | Promise<{ id: string }>
-) {
-  return Promise.resolve(params);
-}
-
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const guard = requireAdmin(session);
@@ -37,7 +31,7 @@ export async function GET(
   const includeHidden = url.searchParams.get("includeHidden") === "true";
   const includeArchived = url.searchParams.get("includeArchived") === "true";
 
-  const { id } = await resolveParams(params);
+  const { id } = await params;
   const job = await prisma.leadJob.findUnique({
     where: { id },
   });

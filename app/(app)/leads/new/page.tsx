@@ -9,6 +9,7 @@ const BUSINESS_SIZES = ["Any", "1-10", "11-50", "51-200", "200+"];
 export default function NewLeadJobPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGeneratingContext, setIsGeneratingContext] = useState(false);
   const [canRequestLeads, setCanRequestLeads] = useState(true);
   const [permissionChecked, setPermissionChecked] = useState(false);
   const [formData, setFormData] = useState({
@@ -19,6 +20,8 @@ export default function NewLeadJobPage() {
     city: "",
     size: "Any",
     leadsTarget: 50,
+    businessType: "ALL",
+    channelMode: "all",
   });
 
   useEffect(() => {
@@ -59,6 +62,57 @@ export default function NewLeadJobPage() {
       ...prev,
       [name]: name === "leadsTarget" ? Number(value) : value,
     }));
+  };
+
+  const handleGenerateContext = async () => {
+    const keyword = formData.keyword.trim();
+    if (!keyword) {
+      toast.error("Add a keyword first so AI can suggest context.");
+      return;
+    }
+    if (isGeneratingContext) return;
+
+    setIsGeneratingContext(true);
+    // Lightweight client-only generation to keep the flow fast/offline.
+    const angles = [
+      "audience",
+      "location",
+      "budget",
+      "tech",
+      "compliance",
+      "differentiators",
+    ];
+    const picks = angles.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+    const contextText = [
+      `Focus on ${keyword} with clear buyer intent (recently searching, requesting quotes, or scheduling).`,
+      `Prioritize cities with healthy demand and mid-to-high household income; skip regions with saturated competition unless reviews are weak.`,
+      `Ideal profiles: ${picks
+        .map((p) => {
+          switch (p) {
+            case "audience":
+              return "owner/ops contacts who decide on purchases";
+            case "location":
+              return "metro areas within 50 miles of the target city";
+            case "budget":
+              return "businesses spending at least $2k/month on paid marketing";
+            case "tech":
+              return "websites with modern CMS, active socials, and online booking";
+            case "compliance":
+              return "licensed, insured, and with recent public listings";
+            case "differentiators":
+              return "providers with unique services or fast response times";
+            default:
+              return "engaged buyers";
+          }
+        })
+        .join("; ")}.`,
+      "Exclude obvious job seekers, directories, spammy listings, and duplicate domains.",
+    ].join(" ");
+
+    setFormData((prev) => ({ ...prev, context: contextText }));
+    toast.success("Context drafted — feel free to edit.");
+    setIsGeneratingContext(false);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -153,16 +207,64 @@ export default function NewLeadJobPage() {
             </label>
 
             <label className="space-y-2 md:col-span-2">
-              <span className="text-sm font-medium text-slate-700">Context</span>
+              <span className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                Context
+                <button
+                  type="button"
+                  onClick={handleGenerateContext}
+                  className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 ring-1 ring-indigo-100 transition hover:bg-indigo-100 disabled:opacity-60"
+                  disabled={isGeneratingContext}
+                >
+                  <span aria-hidden>✨</span>
+                  {isGeneratingContext ? "Generating..." : "AI fill"}
+                </button>
+              </span>
               <textarea
                 name="context"
                 value={formData.context}
                 onChange={handleChange}
-                placeholder="Optional notes about ideal customers, industries, or exclusions."
+                placeholder="Optional notes about ideal customers, industries, or exclusions. Or click AI fill to draft from your keyword."
                 rows={4}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
               />
             </label>
+
+            <div className="grid gap-4 md:grid-cols-2 md:col-span-2">
+              <label className="space-y-2">
+                <span className="text-sm font-medium text-slate-700">Audience</span>
+                <select
+                  name="businessType"
+                  value={formData.businessType}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                >
+                  <option value="ALL">All</option>
+                  <option value="B2B">B2B</option>
+                  <option value="B2C">B2C</option>
+                </select>
+              </label>
+              <label className="space-y-2">
+                <span className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                  Channels
+                  <button
+                    type="button"
+                    onClick={() => setFormData((prev) => ({ ...prev, channelMode: "all" }))}
+                    className="text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                  >
+                    All channels
+                  </button>
+                </span>
+                <select
+                  name="channelMode"
+                  value={formData.channelMode}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                >
+                  <option value="all">All channels</option>
+                  <option value="safe">Safe mode</option>
+                </select>
+              </label>
+            </div>
           </div>
         </section>
 

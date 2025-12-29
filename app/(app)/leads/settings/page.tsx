@@ -13,10 +13,19 @@ export default async function LeadSettingsPage() {
     return null;
   }
 
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
+
   if (session.user.role !== "ADMIN") {
     return (
       <div>
-        <TopNav role={session.user.role} userName={session.user.userId ?? "User"} />
+        <TopNav
+          role={session.user.role}
+          userName={session.user.userId ?? "User"}
+          impersonatorUserId={impersonatorUserId}
+        />
         <div className="mx-auto max-w-5xl px-6 py-10">
           <div className="rounded-lg border bg-white p-6 text-sm">
             You do not have permission to view this page.
@@ -36,7 +45,11 @@ export default async function LeadSettingsPage() {
 
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav
+        role={session.user.role}
+        userName={userName}
+        impersonatorUserId={impersonatorUserId}
+      />
       <div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         <div>
           <h1 className="text-2xl font-semibold">Lead provider settings</h1>

@@ -156,7 +156,7 @@ const googlePlacesProvider: LeadProvider<NormalizedLead> = {
             ? `https://maps.google.com/?q=place_id:${item.place_id}`
             : null,
           industry: inferIndustry(resolvedTypes),
-          confidence: 0.6,
+          confidence: 65,
           raw: { textsearch: item, details },
         });
       }

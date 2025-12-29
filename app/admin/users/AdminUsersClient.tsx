@@ -26,6 +26,7 @@ export default function AdminUsersClient() {
   const [editRole, setEditRole] = useState<"USER" | "ADMIN">("USER");
   const [editPassword, setEditPassword] = useState("");
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [impersonatingId, setImpersonatingId] = useState<string | null>(null);
 
   async function fetchUsers() {
     setError("");
@@ -105,6 +106,26 @@ export default function AdminUsersClient() {
       return;
     }
     await fetchUsers();
+  }
+
+  async function onImpersonate(user: UserRow) {
+    if (!confirm(`Login as ${user.userId}?`)) return;
+    setError("");
+    setImpersonatingId(user.id);
+
+    const res = await fetch("/api/admin/impersonate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setError(data.error || "Unable to switch into user");
+      setImpersonatingId(null);
+      return;
+    }
+
+    window.location.href = "/dashboard";
   }
 
   function startEdit(user: UserRow) {
@@ -305,6 +326,13 @@ export default function AdminUsersClient() {
                         </>
                       ) : (
                         <>
+                          <button
+                            className="text-indigo-700 hover:underline"
+                            onClick={() => onImpersonate(u)}
+                            disabled={impersonatingId === u.id}
+                          >
+                            {impersonatingId === u.id ? "Switching..." : "Login as user"}
+                          </button>
                           <button
                             className="text-slate-700 hover:underline"
                             onClick={() => startEdit(u)}

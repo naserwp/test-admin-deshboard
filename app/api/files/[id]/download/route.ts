@@ -1,3 +1,4 @@
+import { NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
@@ -5,9 +6,10 @@ import { storage } from "@/app/lib/storage";
 import { createReadStream } from "fs";
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return new Response("Unauthorized", { status: 401 });
@@ -17,7 +19,7 @@ export async function GET(
     where: {
       userId_fileId: {
         userId: session.user.id,
-        fileId: params.id
+        fileId: id
       }
     },
     include: { file: true }

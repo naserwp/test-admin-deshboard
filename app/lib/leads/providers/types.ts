@@ -8,6 +8,8 @@ export type LeadSearchParams = {
   city?: string | null;
   industry?: string | null;
   size?: string | null;
+  businessType?: "B2B" | "B2C" | "ALL";
+  channelMode?: "all" | "safe";
   limit?: number;
 };
 

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import path from "path";
 import fs from "fs/promises";
@@ -57,16 +57,17 @@ const estimateHuman = (content: string) => {
 };
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.id || session.user.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const existing = await prisma.blogPost.findUnique({
-    where: { id: params.id }
+    where: { id }
   });
   if (!existing) {
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
@@ -165,7 +166,7 @@ export async function PATCH(
   }
 
   await prisma.blogPost.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       title,
       slug,
@@ -192,21 +193,22 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.id || session.user.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const existing = await prisma.blogPost.findUnique({
-    where: { id: params.id }
+    where: { id }
   });
   if (!existing) {
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
   }
 
-  await prisma.blogPost.delete({ where: { id: params.id } });
+  await prisma.blogPost.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }

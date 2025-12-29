@@ -61,12 +61,25 @@ export async function POST(request: Request) {
   const sizeInput = body.size ?? body.businessSize;
   const size = parseOptionalString(sizeInput);
   const normalizedSize = size === "Any" ? null : size;
+  const businessTypeRaw = parseOptionalString(body.businessType);
+  const businessType =
+    businessTypeRaw === "B2B" || businessTypeRaw === "B2C" ? businessTypeRaw : "ALL";
+  const channelMode =
+    body.channelMode === "all" || body.channelMode === "safe" ? body.channelMode : "all";
+
+  const augmentedContext = [
+    businessType ? `Audience: ${businessType}` : null,
+    channelMode ? `Channels: ${channelMode}` : null,
+    parseOptionalString(body.context),
+  ]
+    .filter(Boolean)
+    .join(" | ");
 
   const job = await prisma.leadJob.create({
     data: {
       userId: session.user.id,
       keyword,
-      context: parseOptionalString(body.context),
+      context: augmentedContext || null,
       country: parseOptionalString(body.country),
       state: parseOptionalString(body.state),
       city: parseOptionalString(body.city),
@@ -76,6 +89,7 @@ export async function POST(request: Request) {
       leadsTarget: Math.round(leadsTargetValue),
       status: "PENDING",
       progress: 0,
+      safeMode: channelMode === "safe",
     },
   });
 

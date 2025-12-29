@@ -1,16 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import { enrichLeadWithAI } from "@/app/lib/leads/ai/enrich";
 import { consumeTokens } from "@/app/lib/leads/rateLimit";
 import { logLeadAudit } from "@/app/lib/leads/audit";
-
-async function resolveParams(
-  params: { id: string } | Promise<{ id: string }>
-) {
-  return Promise.resolve(params);
-}
 
 async function safeLogAudit(entry: Parameters<typeof logLeadAudit>[0]) {
   try {
@@ -21,8 +15,8 @@ async function safeLogAudit(entry: Parameters<typeof logLeadAudit>[0]) {
 }
 
 export async function POST(
-  _request: Request,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
@@ -36,7 +30,7 @@ export async function POST(
     );
   }
 
-  const { id } = await resolveParams(params);
+  const { id } = await params;
   const job = await prisma.leadJob.findFirst({
     where: { id, userId: session.user.id },
   });

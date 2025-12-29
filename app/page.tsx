@@ -1,7 +1,8 @@
 import Link from "next/link";
-import MarketingNav from "@/app/components/MarketingNav";
 import { prisma } from "@/app/lib/prisma";
 import MarketingFooter from "@/app/components/MarketingFooter";
+import GlobalHeader from "@/app/components/GlobalHeader";
+import GlobalFooter from "@/app/components/GlobalFooter";
 
 export default async function Home() {
   const latestPosts = await prisma.blogPost.findMany({
@@ -13,7 +14,7 @@ export default async function Home() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
       <div className="mx-auto max-w-6xl px-6">
-        <MarketingNav />
+        <GlobalHeader />
       </div>
 
       <main>
@@ -457,7 +458,9 @@ export default async function Home() {
           </div>
         </section>
       </main>
-      <MarketingFooter />
+      <div className="mx-auto max-w-6xl px-6 pb-10">
+        <GlobalFooter />
+      </div>
     </div>
   );
 }

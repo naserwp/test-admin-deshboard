@@ -56,6 +56,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
   const [loading, setLoading] = useState(false);
   const [tocLoading, setTocLoading] = useState(false);
   const [autoSave, setAutoSave] = useState(true);
+  const [humanScore, setHumanScore] = useState<number | null>(null);
 
   const estimateSeo = () => {
     const titleScore = Math.min(40, Math.max(0, title.length / 2));
@@ -72,6 +73,10 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
   };
 
   const isSeoStrong = useMemo(() => estimateSeo() >= 75, [content, metaDescription, tags, categories, title]);
+  const computedHumanScore = useMemo(
+    () => humanScore ?? estimateHuman(),
+    [humanScore, content]
+  );
 
   const handleGenerateToc = async () => {
     setTocLoading(true);
@@ -216,7 +221,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
     formData.append("status", status);
     formData.append("publishedAt", publishedAt);
     formData.append("seoScore", estimateSeo().toString());
-    formData.append("humanScore", estimateHuman().toString());
+    formData.append("humanScore", computedHumanScore.toString());
     formData.append("readMinutesOverride", readMinutesOverride);
     formData.append("tocOverride", tocOverride);
 
@@ -270,6 +275,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
     setPublishedAt("");
     setCoverImage(null);
     setVideoFile(null);
+    setHumanScore(null);
   };
 
   return (
@@ -284,7 +290,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
             SEO {estimateSeo()}/100
           </span>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-            Human {estimateHuman()}/100
+            Human {computedHumanScore}/100
           </span>
           <label className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
             <input

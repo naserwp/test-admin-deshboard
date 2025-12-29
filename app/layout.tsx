@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
 import CursorGlow from "@/app/components/CursorGlow";
+import ChatWidget from "@/app/components/ChatWidget";
 
 export const metadata: Metadata = {
   title: "Virtual Office Documents",
@@ -39,6 +40,7 @@ export default function RootLayout({
               <div className="fixed left-4 top-1/2 z-50 -translate-y-1/2 md:left-8">
                 <ThemeToggle />
               </div>
+              <ChatWidget />
             </div>
           </div>
 

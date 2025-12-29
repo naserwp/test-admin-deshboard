@@ -152,7 +152,7 @@ function normalizeElement(element: OsmRawElement): NormalizedLead | null {
     },
     source: "osm",
     sourceUrl: pickTag(tags, ["contact:website", "website"]) ?? null,
-    confidence: 0.35,
+    confidence: 40,
     raw: element,
   };
 }
@@ -162,7 +162,7 @@ function delay(ms: number) {
 }
 
 const osmOverpassProvider: LeadProvider = {
-  providerId: "osm",
+  providerId: "osm-overpass",
   name: "OSM Overpass",
   async search(params: LeadSearchParams) {
     const location = await fetchNominatim(params);

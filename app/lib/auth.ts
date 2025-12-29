@@ -102,6 +102,9 @@ export const authOptions: NextAuthOptions = {
         token.userId = (user as any).userId;
         token.email = (user as any).email ?? null;
         token.imageUrl = (user as any).imageUrl ?? null;
+        (token as any).impersonatorId = null;
+        (token as any).impersonatorUserId = null;
+        (token as any).impersonatorRole = null;
 
         // token.sub ব্যবহার করে session.user.id set করছেন—এটা ঠিক আছে
         token.sub = (user as any).id;
@@ -123,6 +126,12 @@ export const authOptions: NextAuthOptions = {
         // Extra fields for profile/avatar
         (session.user as any).email = (token.email as string | null) ?? null;
         (session.user as any).imageUrl = (token.imageUrl as string | null) ?? null;
+        (session.user as any).impersonatorId =
+          ((token as any).impersonatorId as string | null) ?? null;
+        (session.user as any).impersonatorUserId =
+          ((token as any).impersonatorUserId as string | null) ?? null;
+        (session.user as any).impersonatorRole =
+          ((token as any).impersonatorRole as string | null) ?? null;
       }
       return session;
     },

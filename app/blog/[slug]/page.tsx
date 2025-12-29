@@ -68,7 +68,9 @@ async function findPost(slug: string) {
   return sample
     ? {
         ...sample,
-        readMinutes: readingTime(sample.content)
+        readMinutes: readingTime(sample.content),
+        tocOverride: null,
+        customPublished: null
       }
     : null;
 }

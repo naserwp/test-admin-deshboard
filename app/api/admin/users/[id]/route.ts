@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/app/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -10,15 +10,9 @@ function requireAdmin(session: any) {
   return { ok: true as const };
 }
 
-async function resolveParams(
-  params: { id: string } | Promise<{ id: string }>
-) {
-  return Promise.resolve(params);
-}
-
 export async function PATCH(
-  req: Request,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const guard = requireAdmin(session);
@@ -27,7 +21,7 @@ export async function PATCH(
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
 
-  const { id } = await resolveParams(params);
+  const { id } = await params;
   const data: any = {};
 
   if (body.role === "ADMIN" || body.role === "USER") {
@@ -54,16 +48,17 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _req: Request,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const guard = requireAdmin(session);
   if (!guard.ok) return NextResponse.json({ error: guard.error }, { status: guard.status });
 
-  const { id } = await resolveParams(params);
+  const { id } = await params;
   // Safety: prevent deleting self
-  if ((session.user as any).id === id) {
+  const currentUserId = session?.user?.id;
+  if (currentUserId && currentUserId === id) {
     return NextResponse.json({ error: "You cannot delete your own admin account" }, { status: 400 });
   }
 

@@ -176,6 +176,10 @@ export default async function DashboardPage() {
 
   const userName = session.user.userId || session.user.email || "User";
   const imageUrl = (session.user as any).imageUrl;
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
 
   const unlockedCount = assignments.filter(
     (a) => a.status === "UNLOCKED"
@@ -188,6 +192,7 @@ export default async function DashboardPage() {
         role={session.user.role}
         userName={userName}
         imageUrl={imageUrl}
+        impersonatorUserId={impersonatorUserId}
       />
 
       {/* Background accents */}
@@ -289,11 +294,11 @@ export default async function DashboardPage() {
           </div>
 
           {/* Quick stats */}
-          <div className="grid gap-4 border-t border-slate-200 p-6 sm:p-8 md:grid-cols-4">
-            <StatCard
-              label="Assigned documents"
-              value={assignments.length}
-              gradient="from-indigo-500 to-sky-500"
+        <div className="grid gap-4 border-t border-slate-200 p-6 sm:p-8 md:grid-cols-4">
+          <StatCard
+            label="Assigned documents"
+            value={assignments.length}
+            gradient="from-indigo-500 to-sky-500"
               hint="Total files assigned to you"
             />
             <StatCard
@@ -316,6 +321,72 @@ export default async function DashboardPage() {
             />
           </div>
         </div>
+
+        <section className="grid gap-4 md:grid-cols-[1.5fr_1fr]">
+          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">
+                  Support & chat
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Reach the support team directly from your workspace.
+                </p>
+              </div>
+              <span className="inline-flex w-fit items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200">
+                Chat ready
+              </span>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold">
+              <Link
+                href="/support/history"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                Chat history
+              </Link>
+              <Link
+                href="/support/ticket/new"
+                className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-100 dark:text-slate-900"
+              >
+                New support ticket
+              </Link>
+              <Link
+                href="/support/tickets"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                My tickets
+              </Link>
+            </div>
+
+            <p className="mt-3 text-xs text-slate-500">
+              Use the chat button in the bottom-right to start or resume a conversation. If you need an admin to approve something, ask the assistant to request a human.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm">
+            <h3 className="text-base font-semibold text-slate-900">
+              Need an approval?
+            </h3>
+            <p className="mt-2 text-sm text-slate-500">
+              Start a chat for quick questions, or open a ticket for longer requests.
+            </p>
+            <div className="mt-4 space-y-2 text-sm text-slate-600">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                <p className="font-semibold text-slate-900">Ask in chat</p>
+                <p className="text-sm text-slate-600">
+                  Get instant answers and request a human when you need an admin to review.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                <p className="font-semibold text-slate-900">Track with tickets</p>
+                <p className="text-sm text-slate-600">
+                  Tickets keep your approvals and follow-ups organized for you and the admin team.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">

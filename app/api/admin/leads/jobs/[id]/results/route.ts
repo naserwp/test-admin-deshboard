@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
@@ -11,12 +11,6 @@ function requireAdmin(session: any) {
   return { ok: true as const };
 }
 
-async function resolveParams(
-  params: { id: string } | Promise<{ id: string }>
-) {
-  return Promise.resolve(params);
-}
-
 function parseOptionalString(value: unknown) {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
@@ -24,8 +18,8 @@ function parseOptionalString(value: unknown) {
 }
 
 export async function POST(
-  request: Request,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const guard = requireAdmin(session);
@@ -33,7 +27,7 @@ export async function POST(
     return NextResponse.json({ error: guard.error }, { status: guard.status });
   }
 
-  const { id } = await resolveParams(params);
+  const { id } = await params;
   const body = await request.json().catch(() => null);
   if (!body) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });

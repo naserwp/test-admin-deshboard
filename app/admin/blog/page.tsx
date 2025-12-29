@@ -10,6 +10,11 @@ export default async function AdminBlogPage() {
     return null;
   }
 
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
+
   const posts = await prisma.blogPost.findMany({
     orderBy: [{ createdAt: "desc" }]
   });
@@ -31,6 +36,7 @@ export default async function AdminBlogPage() {
         role={session.user.role}
         userName={userName}
         imageUrl={imageUrl}
+        impersonatorUserId={impersonatorUserId}
       />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(56,189,248,0.15),transparent_32%),radial-gradient(circle_at_80%_0%,rgba(99,102,241,0.14),transparent_28%)] opacity-70 dark:opacity-50" />
       <div className="relative mx-auto max-w-6xl px-6 py-10">

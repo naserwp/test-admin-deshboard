@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
@@ -8,12 +9,6 @@ import { enrichLeadWithAI } from "@/app/lib/leads/ai/enrich";
 import { consumeTokens } from "@/app/lib/leads/rateLimit";
 import { logLeadAudit } from "@/app/lib/leads/audit";
 import { listEnabledProviders } from "@/app/lib/leads/providers/registry";
-
-async function resolveParams(
-  params: { id: string } | Promise<{ id: string }>
-) {
-  return Promise.resolve(params);
-}
 
 function guessEmailFromWebsite(website: string | null | undefined) {
   if (!website) return null;
@@ -36,8 +31,8 @@ async function safeLogAudit(entry: Parameters<typeof logLeadAudit>[0]) {
 }
 
 export async function POST(
-  _request: Request,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
@@ -45,7 +40,7 @@ export async function POST(
   }
 
   let requestCount = 0;
-  const { id } = await resolveParams(params);
+  const { id } = await params;
   const isAdmin = session.user.role === "ADMIN";
   const scrapingEnabled = process.env.LEADS_SCRAPING_ENABLED !== "false";
 
@@ -116,15 +111,20 @@ export async function POST(
       city: job.city ?? undefined,
       industry: job.industry ?? undefined,
       size: job.size ?? undefined,
+      businessType: (job as any).businessType as any,
+      channelMode: "all" as const,
       limit: job.leadsTarget,
     };
 
     const providers = listEnabledProviders();
     const safeAllowList = new Set([
       "osm",
+      "osm-overpass",
+      "wikidata",
       "google-places",
       "yelp",
       "opencorporates",
+      "ai-synthesis",
     ]);
     const activeProviders = job.safeMode
       ? providers.filter((provider) => {
@@ -160,11 +160,26 @@ export async function POST(
       enriched = [];
       for (const lead of capped) {
         const ai = await enrichLeadWithAI(lead, paramsInput);
+        const mergedAddress =
+          ai.address || lead.address
+            ? {
+                line1: ai.address?.line1 ?? lead.address?.line1 ?? null,
+                city: ai.address?.city ?? lead.address?.city ?? null,
+                state: ai.address?.state ?? lead.address?.state ?? null,
+                country: ai.address?.country ?? lead.address?.country ?? null,
+              }
+            : null;
+
         enriched.push({
           ...lead,
           industry: ai.industry ?? lead.industry,
           confidence: ai.confidence ?? lead.confidence,
           notes: ai.notes ?? lead.notes,
+          contactRole: ai.contactRole ?? lead.contactRole,
+          ownerName: ai.ownerName ?? lead.ownerName,
+          email: ai.email ?? lead.email,
+          phone: ai.phone ?? lead.phone,
+          address: mergedAddress,
         });
       }
     }
@@ -203,7 +218,12 @@ export async function POST(
           sourceUrl: lead.sourceUrl ?? null,
           confidence: lead.confidence ?? null,
           notes: lead.notes ?? null,
-          rawJson: lead.raw ?? null,
+          rawJson:
+            lead.raw === null
+              ? Prisma.JsonNull
+              : lead.raw === undefined
+                ? Prisma.DbNull
+                : (lead.raw as Prisma.InputJsonValue),
         })),
       });
     }

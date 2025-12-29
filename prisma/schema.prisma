@@ -32,6 +32,40 @@ enum LeadJobStatus {
   QUEUED
 }
 
+enum ConversationStatus {
+  AI_ONLY
+  REQUESTED_HUMAN
+  HUMAN_ACTIVE
+  CLOSED
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  ADMIN
+  SYSTEM
+}
+
+enum MessageSender {
+  USER
+  AI
+  ADMIN
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
 model User {
   id           String   @id @default(cuid())
   userId       String   @unique
@@ -47,6 +81,9 @@ model User {
   leadJobs     LeadJob[]
   leadAudits   LeadAudit[]
   leadAuditLogs LeadAuditLog[]
+  conversations Conversation[]
+  tickets       Ticket[]
+  supportTickets SupportTicket[]
 }
 
 model File {
@@ -197,4 +234,90 @@ model LeadAuditLog {
 
   @@index([userId, createdAt])
   @@index([jobId, createdAt])
+}
+
+model Conversation {
+  id             String             @id @default(cuid())
+  userId         String?
+  email          String?
+  visitorName    String?
+  visitorEmail   String?
+  visitorPhone   String?
+  metadata       Json?
+  status         ConversationStatus @default(AI_ONLY)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  lastMessageAt  DateTime           @default(now())
+  tickets        Ticket[]
+  messages       Message[]
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId, lastMessageAt])
+}
+
+model Message {
+  id             String         @id @default(cuid())
+  conversationId String
+  sender         MessageSender
+  content        String
+  role           MessageRole    @default(USER)
+  metadata       Json?
+  createdAt      DateTime       @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+
+  @@index([conversationId, createdAt])
+}
+
+model Ticket {
+  id             String         @id @default(cuid())
+  conversationId String?
+  userId         String?
+  email          String?
+  subject        String
+  status         TicketStatus   @default(OPEN)
+  priority       TicketPriority @default(MEDIUM)
+  assigneeId     String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  lastMessageAt  DateTime       @default(now())
+
+  conversation Conversation? @relation(fields: [conversationId], references: [id])
+  user         User?         @relation(fields: [userId], references: [id])
+}
+
+model SupportTicket {
+  id             String        @id @default(cuid())
+  userId         String?
+  visitorEmail   String?
+  subject        String
+  status         TicketStatus  @default(OPEN)
+  priority       TicketPriority @default(MEDIUM)
+  assigneeId     String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  user   User? @relation(fields: [userId], references: [id])
+  messages SupportTicketMessage[]
+}
+
+model SupportTicketMessage {
+  id          String       @id @default(cuid())
+  ticketId    String
+  sender      MessageRole  @default(USER)
+  content     String
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id])
+
+  @@index([ticketId, createdAt])
+}
+
+model Transcript {
+  id             String @id @default(cuid())
+  conversationId String
+  ticketId       String
+  createdAt      DateTime @default(now())
 }

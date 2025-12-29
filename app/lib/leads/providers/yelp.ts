@@ -65,7 +65,7 @@ const yelpProvider: LeadProvider<NormalizedLead> = {
         source: "yelp",
         sourceUrl: item.url ?? null,
         industry: item.categories?.[0]?.title ?? null,
-        confidence: 0.55,
+        confidence: 60,
         raw: item,
       }));
   },

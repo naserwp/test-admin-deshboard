@@ -17,6 +17,10 @@ export default async function AdminFilesPage() {
 
   const userName = session.user.userId || session.user.email || "Admin";
   const imageUrl = (session.user as any).imageUrl;
+  const impersonatorUserId = (session.user as any).impersonatorUserId as
+    | string
+    | null
+    | undefined;
 
   return (
     <div>
@@ -24,6 +28,7 @@ export default async function AdminFilesPage() {
         role={session.user.role}
         userName={userName}
         imageUrl={imageUrl}
+        impersonatorUserId={impersonatorUserId}
       />
       <div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         <h1 className="text-2xl font-semibold">Files</h1>

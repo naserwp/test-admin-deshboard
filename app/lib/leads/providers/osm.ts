@@ -192,7 +192,7 @@ const osmProvider: LeadProvider<OsmRawResult> = {
       address: raw.address ?? null,
       source: "osm",
       sourceUrl: raw.url ?? null,
-      confidence: 0.35,
+      confidence: 40,
       raw: raw.raw ?? raw,
     };
   },

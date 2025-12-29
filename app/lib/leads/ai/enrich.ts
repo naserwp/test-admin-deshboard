@@ -10,6 +10,17 @@ const LeadEnrichmentSchema = z.object({
   notes: z.string().min(1).max(280).optional().nullable(),
   contactRole: z.string().min(1).max(80).optional().nullable(),
   ownerName: z.string().min(1).max(120).optional().nullable(),
+  email: z.string().email().optional().nullable(),
+  phone: z.string().min(4).max(32).optional().nullable(),
+  address: z
+    .object({
+      line1: z.string().min(1).max(180).optional().nullable(),
+      city: z.string().min(1).max(80).optional().nullable(),
+      state: z.string().min(1).max(80).optional().nullable(),
+      country: z.string().min(2).max(80).optional().nullable(),
+    })
+    .optional()
+    .nullable(),
 });
 
 export type LeadEnrichment = z.infer<typeof LeadEnrichmentSchema>;

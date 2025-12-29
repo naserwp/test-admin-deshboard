@@ -21,7 +21,15 @@ Respond with JSON:
 {
   "industry": "short category",
   "confidence": number (0-100),
-  "notes": "one or two short sentences, include any email guess if helpful",
+  "email": "real or best-guess email from the domain; leave null if unknown",
+  "phone": "international format phone; null if unknown",
+  "address": {
+    "line1": "street and number if known",
+    "city": "city if known",
+    "state": "state/region if known",
+    "country": "country code or name if known"
+  },
+  "notes": "one or two short sentences",
   "contactRole": "best guess for decision maker role",
   "ownerName": "best guess if a person's name is apparent"
 }
