@@ -8,19 +8,23 @@ import TopNav from "@/app/components/TopNav";
 const STATUS_LABEL: Record<string, { label: string; badge: string }> = {
   AI_ONLY: {
     label: "AI Assistant",
-    badge: "bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-200",
+    badge:
+      "bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-200 dark:ring-emerald-500/40",
   },
   REQUESTED_HUMAN: {
     label: "Waiting for admin",
-    badge: "bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-900/50 dark:text-amber-100",
+    badge:
+      "bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-900/50 dark:text-amber-100 dark:ring-amber-500/40",
   },
   HUMAN_ACTIVE: {
     label: "Live chat",
-    badge: "bg-sky-50 text-sky-800 ring-sky-200 dark:bg-sky-900/50 dark:text-sky-100",
+    badge:
+      "bg-sky-50 text-sky-800 ring-sky-200 dark:bg-sky-900/50 dark:text-sky-100 dark:ring-sky-500/40",
   },
   CLOSED: {
     label: "Closed",
-    badge: "bg-slate-100 text-slate-700 ring-slate-200 dark:bg-slate-800/70 dark:text-slate-200",
+    badge:
+      "bg-slate-100 text-slate-700 ring-slate-200 dark:bg-slate-800/70 dark:text-slate-200 dark:ring-slate-600/60",
   },
 };
 
@@ -72,7 +76,7 @@ export default async function DashboardSupportChatsPage() {
           </div>
           <Link
             href="/dashboard/support"
-            className="text-sm font-semibold text-indigo-700 hover:text-indigo-800"
+            className="text-sm font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
           >
             Support hub
           </Link>
@@ -96,11 +100,11 @@ export default async function DashboardSupportChatsPage() {
                   <div className="space-y-1">
                     <Link
                       href={`/dashboard/support/chats/${conversation.id}`}
-                      className="text-sm font-semibold text-indigo-700 hover:text-indigo-800"
+                      className="text-sm font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
                     >
                       Conversation #{conversation.id.slice(0, 8)}
                     </Link>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Started {new Date(conversation.createdAt).toLocaleDateString()} · Last activity{" "}
                       {new Date(lastActivity).toLocaleString()}
                     </p>
@@ -117,7 +121,7 @@ export default async function DashboardSupportChatsPage() {
                   <p className="max-h-14 overflow-hidden">
                     {lastMessage?.content ?? "No messages yet."}
                   </p>
-                  <div className="flex items-center justify-between text-[11px] uppercase tracking-wide text-slate-400">
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-wide text-slate-400 dark:text-slate-400">
                     <span>{lastMessage ? prettyRole(lastMessage.role) : "Awaiting first message"}</span>
                     {lastMessage?.createdAt ? (
                       <span>

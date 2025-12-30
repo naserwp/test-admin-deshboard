@@ -183,7 +183,7 @@ export default function ChatDrawer({
               <input
                 value={guestValues?.name ?? ""}
                 onChange={(e) => onGuestChange?.("name", e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
                 placeholder="Full name"
                 aria-label="Full name"
                 required
@@ -191,7 +191,7 @@ export default function ChatDrawer({
               <input
                 value={guestValues?.email ?? ""}
                 onChange={(e) => onGuestChange?.("email", e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
                 placeholder="Email"
                 aria-label="Email"
                 required
@@ -199,14 +199,14 @@ export default function ChatDrawer({
               <input
                 value={guestValues?.phone ?? ""}
                 onChange={(e) => onGuestChange?.("phone", e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
                 placeholder="Phone number"
                 aria-label="Phone number"
                 required
               />
             </div>
             {guestError ? (
-              <div className="text-xs font-semibold text-rose-600">{guestError}</div>
+              <div className="text-xs font-semibold text-rose-600 dark:text-rose-400">{guestError}</div>
             ) : null}
           </div>
         ) : (
@@ -215,11 +215,11 @@ export default function ChatDrawer({
             className="max-h-80 space-y-3 overflow-y-auto bg-white px-4 py-4 text-sm dark:bg-slate-900"
           >
             {loading ? (
-              <div className="text-xs text-slate-500">Loading messages...</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Loading messages...</div>
             ) : null}
             {!loading && !messages.length ? (
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <span className="h-2 w-2 rounded-full bg-slate-300" />
+              <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                <span className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-500" />
                 No messages yet.
               </div>
             ) : null}
@@ -244,7 +244,7 @@ export default function ChatDrawer({
             >
               View full history
             </Link>
-            {error ? <span className="text-rose-600">{error}</span> : null}
+            {error ? <span className="text-rose-600 dark:text-rose-400">{error}</span> : null}
           </div>
         </div>
 
@@ -271,7 +271,7 @@ export default function ChatDrawer({
                 <input
                   value={input}
                   onChange={(e) => onInputChange(e.target.value)}
-                  className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                  className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
                   placeholder="Type a message..."
                   aria-label="Your message"
                 />
