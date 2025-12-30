@@ -11,6 +11,7 @@ const googleEnabled =
   !!process.env.GOOGLE_CLIENT_SECRET;
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -88,6 +89,25 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
+
+      try {
+        const parsedUrl = new URL(url);
+        if (parsedUrl.origin === baseUrl) {
+          if (parsedUrl.pathname.startsWith("/api/auth")) {
+            return `${baseUrl}/dashboard`;
+          }
+          return url;
+        }
+      } catch {
+        return `${baseUrl}/dashboard`;
+      }
+
+      return `${baseUrl}/dashboard`;
+    },
     /**
      * NOTE:
      * jwt token এ আমরা custom fields রাখছি:
@@ -140,4 +160,17 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
   },
+
+  logger:
+    process.env.NODE_ENV === "development"
+      ? {
+          error(code, metadata) {
+            const safeMetadata =
+              metadata instanceof Error
+                ? { name: metadata.name, message: metadata.message }
+                : undefined;
+            console.error("[auth]", code, safeMetadata);
+          },
+        }
+      : undefined,
 };
