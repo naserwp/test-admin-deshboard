@@ -161,22 +161,24 @@ export default function AdminUsersClient() {
   return (
     <div className="space-y-6">
       {error ? (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-200">
           {error}
         </div>
       ) : null}
 
       {/* Create User Card */}
-      <div className="rounded-xl border bg-white p-5">
-        <h2 className="text-base font-semibold">Create User</h2>
-        <p className="text-sm text-slate-600 mb-4">Create a new USER or ADMIN account.</p>
+      <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100">Create User</h2>
+        <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          Create a new USER or ADMIN account.
+        </p>
 
         <form onSubmit={onCreate} className="grid gap-3 max-w-2xl">
           <div className="grid gap-2 md:grid-cols-2">
             <div className="space-y-1">
-              <label className="text-sm font-medium">User ID</label>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-200">User ID</label>
               <input
-                className="w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-900"
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:border-slate-300"
                 value={newUserId}
                 onChange={(e) => setNewUserId(e.target.value)}
                 placeholder="e.g. user001"
@@ -185,9 +187,11 @@ export default function AdminUsersClient() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-sm font-medium">Email (optional)</label>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                Email (optional)
+              </label>
               <input
-                className="w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-900"
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:border-slate-300"
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder="user@email.com"
@@ -197,9 +201,9 @@ export default function AdminUsersClient() {
 
           <div className="grid gap-2 md:grid-cols-2">
             <div className="space-y-1">
-              <label className="text-sm font-medium">Password</label>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Password</label>
               <input
-                className="w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-900"
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:border-slate-300"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -209,9 +213,9 @@ export default function AdminUsersClient() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-sm font-medium">Role</label>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Role</label>
               <select
-                className="w-full rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-slate-900"
+                className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-slate-300"
                 value={newRole}
                 onChange={(e) => setNewRole(e.target.value as any)}
               >
@@ -221,7 +225,7 @@ export default function AdminUsersClient() {
             </div>
           </div>
 
-          <label className="flex items-center gap-2 text-sm text-slate-600">
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
             <input
               type="checkbox"
               checked={newCanRequestLeads}
@@ -233,7 +237,7 @@ export default function AdminUsersClient() {
           <div>
             <button
               disabled={loading}
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
             >
               {loading ? "Creating..." : "Create User"}
             </button>
@@ -242,12 +246,12 @@ export default function AdminUsersClient() {
       </div>
 
       {/* Users Table */}
-      <div className="overflow-hidden rounded-xl border bg-white">
-        <div className="flex items-center justify-between px-4 py-3 border-b">
-          <div className="font-semibold">All Users</div>
+      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+          <div className="font-semibold text-slate-900 dark:text-slate-100">All Users</div>
           <button
             onClick={fetchUsers}
-            className="text-sm font-medium text-slate-700 hover:text-slate-900"
+            className="text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white"
           >
             Refresh
           </button>
@@ -255,7 +259,7 @@ export default function AdminUsersClient() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600">
+            <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
               <tr>
                 <th className="text-left px-4 py-3">User ID</th>
                 <th className="text-left px-4 py-3">Email</th>
@@ -267,11 +271,15 @@ export default function AdminUsersClient() {
             </thead>
             <tbody>
               {users.map((u) => (
-                <tr key={u.id} className="border-t">
-                  <td className="px-4 py-3 font-medium">{u.userId}</td>
-                  <td className="px-4 py-3 text-slate-600">{u.email ?? "-"}</td>
+                <tr key={u.id} className="border-t border-slate-200 dark:border-slate-800">
+                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
+                    {u.userId}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                    {u.email ?? "-"}
+                  </td>
                   <td className="px-4 py-3">
-                    <span className="inline-flex rounded-full border px-2 py-0.5 text-xs">
+                    <span className="inline-flex rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
                       {u.role}
                     </span>
                   </td>
@@ -281,14 +289,14 @@ export default function AdminUsersClient() {
                       className={[
                         "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset",
                         u.canRequestLeads
-                          ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
-                          : "bg-slate-100 text-slate-600 ring-slate-200",
+                          ? "bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-200 dark:ring-emerald-500/30"
+                          : "bg-slate-100 text-slate-600 ring-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700",
                       ].join(" ")}
                     >
                       {u.canRequestLeads ? "Enabled" : "Disabled"}
                     </button>
                   </td>
-                  <td className="px-4 py-3 text-slate-600">
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                     {new Date(u.createdAt).toLocaleString()}
                   </td>
                   <td className="px-4 py-3">
@@ -296,7 +304,7 @@ export default function AdminUsersClient() {
                       {editingId === u.id ? (
                         <>
                           <select
-                            className="rounded-md border border-slate-300 px-2 py-1 text-xs"
+                            className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                             value={editRole}
                             onChange={(e) => setEditRole(e.target.value as any)}
                           >
@@ -308,18 +316,18 @@ export default function AdminUsersClient() {
                             placeholder="New password"
                             value={editPassword}
                             onChange={(e) => setEditPassword(e.target.value)}
-                            className="rounded-md border border-slate-300 px-2 py-1 text-xs"
+                            className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
                           />
                           <button
                             onClick={() => onSaveEdit(u)}
-                            className="text-emerald-700 hover:underline"
+                            className="text-emerald-700 hover:underline dark:text-emerald-300"
                             disabled={savingId === u.id}
                           >
                             {savingId === u.id ? "Saving..." : "Save"}
                           </button>
                           <button
                             onClick={() => setEditingId(null)}
-                            className="text-slate-500 hover:underline"
+                            className="text-slate-500 hover:underline dark:text-slate-300"
                           >
                             Cancel
                           </button>
@@ -327,20 +335,20 @@ export default function AdminUsersClient() {
                       ) : (
                         <>
                           <button
-                            className="text-indigo-700 hover:underline"
+                            className="text-indigo-700 hover:underline dark:text-indigo-300"
                             onClick={() => onImpersonate(u)}
                             disabled={impersonatingId === u.id}
                           >
                             {impersonatingId === u.id ? "Switching..." : "Login as user"}
                           </button>
                           <button
-                            className="text-slate-700 hover:underline"
+                            className="text-slate-700 hover:underline dark:text-slate-200"
                             onClick={() => startEdit(u)}
                           >
                             Edit
                           </button>
                           <button
-                            className="text-red-600 hover:underline"
+                            className="text-red-600 hover:underline dark:text-red-400"
                             onClick={() => onDelete(u.id)}
                           >
                             Delete
@@ -354,7 +362,10 @@ export default function AdminUsersClient() {
 
               {!users.length ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-8 text-center text-slate-500 dark:text-slate-400"
+                  >
                     No users found.
                   </td>
                 </tr>

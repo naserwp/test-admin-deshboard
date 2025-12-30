@@ -95,29 +95,31 @@ export default function ConversationThread({
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold">{status}</span>
+        <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
+          {status}
+        </span>
         <button
           onClick={() => postAction(`/api/admin/conversations/${conversationId}/takeover`)}
-          className="rounded-full bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60"
+          className="rounded-full bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
           type="button"
         >
           Take Over Live
         </button>
         <button
           onClick={() => postAction(`/api/admin/conversations/${conversationId}/close`)}
-          className="rounded-full border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60"
+          className="rounded-full border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-500 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
           type="button"
         >
           Close
         </button>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <div className="space-y-4">
           {messages.map((msg) => (
             <div key={msg.id} className="space-y-1">
-              <div className="flex items-center justify-between text-xs text-slate-500">
-                <span className="font-semibold text-slate-800">
+              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <span className="font-semibold text-slate-800 dark:text-slate-100">
                   {msg.role === "ADMIN"
                     ? "Admin"
                     : msg.role === "ASSISTANT"
@@ -128,24 +130,28 @@ export default function ConversationThread({
                 </span>
                 <span>{new Date(msg.createdAt).toLocaleString()}</span>
               </div>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
                 {msg.content}
               </div>
             </div>
           ))}
-          {!messages.length ? <div className="text-sm text-slate-500">No messages yet.</div> : null}
+          {!messages.length ? (
+            <div className="text-sm text-slate-500 dark:text-slate-400">No messages yet.</div>
+          ) : null}
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <form onSubmit={sendReply} className="space-y-3">
           <div>
-            <label className="text-sm font-semibold text-slate-800">Admin reply</label>
+            <label className="text-sm font-semibold text-slate-800 dark:text-slate-100">
+              Admin reply
+            </label>
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               required
-              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
               rows={3}
               placeholder="Type your reply to the user..."
             />
@@ -154,7 +160,7 @@ export default function ConversationThread({
             <button
               type="submit"
               disabled={sending}
-              className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60"
+              className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
             >
               {sending ? "Sending..." : "Send reply"}
             </button>

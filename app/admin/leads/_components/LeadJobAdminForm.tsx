@@ -69,23 +69,23 @@ export default function LeadJobAdminForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
-        <label className="space-y-2 text-sm text-slate-600">
-          <span className="font-medium text-slate-800">Keyword</span>
+        <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <span className="font-medium text-slate-800 dark:text-slate-100">Keyword</span>
           <input
             name="keyword"
             value={formData.keyword}
             onChange={handleChange}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2"
+            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
           />
         </label>
 
-        <label className="space-y-2 text-sm text-slate-600">
-          <span className="font-medium text-slate-800">Status</span>
+        <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <span className="font-medium text-slate-800 dark:text-slate-100">Status</span>
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2"
+            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-indigo-500/30"
           >
             {STATUS_OPTIONS.map((option) => (
               <option key={option} value={option}>
@@ -96,31 +96,31 @@ export default function LeadJobAdminForm({
         </label>
       </div>
 
-      <label className="space-y-2 text-sm text-slate-600">
-        <span className="font-medium text-slate-800">Context</span>
+      <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+        <span className="font-medium text-slate-800 dark:text-slate-100">Context</span>
         <textarea
           name="context"
           value={formData.context}
           onChange={handleChange}
           rows={3}
-          className="w-full rounded-xl border border-slate-200 px-3 py-2"
+          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
         />
       </label>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <label className="space-y-2 text-sm text-slate-600">
-          <span className="font-medium text-slate-800">Leads target</span>
+        <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <span className="font-medium text-slate-800 dark:text-slate-100">Leads target</span>
           <input
             name="leadsTarget"
             type="number"
             min={1}
             value={formData.leadsTarget}
             onChange={handleChange}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2"
+            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
           />
         </label>
-        <label className="space-y-2 text-sm text-slate-600">
-          <span className="font-medium text-slate-800">Progress (%)</span>
+        <label className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <span className="font-medium text-slate-800 dark:text-slate-100">Progress (%)</span>
           <input
             name="progress"
             type="number"
@@ -128,7 +128,7 @@ export default function LeadJobAdminForm({
             max={100}
             value={formData.progress}
             onChange={handleChange}
-            className="w-full rounded-xl border border-slate-200 px-3 py-2"
+            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
           />
         </label>
       </div>
@@ -136,7 +136,7 @@ export default function LeadJobAdminForm({
       <button
         type="submit"
         disabled={saving}
-        className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-400"
+        className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
       >
         {saving ? "Saving..." : "Save changes"}
       </button>

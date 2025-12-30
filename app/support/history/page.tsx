@@ -110,7 +110,7 @@ export default async function SupportHistoryPage() {
                     <p className="text-sm font-semibold text-slate-900 dark:text-white">
                       Conversation #{conversation.id.slice(0, 8)}
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Started {new Date(conversation.createdAt).toLocaleDateString()} · Last activity{" "}
                       {new Date(lastActivity).toLocaleString()}
                     </p>
@@ -127,7 +127,7 @@ export default async function SupportHistoryPage() {
                   <p className="max-h-14 overflow-hidden">
                     {lastMessage?.content ?? "No messages yet."}
                   </p>
-                  <div className="flex items-center justify-between text-[11px] uppercase tracking-wide text-slate-400">
+                  <div className="flex items-center justify-between text-[11px] uppercase tracking-wide text-slate-400 dark:text-slate-400">
                     <span>{lastMessage ? prettyRole(lastMessage.role) : "Awaiting first message"}</span>
                     {lastMessage?.createdAt ? (
                       <span>

@@ -123,7 +123,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                       </Link>
                       <button
                         onClick={() => handleDelete(post.id)}
-                        className="text-sm font-semibold text-rose-600 hover:text-rose-700"
+                        className="text-sm font-semibold text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300"
                       >
                         Delete
                       </button>
@@ -143,8 +143,8 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
         </div>
         {(message || error) && (
           <div className="border-t border-slate-200/80 px-6 py-4 text-sm dark:border-slate-800/80">
-            {message && <p className="text-emerald-600">{message}</p>}
-            {error && <p className="text-rose-600">{error}</p>}
+            {message && <p className="text-emerald-600 dark:text-emerald-300">{message}</p>}
+            {error && <p className="text-rose-600 dark:text-rose-400">{error}</p>}
           </div>
         )}
       </div>
