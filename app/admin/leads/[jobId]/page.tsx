@@ -31,7 +31,7 @@ export default async function AdminLeadJobPage({
           userName={session.user.userId ?? "Admin"}
           impersonatorUserId={impersonatorUserId}
         />
-        <div className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-600">
+        <div className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-600 dark:text-slate-300">
           Lead job not found.
         </div>
       </div>
@@ -47,7 +47,7 @@ export default async function AdminLeadJobPage({
           impersonatorUserId={impersonatorUserId}
         />
         <div className="mx-auto max-w-5xl px-6 py-10">
-          <div className="rounded-lg border bg-white p-6 text-sm">
+          <div className="rounded-lg border border-slate-200 bg-white p-6 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
             You do not have permission to view this page.
           </div>
         </div>
@@ -71,7 +71,7 @@ export default async function AdminLeadJobPage({
           userName={session.user.userId ?? "Admin"}
           impersonatorUserId={impersonatorUserId}
         />
-        <div className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-600">
+        <div className="mx-auto max-w-5xl px-6 py-10 text-sm text-slate-600 dark:text-slate-300">
           Lead job not found.
         </div>
       </div>
@@ -88,24 +88,24 @@ export default async function AdminLeadJobPage({
         userName={userName}
         impersonatorUserId={impersonatorUserId}
       />
-      <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
+      <div className="mx-auto max-w-6xl px-6 py-8 space-y-6 text-slate-900 dark:text-slate-100">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold">Lead job details</h1>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               {job.keyword} · {job.user.userId} {job.user.email ? `(${job.user.email})` : ""}
             </p>
           </div>
           <div className="flex gap-3">
             <Link
               href="/admin/leads"
-              className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700"
+              className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-500"
             >
               ← All jobs
             </Link>
             <a
               href={`/api/admin/leads/jobs/${job.id}/export?format=csv`}
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white"
+              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400"
             >
               Export CSV
             </a>
@@ -113,43 +113,43 @@ export default async function AdminLeadJobPage({
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border bg-white p-5">
-            <p className="text-xs uppercase tracking-wide text-slate-400">Status</p>
-            <p className="mt-2 text-lg font-semibold text-slate-900">{job.status}</p>
-            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+            <p className="text-xs uppercase tracking-wide text-slate-400 dark:text-slate-400">Status</p>
+            <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">{job.status}</p>
+            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-sky-400"
+                className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-sky-400 dark:from-sky-500 dark:to-cyan-400"
                 style={{ width: `${Math.min(progressValue, 100)}%` }}
               />
             </div>
-            <p className="mt-1 text-xs text-slate-500">{progressValue}% complete</p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{progressValue}% complete</p>
           </div>
-          <div className="rounded-2xl border bg-white p-5">
-            <p className="text-xs uppercase tracking-wide text-slate-400">Target</p>
-            <p className="mt-2 text-lg font-semibold text-slate-900">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+            <p className="text-xs uppercase tracking-wide text-slate-400 dark:text-slate-400">Target</p>
+            <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100">
               {job.leadsTarget} leads
             </p>
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
               {job.city ? `${job.city}, ` : ""}
               {job.state ? `${job.state}, ` : ""}
               {job.country ?? "US"}
             </p>
           </div>
-          <div className="rounded-2xl border bg-white p-5">
-            <p className="text-xs uppercase tracking-wide text-slate-400">Created</p>
-            <p className="mt-2 text-sm font-semibold text-slate-900">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+            <p className="text-xs uppercase tracking-wide text-slate-400 dark:text-slate-400">Created</p>
+            <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
               {new Date(job.createdAt).toLocaleString()}
             </p>
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
               Updated {new Date(job.updatedAt).toLocaleString()}
             </p>
           </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-3xl border bg-white p-6">
-            <h2 className="text-lg font-semibold text-slate-900">Edit job</h2>
-            <p className="text-sm text-slate-500">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Edit job</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-300">
               Update keyword, context, status, target, or progress.
             </p>
             <div className="mt-4">
@@ -164,9 +164,9 @@ export default async function AdminLeadJobPage({
             </div>
           </div>
 
-          <div className="rounded-3xl border bg-white p-6">
-            <h2 className="text-lg font-semibold text-slate-900">Add lead result</h2>
-            <p className="text-sm text-slate-500">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Add lead result</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-300">
               Manually add a verified lead for this job.
             </p>
             <div className="mt-4">
@@ -175,14 +175,14 @@ export default async function AdminLeadJobPage({
           </div>
         </div>
 
-        <div className="rounded-3xl border bg-white p-6">
-          <h2 className="text-lg font-semibold text-slate-900">Results</h2>
-          <p className="text-sm text-slate-500">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Results</h2>
+          <p className="text-sm text-slate-500 dark:text-slate-300">
             {job.results.length} lead result{job.results.length === 1 ? "" : "s"} collected.
           </p>
           <div className="mt-4 overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-slate-600">
+              <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
                 <tr>
                   <th className="px-4 py-3 text-left">Business</th>
                   <th className="px-4 py-3 text-left">Industry</th>
@@ -195,37 +195,37 @@ export default async function AdminLeadJobPage({
               </thead>
               <tbody>
                 {job.results.map((result) => (
-                  <tr key={result.id} className="border-t">
-                    <td className="px-4 py-3 font-medium text-slate-900">
+                  <tr key={result.id} className="border-t border-slate-200 dark:border-slate-800">
+                    <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
                       {result.businessName}
                       {result.website ? (
                         <a
                           href={result.website}
                           target="_blank"
                           rel="noreferrer"
-                          className="ml-2 text-xs font-medium text-indigo-600"
+                          className="ml-2 text-xs font-medium text-indigo-600 dark:text-indigo-300"
                         >
                           Website
                         </a>
                       ) : null}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                       {result.industry ?? "-"}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                       <div>{result.email ?? "-"}</div>
                       <div>{result.phone ?? "-"}</div>
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                       {[result.city, result.state, result.country].filter(Boolean).join(", ") || "-"}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                       {result.source ?? "-"}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                       {result.confidence ?? "-"}
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                       {result.notes ?? "-"}
                     </td>
                   </tr>
@@ -233,7 +233,7 @@ export default async function AdminLeadJobPage({
 
                 {!job.results.length ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-8 text-center text-slate-500">
+                    <td colSpan={7} className="px-4 py-8 text-center text-slate-500 dark:text-slate-400">
                       No results yet.
                     </td>
                   </tr>

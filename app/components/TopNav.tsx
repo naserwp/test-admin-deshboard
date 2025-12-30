@@ -5,7 +5,6 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { signOut } from "next-auth/react";
 import Avatar from "@/app/components/Avatar";
-import ThemeToggle from "./ThemeToggle";
 
 type TopNavProps = {
   role: string;
@@ -331,8 +330,6 @@ export default function TopNav({
               <p className="font-semibold text-slate-800 dark:text-white">{userName}</p>
             </div>
           </div>
-
-          <ThemeToggle />
 
           <button
             onClick={() => signOut({ callbackUrl: "/auth/login" })}

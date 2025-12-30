@@ -85,10 +85,13 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
     <div className="space-y-6">
       <div className="card space-y-4 p-6">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Select file</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Select file
+          </label>
           <select
             value={selectedFile}
             onChange={(event) => setSelectedFile(event.target.value)}
+            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-indigo-500/30"
           >
             <option value="">Choose a file</option>
             {files.map((file) => (
@@ -99,10 +102,15 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
           </select>
         </div>
         <div>
-          <p className="text-sm font-medium mb-2">Assign to users</p>
+          <p className="text-sm font-medium mb-2 text-slate-700 dark:text-slate-200">
+            Assign to users
+          </p>
           <div className="grid gap-2 md:grid-cols-3">
             {users.map((user) => (
-              <label key={user.id} className="flex items-center gap-2 text-sm">
+              <label
+                key={user.id}
+                className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200"
+              >
                 <input
                   type="checkbox"
                   checked={selectedUsers.includes(user.id)}
@@ -113,14 +121,14 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
             ))}
           </div>
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        {message && <p className="text-sm text-green-600">{message}</p>}
+        {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+        {message && <p className="text-sm text-green-600 dark:text-emerald-300">{message}</p>}
         <button className="btn btn-primary" onClick={handleAssign}>
           Assign
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
         <table className="table-base">
           <thead>
             <tr>
@@ -132,11 +140,11 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
           </thead>
           <tbody>
             {assignments.map((assignment) => (
-              <tr key={assignment.id} className="border-t border-slate-100">
-                <td className="font-semibold text-slate-900">
+              <tr key={assignment.id} className="border-t border-slate-200 dark:border-slate-800">
+                <td className="font-semibold text-slate-900 dark:text-slate-100">
                   {assignment.user.userId}
                 </td>
-                <td className="text-slate-600">{assignment.file.title}</td>
+                <td className="text-slate-600 dark:text-slate-300">{assignment.file.title}</td>
                 <td>
                   <span
                     className={`badge ${
@@ -160,7 +168,7 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
             ))}
             {assignments.length === 0 && (
               <tr>
-                <td className="px-4 py-6 text-center text-slate-500" colSpan={4}>
+                <td className="px-4 py-6 text-center text-slate-500 dark:text-slate-400" colSpan={4}>
                   No assignments yet.
                 </td>
               </tr>

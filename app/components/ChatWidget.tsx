@@ -403,7 +403,7 @@ export default function ChatWidget() {
     <>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-4 right-4 z-[1200] inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-white dark:text-slate-900"
+        className="fixed bottom-4 right-4 z-[1200] inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 dark:focus-visible:ring-slate-500"
         aria-label="Open chat"
         aria-expanded={open}
       >
@@ -411,7 +411,7 @@ export default function ChatWidget() {
           Chat
         </span>
         <span>Chat</span>
-        <span className="rounded-full bg-white/20 px-2 py-1 text-[11px] font-bold">
+        <span className="rounded-full bg-white/20 px-2 py-1 text-[11px] font-bold dark:bg-slate-700 dark:text-slate-100">
           {badgeText}
         </span>
       </button>

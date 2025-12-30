@@ -70,7 +70,7 @@ export default async function AdminUsersPage() {
           impersonatorUserId={impersonatorUserId}
         />
         <div className="mx-auto max-w-5xl px-6 py-10">
-          <div className="rounded-lg border bg-white p-6 text-sm">
+          <div className="rounded-lg border border-slate-200 bg-white p-6 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
             You do not have permission to view this page.
           </div>
         </div>
@@ -90,7 +90,9 @@ export default async function AdminUsersPage() {
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
         <div>
           <h1 className="text-2xl font-semibold">Admin • Users</h1>
-          <p className="text-sm text-slate-600">Create and manage user accounts.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            Create and manage user accounts.
+          </p>
         </div>
 
         <AdminUsersClient />
