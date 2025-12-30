@@ -60,25 +60,25 @@ export default async function AdminSupportWaitingPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold">Waiting for admin</h1>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               Conversations requesting a human plus tickets waiting on admin.
             </p>
           </div>
           <Link
             href="/admin/support/conversations"
-            className="text-sm font-semibold text-indigo-700 hover:text-indigo-800"
+            className="text-sm font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
           >
             View all conversations
           </Link>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-amber-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+        <div className="overflow-hidden rounded-2xl border border-amber-200 bg-white shadow-sm dark:border-amber-500/40 dark:bg-slate-900">
+          <div className="flex items-center justify-between border-b border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-100">
             <span>REQUESTED_HUMAN queue</span>
             <span>{conversations.length} waiting</span>
           </div>
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600">
+            <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
               <tr>
                 <th className="px-4 py-3 text-left">Conversation</th>
                 <th className="px-4 py-3 text-left">Last message</th>
@@ -88,26 +88,33 @@ export default async function AdminSupportWaitingPage() {
             </thead>
             <tbody>
               {conversations.map((c) => (
-                <tr key={c.id} className="border-t hover:bg-amber-50/50">
+                <tr
+                  key={c.id}
+                  className="border-t border-amber-200 hover:bg-amber-50/50 dark:border-amber-500/30 dark:hover:bg-amber-500/10"
+                >
                   <td className="px-4 py-3">
-                    <div className="font-semibold text-slate-900">#{c.id.slice(0, 8)}</div>
-                    <div className="text-xs text-slate-500">
+                    <div className="font-semibold text-slate-900 dark:text-slate-100">
+                      #{c.id.slice(0, 8)}
+                    </div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
                       {c.email || c.visitorEmail || c.userId || "Visitor"}
                     </div>
                     {c.visitorName ? (
-                      <div className="text-[11px] text-slate-400">{c.visitorName}</div>
+                      <div className="text-[11px] text-slate-400 dark:text-slate-400">
+                        {c.visitorName}
+                      </div>
                     ) : null}
                   </td>
-                  <td className="px-4 py-3 text-slate-600">
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                     {c.messages[0]?.content?.slice(0, 80) ?? "No messages"}
                   </td>
-                  <td className="px-4 py-3 text-xs text-slate-500">
+                  <td className="px-4 py-3 text-xs text-slate-500 dark:text-slate-400">
                     {new Date(c.lastMessageAt).toLocaleString()}
                   </td>
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/support/conversations/${c.id}`}
-                      className="text-sm font-semibold text-indigo-700 hover:text-indigo-800"
+                      className="text-sm font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
                     >
                       Open
                     </Link>
@@ -116,7 +123,10 @@ export default async function AdminSupportWaitingPage() {
               ))}
               {!conversations.length ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-6 text-center text-sm text-slate-500">
+                  <td
+                    colSpan={4}
+                    className="px-4 py-6 text-center text-sm text-slate-500 dark:text-slate-400"
+                  >
                     No conversations are waiting for admin right now.
                   </td>
                 </tr>
@@ -125,13 +135,13 @@ export default async function AdminSupportWaitingPage() {
           </table>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
             <span>Tickets waiting for admin</span>
             <span>{pendingTickets.length} open/pending</span>
           </div>
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-600">
+            <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
               <tr>
                 <th className="px-4 py-3 text-left">Ticket</th>
                 <th className="px-4 py-3 text-left">Status</th>
@@ -142,34 +152,46 @@ export default async function AdminSupportWaitingPage() {
             </thead>
             <tbody>
               {pendingTickets.map((t) => (
-                <tr key={t.id} className="border-t hover:bg-slate-50/60">
+                <tr
+                  key={t.id}
+                  className="border-t border-slate-200 hover:bg-slate-50/60 dark:border-slate-800 dark:hover:bg-slate-800/60"
+                >
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/support/tickets/${t.id}`}
-                      className="font-semibold text-indigo-700 hover:text-indigo-800"
+                      className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
                     >
                       #{t.id}
                     </Link>
-                    <div className="text-xs text-slate-500">{t.subject}</div>
-                    <div className="text-xs text-slate-500">{t.visitorEmail || t.userId || "Visitor"}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">{t.subject}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
+                      {t.visitorEmail || t.userId || "Visitor"}
+                    </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs">{t.status}</span>
+                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
+                      {t.status}
+                    </span>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs">{t.priority}</span>
+                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
+                      {t.priority}
+                    </span>
                   </td>
-                  <td className="px-4 py-3 text-slate-600">
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                     {t.messages[0]?.content?.slice(0, 80) ?? "No messages"}
                   </td>
-                  <td className="px-4 py-3 text-xs text-slate-500">
+                  <td className="px-4 py-3 text-xs text-slate-500 dark:text-slate-400">
                     {new Date(t.updatedAt).toLocaleString()}
                   </td>
                 </tr>
               ))}
               {!pendingTickets.length ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-6 text-center text-sm text-slate-500">
+                  <td
+                    colSpan={5}
+                    className="px-4 py-6 text-center text-sm text-slate-500 dark:text-slate-400"
+                  >
                     No open or pending tickets right now.
                   </td>
                 </tr>

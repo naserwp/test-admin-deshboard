@@ -42,25 +42,30 @@ export default async function AdminConversationDetailPage({
   return (
     <div>
       <TopNav role={session.user.role} userName={userName} />
-      <div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
+      <div className="mx-auto max-w-5xl px-6 py-8 space-y-6 text-slate-900 dark:text-slate-100">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm text-slate-500">
-              <Link href="/admin/support/conversations" className="text-indigo-600 hover:text-indigo-700">
+            <div className="text-sm text-slate-500 dark:text-slate-400">
+              <Link
+                href="/admin/support/conversations"
+                className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-200"
+              >
                 ← Back to conversations
               </Link>
             </div>
             <h1 className="text-2xl font-semibold">Conversation #{conversation.id.slice(0, 8)}</h1>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               {conversation.visitorName || "User/Guest"} · {conversation.email || conversation.visitorEmail || "No email"} ·{" "}
               {conversation.visitorPhone || "No phone"}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold">{conversation.status}</span>
+            <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
+              {conversation.status}
+            </span>
             <form action={`/api/admin/conversations/${conversation.id}/takeover`} method="post">
               <button
-                className="rounded-full bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60"
+                className="rounded-full bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
                 type="submit"
               >
                 Take Over Live
@@ -68,7 +73,7 @@ export default async function AdminConversationDetailPage({
             </form>
             <form action={`/api/admin/conversations/${conversation.id}/close`} method="post">
               <button
-                className="rounded-full border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60"
+                className="rounded-full border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-500 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
                 type="submit"
               >
                 Close
