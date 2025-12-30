@@ -47,37 +47,37 @@ export default async function DashboardChatDetailPage({
           <div>
             <Link
               href="/dashboard/support/chats"
-              className="text-sm text-indigo-600 hover:text-indigo-700"
+              className="text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-200"
             >
               Back to chats
             </Link>
             <h1 className="text-2xl font-semibold mt-1">
               Conversation #{conversation.id.slice(0, 8)}
             </h1>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-600 dark:text-slate-300">
               Status: {conversation.status} · Updated{" "}
               {new Date(conversation.lastMessageAt).toLocaleString()}
             </p>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="space-y-4">
             {conversation.messages.map((msg) => (
               <div key={msg.id} className="space-y-1">
-                <div className="flex items-center justify-between text-xs text-slate-500">
-                  <span className="font-semibold text-slate-800">
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {msg.role === "ADMIN" ? "Admin" : msg.role === "ASSISTANT" ? "Assistant" : "You"}
                   </span>
                   <span>{new Date(msg.createdAt).toLocaleString()}</span>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800">
+                <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
                   {msg.content}
                 </div>
               </div>
             ))}
             {!conversation.messages.length ? (
-              <div className="text-sm text-slate-500">No messages yet.</div>
+              <div className="text-sm text-slate-500 dark:text-slate-400">No messages yet.</div>
             ) : null}
           </div>
         </div>

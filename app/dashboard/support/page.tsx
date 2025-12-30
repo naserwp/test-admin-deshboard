@@ -27,19 +27,19 @@ export default async function DashboardSupportPage() {
           <div className="flex flex-wrap gap-2 text-sm font-semibold">
             <Link
               href="/dashboard/support/chats"
-              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600"
             >
               Chats
             </Link>
             <Link
               href="/dashboard/support/tickets"
-              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600"
             >
               Tickets
             </Link>
             <Link
               href="/dashboard/support/waiting"
-              className="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-amber-400/40 dark:bg-amber-500/10 dark:text-amber-100"
             >
               Waiting
             </Link>

@@ -264,21 +264,23 @@ export default async function DashboardPage() {
         </section>
 
         {/* Hero */}
-        <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur-md shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur-md shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
           <div className="flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-4">
               <div className="rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-500 p-[2px] shadow-sm">
-                <div className="rounded-2xl bg-white p-1">
+                <div className="rounded-2xl bg-white p-1 dark:bg-slate-900">
                   <Avatar label={userName} imageUrl={imageUrl} size={56} />
                 </div>
               </div>
 
               <div>
-                <p className="text-sm text-slate-500">Welcome back</p>
-                <h1 className="mt-1 text-2xl sm:text-3xl font-semibold text-slate-900">
+                <p className="text-sm text-slate-500 dark:text-slate-300">
+                  Welcome back
+                </p>
+                <h1 className="mt-1 text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-slate-100">
                   {userName}
                 </h1>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
                   Manage your assigned documents, access, and downloads from one
                   place.
                 </p>
@@ -294,7 +296,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Quick stats */}
-        <div className="grid gap-4 border-t border-slate-200 p-6 sm:p-8 md:grid-cols-4">
+        <div className="grid gap-4 border-t border-slate-200 p-6 sm:p-8 md:grid-cols-4 dark:border-slate-800">
           <StatCard
             label="Assigned documents"
             value={assignments.length}
@@ -323,17 +325,17 @@ export default async function DashboardPage() {
         </div>
 
         <section className="grid gap-4 md:grid-cols-[1.5fr_1fr]">
-          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm">
+          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                   Support & chat
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-500 dark:text-slate-300">
                   Reach the support team directly from your workspace.
                 </p>
               </div>
-              <span className="inline-flex w-fit items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-200 dark:ring-emerald-500/30">
                 Chat ready
               </span>
             </div>
@@ -341,7 +343,7 @@ export default async function DashboardPage() {
             <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold">
               <Link
                 href="/support/history"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600"
               >
                 Chat history
               </Link>
@@ -353,34 +355,34 @@ export default async function DashboardPage() {
               </Link>
               <Link
                 href="/support/tickets"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600"
               >
                 My tickets
               </Link>
             </div>
 
-            <p className="mt-3 text-xs text-slate-500">
+            <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
               Use the chat button in the bottom-right to start or resume a conversation. If you need an admin to approve something, ask the assistant to request a human.
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm">
-            <h3 className="text-base font-semibold text-slate-900">
+          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">
               Need an approval?
             </h3>
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-300">
               Start a chat for quick questions, or open a ticket for longer requests.
             </p>
-            <div className="mt-4 space-y-2 text-sm text-slate-600">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-                <p className="font-semibold text-slate-900">Ask in chat</p>
-                <p className="text-sm text-slate-600">
+            <div className="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Ask in chat</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   Get instant answers and request a human when you need an admin to review.
                 </p>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-                <p className="font-semibold text-slate-900">Track with tickets</p>
-                <p className="text-sm text-slate-600">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Track with tickets</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
                   Tickets keep your approvals and follow-ups organized for you and the admin team.
                 </p>
               </div>
@@ -388,45 +390,45 @@ export default async function DashboardPage() {
           </div>
         </section>
 
-        <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex flex-col gap-3 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex flex-col gap-3 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
             <div>
-              <h2 className="text-lg font-semibold text-slate-900">Lead jobs</h2>
-              <p className="text-sm text-slate-500">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Lead jobs</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-300">
                 Track the latest lead searches you have created.
               </p>
             </div>
             <Link
               href="/leads/new"
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
+              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
             >
               + New lead job
             </Link>
           </div>
 
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {leadJobs.map((job) => (
               <div
                 key={job.id}
                 className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div className="space-y-1">
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                     {job.keyword}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {job.city ? `${job.city}, ` : ""}
                     {job.state ? `${job.state}, ` : ""}
                     {job.country ?? "US"} · Target {job.leadsTarget} leads
                   </p>
                 </div>
                 <div className="flex items-center gap-3 text-xs">
-                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200">
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-200 dark:ring-emerald-500/30">
                     {job.status}
                   </span>
                   <Link
                     href={`/leads/${job.id}`}
-                    className="text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                    className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-200"
                   >
                     View details →
                   </Link>
@@ -435,7 +437,7 @@ export default async function DashboardPage() {
             ))}
 
             {leadJobs.length === 0 && (
-              <div className="px-6 py-10 text-center text-sm text-slate-500">
+              <div className="px-6 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
                 No lead jobs yet. Create one to start collecting prospects.
               </div>
             )}
@@ -443,27 +445,27 @@ export default async function DashboardPage() {
         </section>
 
         {/* Table */}
-        <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex flex-col gap-3 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex flex-col gap-3 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
             <div>
-              <h2 className="text-lg font-semibold text-slate-900">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                 Assigned documents
               </h2>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-500 dark:text-slate-300">
                 Review, open, and download your latest files.
               </p>
             </div>
 
-            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 ring-1 ring-inset ring-sky-200">
-              <span className="h-2 w-2 rounded-full bg-sky-500" />
+            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 ring-1 ring-inset ring-sky-200 dark:bg-sky-500/10 dark:text-sky-200 dark:ring-sky-500/30">
+              <span className="h-2 w-2 rounded-full bg-sky-500 dark:bg-sky-300" />
               Updated just now
             </span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="min-w-full text-left">
-              <thead className="bg-slate-50">
-                <tr className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+              <thead className="bg-slate-50 dark:bg-slate-800">
+                <tr className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-200">
                   <th className="px-6 py-4">#</th>
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">File name</th>
@@ -472,18 +474,18 @@ export default async function DashboardPage() {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {assignments.map((assignment, index) => {
                   const isUnlocked = assignment.status === "UNLOCKED";
                   return (
-                    <tr key={assignment.id} className="hover:bg-slate-50/70">
-                      <td className="px-6 py-4 text-sm text-slate-600">
+                    <tr key={assignment.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/70">
+                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">
                         {index + 1}
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold text-slate-900">
+                      <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100">
                         {assignment.file.title}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-600">
+                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">
                         {assignment.file.originalName}
                       </td>
                       <td className="px-6 py-4">
@@ -491,8 +493,8 @@ export default async function DashboardPage() {
                           className={[
                             "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset",
                             isUnlocked
-                              ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
-                              : "bg-amber-50 text-amber-700 ring-amber-200",
+                              ? "bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-200 dark:ring-emerald-500/30"
+                              : "bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-200 dark:ring-amber-500/30",
                           ].join(" ")}
                         >
                           {assignment.status}
@@ -510,13 +512,13 @@ export default async function DashboardPage() {
 
                             <Link
                               href={`/api/files/${assignment.file.id}/download`}
-                              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                             >
                               Download
                             </Link>
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">
+                          <span className="text-xs text-slate-400 dark:text-slate-400">
                             Locked by admin
                           </span>
                         )}
@@ -528,7 +530,7 @@ export default async function DashboardPage() {
                 {assignments.length === 0 && (
                   <tr>
                     <td
-                      className="px-6 py-10 text-center text-sm text-slate-500"
+                      className="px-6 py-10 text-center text-sm text-slate-500 dark:text-slate-400"
                       colSpan={5}
                     >
                       No assigned documents yet. When an admin assigns files,
@@ -541,14 +543,14 @@ export default async function DashboardPage() {
           </div>
 
           {/* Footer */}
-          <div className="flex flex-col gap-2 border-t border-slate-200 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-slate-500">
+          <div className="flex flex-col gap-2 border-t border-slate-200 px-6 py-4 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Tip: Keep your profile updated so admins can assign documents
               faster.
             </p>
             <Link
               href="/account"
-              className="text-xs font-semibold text-indigo-700 hover:text-indigo-800"
+              className="text-xs font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
             >
               Update profile →
             </Link>
@@ -571,13 +573,13 @@ function StatCard({
   hint: string;
 }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <div
-        className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${gradient} opacity-20 blur-2xl`}
+        className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${gradient} opacity-20 blur-2xl dark:from-slate-700 dark:to-slate-900 dark:opacity-40`}
       />
-      <p className="text-sm text-slate-500">{label}</p>
-      <p className="mt-2 text-3xl font-semibold text-slate-900">{value}</p>
-      <p className="mt-2 text-xs text-slate-500">{hint}</p>
+      <p className="text-sm text-slate-500 dark:text-slate-300">{label}</p>
+      <p className="mt-2 text-3xl font-semibold text-slate-900 dark:text-slate-100">{value}</p>
+      <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">{hint}</p>
     </div>
   );
 }
