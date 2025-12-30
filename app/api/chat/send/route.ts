@@ -106,6 +106,7 @@ export async function POST(req: Request) {
   if (!conversation) {
     return NextResponse.json({ error: "Conversation not found" }, { status: 404 });
   }
+const convoId = conversation.id;
 
   // AuthZ: allow admin; allow owner; allow guest conversation when conversation.userId is null
   if (conversation.userId && userId && conversation.userId !== userId && !isAdmin) {
@@ -284,10 +285,11 @@ export async function POST(req: Request) {
   // Realtime broadcast MUST happen before return
   try {
     publish({
-      type: "message:new",
-      conversationId: conversation.id,
-      payload: { messages: responseMessages },
-    });
+  type: "message:new",
+  conversationId: convoId,
+  payload: { messages: responseMessages },
+});
+
   } catch (error) {
     logError("chat.publish_failed", error, { conversationId: conversation.id });
   }
