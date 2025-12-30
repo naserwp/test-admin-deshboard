@@ -42,7 +42,7 @@ export default async function AdminAssignmentsPage() {
         imageUrl={imageUrl}
         impersonatorUserId={impersonatorUserId}
       />
-      <div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
+      <div className="mx-auto max-w-5xl px-6 py-8 space-y-6 text-slate-900 dark:text-slate-100">
         <h1 className="text-2xl font-semibold">Assignments</h1>
         <AssignmentsClient
           users={users}

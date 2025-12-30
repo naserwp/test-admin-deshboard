@@ -30,12 +30,12 @@ export default async function AdminFilesPage() {
         imageUrl={imageUrl}
         impersonatorUserId={impersonatorUserId}
       />
-      <div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
+      <div className="mx-auto max-w-5xl px-6 py-8 space-y-6 text-slate-900 dark:text-slate-100">
         <h1 className="text-2xl font-semibold">Files</h1>
         <UploadForm />
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-100 text-slate-600">
+            <thead className="bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
               <tr>
                 <th className="px-4 py-3">Title</th>
                 <th className="px-4 py-3">Original Name</th>
@@ -45,18 +45,24 @@ export default async function AdminFilesPage() {
             </thead>
             <tbody>
               {files.map((file) => (
-                <tr key={file.id} className="border-t border-slate-200">
-                  <td className="px-4 py-3 font-medium">{file.title}</td>
-                  <td className="px-4 py-3 text-slate-600">{file.originalName}</td>
-                  <td className="px-4 py-3 text-slate-600">{file.uploadedByAdmin.userId}</td>
-                  <td className="px-4 py-3 text-slate-600">
+                <tr key={file.id} className="border-t border-slate-200 dark:border-slate-800">
+                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
+                    {file.title}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                    {file.originalName}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                    {file.uploadedByAdmin.userId}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                     {file.createdAt.toLocaleDateString()}
                   </td>
                 </tr>
               ))}
               {files.length === 0 && (
                 <tr>
-                  <td className="px-4 py-6 text-center text-slate-500" colSpan={4}>
+                  <td className="px-4 py-6 text-center text-slate-500 dark:text-slate-400" colSpan={4}>
                     No files uploaded yet.
                   </td>
                 </tr>

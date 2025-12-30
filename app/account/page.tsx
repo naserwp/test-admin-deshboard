@@ -136,12 +136,12 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10">
+    <div className="mx-auto max-w-6xl px-6 py-10 text-slate-900 dark:text-slate-100">
       {/* Page header (dashboard-like) */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-500 p-[2px] shadow-sm">
-            <div className="h-14 w-14 overflow-hidden rounded-2xl bg-white">
+            <div className="h-14 w-14 overflow-hidden rounded-2xl bg-white dark:bg-slate-900">
               {user?.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -150,7 +150,7 @@ export default function AccountPage() {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-slate-50 text-lg font-semibold text-slate-700">
+                <div className="flex h-full w-full items-center justify-center bg-slate-50 text-lg font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
                   {initials}
                 </div>
               )}
@@ -158,9 +158,9 @@ export default function AccountPage() {
           </div>
 
           <div>
-            <p className="text-sm text-slate-500">Account</p>
-            <h1 className="text-2xl font-semibold text-slate-900">Settings</h1>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-slate-300">Account</p>
+            <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Settings</h1>
+            <p className="text-sm text-slate-500 dark:text-slate-300">
               Update your profile, photo, and password.
             </p>
           </div>
@@ -204,31 +204,31 @@ export default function AccountPage() {
       {/* Stats row (small, dashboard-like) */}
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <div className="card p-6">
-          <p className="text-sm text-slate-500">Role</p>
-          <p className="mt-2 text-2xl font-semibold text-slate-900">
+          <p className="text-sm text-slate-500 dark:text-slate-300">Role</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-slate-100">
             {user?.role || "USER"}
           </p>
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
             Access level for this workspace.
           </p>
         </div>
 
         <div className="card p-6">
-          <p className="text-sm text-slate-500">Email</p>
-          <p className="mt-2 text-lg font-semibold text-slate-900 break-all">
+          <p className="text-sm text-slate-500 dark:text-slate-300">Email</p>
+          <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-100 break-all">
             {email || "—"}
           </p>
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
             Used for notifications and login.
           </p>
         </div>
 
         <div className="card p-6">
-          <p className="text-sm text-slate-500">Profile photo</p>
-          <p className="mt-2 text-2xl font-semibold text-slate-900">
+          <p className="text-sm text-slate-500 dark:text-slate-300">Profile photo</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-slate-100">
             {user?.imageUrl ? "Set" : "Not set"}
           </p>
-          <p className="mt-2 text-xs text-slate-500">Recommended 400×400.</p>
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">Recommended 400×400.</p>
         </div>
       </div>
 
@@ -237,13 +237,13 @@ export default function AccountPage() {
         {/* Left column */}
         <div className="lg:col-span-2 space-y-6">
           {/* Profile card */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-700">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                   Profile
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-500 dark:text-slate-300">
                   Basic account information.
                 </p>
               </div>
@@ -253,11 +253,11 @@ export default function AccountPage() {
             <div className="px-6 py-5">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
                     User ID
                   </label>
                   <input
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
                     placeholder="e.g., nasir"
@@ -265,11 +265,11 @@ export default function AccountPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
                     Email
                   </label>
                   <input
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
@@ -293,13 +293,13 @@ export default function AccountPage() {
           </div>
 
           {/* Password card */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-700">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                   Security
                 </h2>
-                <p className="text-sm text-slate-500">Update your password.</p>
+                <p className="text-sm text-slate-500 dark:text-slate-300">Update your password.</p>
               </div>
               <span className="badge badge-warning">Protected</span>
             </div>
@@ -307,12 +307,12 @@ export default function AccountPage() {
             <div className="px-6 py-5">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
                     Current password
                   </label>
                   <input
                     type="password"
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     placeholder="••••••••"
@@ -320,12 +320,12 @@ export default function AccountPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
                     New password
                   </label>
                   <input
                     type="password"
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="At least 8 characters"
@@ -352,20 +352,20 @@ export default function AccountPage() {
         {/* Right column */}
         <div className="space-y-6">
           {/* Photo card */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-700">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                   Profile photo
                 </h2>
-                <p className="text-sm text-slate-500">Upload JPG/PNG/WEBP.</p>
+                <p className="text-sm text-slate-500 dark:text-slate-300">Upload JPG/PNG/WEBP.</p>
               </div>
               <span className="badge badge-success">Optional</span>
             </div>
 
             <div className="px-6 py-5">
               <div className="flex items-center gap-4">
-                <div className="h-16 w-16 overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
+                <div className="h-16 w-16 overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700">
                   {user?.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -374,20 +374,20 @@ export default function AccountPage() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-slate-600">
+                    <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-slate-600 dark:text-slate-200">
                       {initials}
                     </div>
                   )}
                 </div>
-                <div className="text-sm text-slate-600">
-                  <p className="font-semibold text-slate-900">
+                <div className="text-sm text-slate-600 dark:text-slate-300">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">
                     {userId || email || "User"}
                   </p>
-                  <p className="text-xs text-slate-500">Recommended: 400×400</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Recommended: 400×400</p>
                 </div>
               </div>
 
-              <label className="mt-4 inline-flex w-full cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.98]">
+              <label className="mt-4 inline-flex w-full cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
                 Upload photo
                 <input
                   type="file"
@@ -406,7 +406,8 @@ export default function AccountPage() {
                 disabled={busy || !user?.imageUrl}
                 className={cx(
                   "mt-3 w-full rounded-xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700 shadow-sm",
-                  "transition hover:bg-rose-100 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  "transition hover:bg-rose-100 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed",
+                  "dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-200 dark:hover:bg-rose-500/20"
                 )}
               >
                 Remove photo
@@ -415,16 +416,16 @@ export default function AccountPage() {
           </div>
 
           {/* Tips card */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="border-b border-slate-200 px-6 py-4">
-              <h2 className="text-lg font-semibold text-slate-900">Tips</h2>
-              <p className="text-sm text-slate-500">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <div className="border-b border-slate-200 px-6 py-4 dark:border-slate-700">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Tips</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-300">
                 Small improvements that help a lot.
               </p>
             </div>
 
             <div className="px-6 py-5">
-              <ul className="space-y-2 text-sm text-slate-600">
+              <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
                 <li className="flex gap-2">
                   <span className="mt-1 h-2 w-2 rounded-full bg-emerald-500" />
                   Keep your email current so admins can reach you.
@@ -444,7 +445,7 @@ export default function AccountPage() {
       </div>
 
       {/* Footer (dashboard-style subtle) */}
-      <div className="mt-10 border-t border-slate-200 pt-6 text-center text-xs text-slate-500">
+      <div className="mt-10 border-t border-slate-200 pt-6 text-center text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
         © {new Date().getFullYear()} Virtual Office. All rights reserved.
       </div>
     </div>
