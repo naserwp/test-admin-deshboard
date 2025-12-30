@@ -51,9 +51,7 @@ export default function TopNav({
   const unseenCount = useMemo(() => {
     if (!lastSeen) return notifications.length;
     const last = new Date(lastSeen).getTime();
-    return notifications.filter(
-      (n) => new Date(n.createdAt).getTime() > last
-    ).length;
+    return notifications.filter((n) => new Date(n.createdAt).getTime() > last).length;
   }, [notifications, lastSeen]);
 
   useEffect(() => {
@@ -92,7 +90,6 @@ export default function TopNav({
     const next = !notifOpen;
     setNotifOpen(next);
     if (next) {
-      // Compute position relative to viewport to avoid clipping in hero/overflow contexts.
       const rect = notifButtonRef.current?.getBoundingClientRect();
       if (rect) {
         const width = 360;
@@ -106,34 +103,46 @@ export default function TopNav({
     }
   };
 
-  // Close on outside click or ESC
+  // Close notifications on outside click, ESC, scroll, resize
   useEffect(() => {
     if (!notifOpen) return;
 
-    const handleClick = (event: MouseEvent) => {
-      const target = event.target as Node;
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+
+      // Click inside the panel or the button should not close it
       if (
         notifPanelRef.current?.contains(target) ||
         notifButtonRef.current?.contains(target)
       ) {
         return;
       }
+
       setNotifOpen(false);
     };
+
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setNotifOpen(false);
       }
     };
-    window.addEventListener("mousedown", handleClick);
+
+    // Scroll/resize are not MouseEvents, so we use a separate handler.
+    const handleDismiss = () => {
+      setNotifOpen(false);
+    };
+
+    window.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("keydown", handleKey);
-    window.addEventListener("scroll", handleClick, true);
-    window.addEventListener("resize", handleClick);
+    window.addEventListener("scroll", handleDismiss, true);
+    window.addEventListener("resize", handleDismiss);
+
     return () => {
-      window.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("keydown", handleKey);
-      window.removeEventListener("scroll", handleClick, true);
-      window.removeEventListener("resize", handleClick);
+      window.removeEventListener("scroll", handleDismiss, true);
+      window.removeEventListener("resize", handleDismiss);
     };
   }, [notifOpen]);
 
@@ -165,6 +174,7 @@ export default function TopNav({
               Virtual Office
             </span>
           </Link>
+
           {role === "ADMIN" && (
             <div className="hidden items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-300 md:flex">
               <Link href="/admin" className="hover:text-slate-900 dark:hover:text-white">
@@ -176,10 +186,7 @@ export default function TopNav({
               <Link href="/admin/files" className="hover:text-slate-900 dark:hover:text-white">
                 Files
               </Link>
-              <Link
-                href="/admin/assignments"
-                className="hover:text-slate-900 dark:hover:text-white"
-              >
+              <Link href="/admin/assignments" className="hover:text-slate-900 dark:hover:text-white">
                 Assignments
               </Link>
               <Link href="/admin/leads" className="hover:text-slate-900 dark:hover:text-white">
@@ -196,6 +203,7 @@ export default function TopNav({
               </Link>
             </div>
           )}
+
           {role !== "ADMIN" && (
             <div className="hidden items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-300 md:flex">
               <Link href="/dashboard" className="hover:text-slate-900 dark:hover:text-white">
@@ -213,6 +221,7 @@ export default function TopNav({
             </div>
           )}
         </div>
+
         <div className="flex items-center gap-4">
           <div className="relative">
             <button
@@ -228,6 +237,7 @@ export default function TopNav({
                 </span>
               ) : null}
             </button>
+
             {notifOpen && typeof document !== "undefined"
               ? createPortal(
                   <div
@@ -242,6 +252,7 @@ export default function TopNav({
                       <span>Lead notifications</span>
                       {loadingNotifications ? <span>Loading…</span> : null}
                     </div>
+
                     <div className="max-h-[420px] overflow-y-auto">
                       {notifications.length ? (
                         notifications.map((notif) => (
@@ -259,19 +270,16 @@ export default function TopNav({
                                 </p>
                                 <p className="text-xs text-slate-500">
                                   {notif.city || notif.state || notif.country
-                                    ? [notif.city, notif.state, notif.country]
-                                        .filter(Boolean)
-                                        .join(", ")
+                                    ? [notif.city, notif.state, notif.country].filter(Boolean).join(", ")
                                     : "Location pending"}
                                 </p>
                                 <p className="text-xs text-slate-500">
                                   {notif.email || notif.phone
-                                    ? [notif.email, notif.phone]
-                                        .filter(Boolean)
-                                        .join(" • ")
+                                    ? [notif.email, notif.phone].filter(Boolean).join(" • ")
                                     : "Contact pending"}
                                 </p>
                               </div>
+
                               <Link
                                 href={`/leads/${notif.jobId}`}
                                 className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-700"
@@ -280,6 +288,7 @@ export default function TopNav({
                                 Open
                               </Link>
                             </div>
+
                             <p className="mt-1 text-[11px] text-slate-400">
                               {new Date(notif.createdAt).toLocaleString()}
                             </p>
@@ -296,6 +305,7 @@ export default function TopNav({
                 )
               : null}
           </div>
+
           {isImpersonating ? (
             <div className="hidden sm:flex flex-col items-end gap-1 text-right text-xs">
               <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 font-semibold text-amber-800 ring-1 ring-inset ring-amber-200">
@@ -311,6 +321,7 @@ export default function TopNav({
               </button>
             </div>
           ) : null}
+
           <div className="hidden items-center gap-3 text-sm text-slate-600 dark:text-slate-200 sm:flex">
             <Avatar label={userName} imageUrl={imageUrl} size={36} />
             <div>
@@ -320,7 +331,9 @@ export default function TopNav({
               <p className="font-semibold text-slate-800 dark:text-white">{userName}</p>
             </div>
           </div>
-          <ThemeToggle compact />
+
+          <ThemeToggle />
+
           <button
             onClick={() => signOut({ callbackUrl: "/auth/login" })}
             className="btn btn-muted"
@@ -329,6 +342,7 @@ export default function TopNav({
           </button>
         </div>
       </div>
+
       {isImpersonating ? (
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 sm:px-6 pb-3 text-xs text-amber-800">
           <div className="flex flex-col gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
@@ -344,9 +358,8 @@ export default function TopNav({
               {restoring ? "Switching..." : "Return to admin"}
             </button>
           </div>
-          {restoreError ? (
-            <div className="text-rose-600">{restoreError}</div>
-          ) : null}
+
+          {restoreError ? <div className="text-rose-600">{restoreError}</div> : null}
         </div>
       ) : null}
     </div>

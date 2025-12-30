@@ -30,7 +30,7 @@ export default function MarketingNav() {
         </Link>
       </div>
       <div className="flex items-center gap-2">
-        <ThemeToggle compact />
+        <ThemeToggle />
         <Link href="/auth/login" className="btn btn-secondary">
           Sign in
         </Link>

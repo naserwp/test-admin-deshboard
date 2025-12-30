@@ -9,7 +9,8 @@ const optionalProviders = [
   process.env.GOOGLE_PLACES_API_KEY ? googlePlacesProvider : null,
   process.env.YELP_API_KEY ? yelpProvider : null,
   process.env.OPENCORPORATES_API_KEY ? opencorporatesProvider : null,
-].filter((provider): provider is LeadProvider => Boolean(provider));
+].filter(Boolean) as LeadProvider<any>[];
+
 
 export const leadProviders = [
   osmProvider,

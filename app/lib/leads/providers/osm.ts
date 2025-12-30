@@ -1,4 +1,5 @@
-import type { LeadProvider, LeadSearchParams, NormalizedLead } from "./types";
+import type { LeadProvider, LeadSearchParams } from "./types";
+import type { NormalizedLead } from "../types";
 
 type OsmTagMap = Record<string, string | undefined>;
 

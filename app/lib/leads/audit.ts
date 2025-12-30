@@ -1,4 +1,6 @@
 import { prisma } from "@/app/lib/prisma";
+import { Prisma } from "@prisma/client";
+
 
 type LeadAuditLogInput = {
   userId: string;
@@ -17,7 +19,9 @@ export async function logLeadAudit(entry: LeadAuditLogInput) {
       action: entry.action,
       providerId: entry.providerId,
       count: entry.count ?? 0,
-      meta: entry.meta ?? null,
+     meta: (entry.meta ?? undefined) as Prisma.InputJsonValue | undefined,
+
+
     },
   });
 }

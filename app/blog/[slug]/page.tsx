@@ -134,7 +134,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   : post.customPublished || "Published"}
               </span>
               <span className="h-1 w-1 rounded-full bg-slate-400" />
-              <span>{post.readMinutes || post.readMinutesOverride || readingTime(post.content)} min read</span>
+              <span>{post.readMinutes ?? readingTime(post.content)} min read</span>
+
               <div className="flex flex-wrap gap-2 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
                 {post.tags?.map((tag) => (
                   <span

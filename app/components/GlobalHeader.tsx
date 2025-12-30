@@ -66,7 +66,7 @@ export default function GlobalHeader() {
             <Link href="/auth/signup" className="hover:text-slate-900 dark:hover:text-white">
               Get started
             </Link>
-            <ThemeToggle compact />
+            <ThemeToggle />
           </nav>
         </div>
 
