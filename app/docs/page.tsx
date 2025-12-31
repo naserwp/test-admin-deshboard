@@ -85,7 +85,21 @@ export default function DocsPage() {
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
             The onboarding flow includes workspace setup, branding, and access to support ticket
-            history.
+            history. Get started via{" "}
+            <Link
+              href="/auth/signup"
+              className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+            >
+              Signup
+            </Link>{" "}
+            or{" "}
+            <Link
+              href="/talk-to-sales"
+              className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+            >
+              Talk to Sales
+            </Link>
+            .
           </p>
         </section>
 
@@ -109,7 +123,15 @@ export default function DocsPage() {
             dashboard. Admins receive notifications and respond directly in the support panel.
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Users can monitor status updates and view replies in their ticket history.
+            Users can monitor status updates and view replies in their ticket history. Start a
+            ticket from{" "}
+            <Link
+              href="/support/ticket/new"
+              className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+            >
+              Support Request
+            </Link>
+            .
           </p>
         </section>
 
@@ -121,7 +143,14 @@ export default function DocsPage() {
             planning.
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Submitted leads appear in the admin support area for follow-up.
+            Submitted leads appear in the admin support area for follow-up. Visit{" "}
+            <Link
+              href="/talk-to-sales"
+              className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+            >
+              Talk to Sales
+            </Link>{" "}
+            to start the request.
           </p>
         </section>
 
@@ -133,7 +162,14 @@ export default function DocsPage() {
             branding.
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Use Book onboarding to align on timelines and deliverables before launching.
+            Use Book onboarding to align on timelines and deliverables before launching. Visit{" "}
+            <Link
+              href="/agency"
+              className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+            >
+              Agency Workspace
+            </Link>{" "}
+            to start.
           </p>
         </section>
 
