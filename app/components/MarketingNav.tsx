@@ -1,6 +1,5 @@
 import Link from "next/link";
 import BrandMark from "./BrandMark";
-import ThemeToggle from "./ThemeToggle";
 
 export default function MarketingNav() {
   return (
@@ -30,9 +29,26 @@ export default function MarketingNav() {
         </Link>
       </div>
       <div className="flex items-center gap-2">
-        <ThemeToggle />
-        <Link href="/auth/login" className="btn btn-secondary">
-          Sign in
+        <Link
+          href="/auth/login"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:text-white"
+          aria-label="Sign in"
+          title="Sign in"
+        >
+          <svg
+            aria-hidden="true"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0-8 0 4 4 0 0 0 8 0m6 8v-2a4 4 0 0 0-3-3.87"
+            />
+          </svg>
         </Link>
         <Link href="/auth/signup" className="btn btn-primary">
           Get started

@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import GlobalLogo from "./GlobalLogo";
-import ThemeToggle from "./ThemeToggle";
 
 const slides = [
   {
@@ -44,6 +43,13 @@ export default function GlobalHeader() {
     "dark:hover:text-white dark:hover:bg-white/10 dark:hover:shadow-[0_0_16px_rgba(56,189,248,0.35)]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60",
   ].join(" ");
+  const headerIconClass = [
+    "relative inline-flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200",
+    "text-slate-600 dark:text-slate-200",
+    "hover:-translate-y-0.5 hover:text-slate-900 hover:bg-white/70 hover:shadow-[0_0_12px_rgba(99,102,241,0.25)]",
+    "dark:hover:text-white dark:hover:bg-white/10 dark:hover:shadow-[0_0_16px_rgba(56,189,248,0.35)]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60",
+  ].join(" ");
 
   return (
     <header className="relative overflow-hidden rounded-3xl border border-slate-800/60 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white shadow-soft-xl">
@@ -67,13 +73,30 @@ export default function GlobalHeader() {
             <Link href="/blog" className={headerLinkClass}>
               Blog
             </Link>
-            <Link href="/auth/login" className={headerLinkClass}>
-              Sign in
-            </Link>
             <Link href="/auth/signup" className={headerLinkClass}>
               Get started
             </Link>
-            <ThemeToggle />
+            <Link
+              href="/auth/login"
+              className={headerIconClass}
+              aria-label="Sign in"
+              title="Sign in"
+            >
+              <svg
+                aria-hidden="true"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0-8 0 4 4 0 0 0 8 0m6 8v-2a4 4 0 0 0-3-3.87"
+                />
+              </svg>
+            </Link>
           </nav>
         </div>
 
