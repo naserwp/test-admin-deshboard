@@ -19,6 +19,20 @@ type ChatDrawerProps = {
   conversationId?: string | null;
   creatingTicket?: boolean;
   onCreateTicket?: () => void | Promise<void>;
+  ticketOpen?: boolean;
+  ticketValues?: {
+    subject: string;
+    message: string;
+    name: string;
+    email: string;
+    attachments: File[];
+  };
+  onTicketChange?: (field: "subject" | "message" | "name" | "email" | "attachments", value: string | File[]) => void;
+  onTicketClose?: () => void | Promise<void>;
+  onTicketSubmit?: () => void | Promise<void>;
+  ticketSubmitting?: boolean;
+  ticketError?: string;
+  ticketCreated?: { id: string; subject: string } | null;
   requireGuestProfile?: boolean;
   guestValues?: { name: string; email: string; phone: string };
   onGuestChange?: (field: "name" | "email" | "phone", value: string) => void;
@@ -80,6 +94,14 @@ export default function ChatDrawer({
   conversationId,
   creatingTicket,
   onCreateTicket,
+  ticketOpen = false,
+  ticketValues,
+  onTicketChange,
+  onTicketClose,
+  onTicketSubmit,
+  ticketSubmitting = false,
+  ticketError = "",
+  ticketCreated,
   requireGuestProfile = false,
   guestValues,
   onGuestChange,
@@ -173,6 +195,109 @@ export default function ChatDrawer({
             </button>
           </div>
         </div>
+
+        {ticketOpen ? (
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-sm space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <div>
+                <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">Create ticket</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Add a subject, description, and optional screenshots.
+                </p>
+              </div>
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">Subject</label>
+                  <input
+                    value={ticketValues?.subject ?? ""}
+                    onChange={(e) => onTicketChange?.("subject", e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
+                    placeholder="Brief subject"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">Description</label>
+                  <textarea
+                    value={ticketValues?.message ?? ""}
+                    onChange={(e) => onTicketChange?.("message", e.target.value)}
+                    rows={3}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
+                    placeholder="Describe what happened"
+                  />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">Name</label>
+                    <input
+                      value={ticketValues?.name ?? ""}
+                      onChange={(e) => onTicketChange?.("name", e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">Email</label>
+                    <input
+                      type="email"
+                      value={ticketValues?.email ?? ""}
+                      onChange={(e) => onTicketChange?.("email", e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400"
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    Optional screenshots
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) =>
+                      onTicketChange?.(
+                        "attachments",
+                        e.target.files ? Array.from(e.target.files) : []
+                      )
+                    }
+                    className="block w-full text-xs text-slate-600 file:mr-2 file:rounded-lg file:border-0 file:bg-slate-900 file:px-2.5 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-slate-800 dark:text-slate-300 dark:file:bg-white dark:file:text-slate-900"
+                  />
+                </div>
+                {ticketError ? (
+                  <div className="text-xs font-semibold text-rose-600 dark:text-rose-400">{ticketError}</div>
+                ) : null}
+                {ticketCreated ? (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-700 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200">
+                    Ticket created.{" "}
+                    <Link
+                      href={`/support/tickets/${ticketCreated.id}`}
+                      className="font-semibold underline-offset-2 hover:underline"
+                    >
+                      View ticket
+                    </Link>
+                  </div>
+                ) : null}
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => onTicketClose?.()}
+                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onTicketSubmit?.()}
+                  disabled={ticketSubmitting}
+                  className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
+                >
+                  {ticketSubmitting ? "Creating..." : "Create ticket"}
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
         {requireGuestProfile ? (
           <div className="space-y-3 bg-white px-4 py-4 text-sm dark:bg-slate-900">
@@ -294,7 +419,11 @@ export default function ChatDrawer({
                     onClick={() => onCreateTicket()}
                     className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-500 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
                   >
-                    {creatingTicket ? "Creating..." : "Create ticket"}
+                    {ticketSubmitting
+                      ? "Creating..."
+                      : ticketOpen
+                      ? "Ticket form open"
+                      : "Create ticket"}
                   </button>
                 ) : null}
               </div>

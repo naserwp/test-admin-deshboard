@@ -7,10 +7,11 @@ export default async function AdminSupportPage() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id || session.user.role !== "ADMIN") return null;
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
+  const imageUrl = (session.user as any).imageUrl;
 
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav role={session.user.role} userName={userName} imageUrl={imageUrl} />
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
         <div>
           <h1 className="text-2xl font-semibold">Support</h1>

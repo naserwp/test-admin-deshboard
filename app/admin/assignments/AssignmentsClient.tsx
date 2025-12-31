@@ -83,23 +83,28 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
 
   return (
     <div className="space-y-6">
-      <div className="card space-y-4 p-6">
+      <div className="card space-y-5 p-6">
         <div className="space-y-1">
           <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
             Select file
           </label>
-          <select
-            value={selectedFile}
-            onChange={(event) => setSelectedFile(event.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-indigo-500/30"
-          >
-            <option value="">Choose a file</option>
-            {files.map((file) => (
-              <option key={file.id} value={file.id}>
-                {file.title}
-              </option>
-            ))}
-          </select>
+          <div className="flex flex-wrap items-center gap-3">
+            <select
+              value={selectedFile}
+              onChange={(event) => setSelectedFile(event.target.value)}
+              className="min-w-[220px] flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-indigo-500/30"
+            >
+              <option value="">Choose a file</option>
+              {files.map((file) => (
+                <option key={file.id} value={file.id}>
+                  {file.title}
+                </option>
+              ))}
+            </select>
+            <span className="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-300">
+              {selectedFile ? "File selected" : "Select a file to assign"}
+            </span>
+          </div>
         </div>
         <div>
           <p className="text-sm font-medium mb-2 text-slate-700 dark:text-slate-200">
@@ -109,7 +114,7 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
             {users.map((user) => (
               <label
                 key={user.id}
-                className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200"
+                className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-500"
               >
                 <input
                   type="checkbox"
@@ -123,9 +128,18 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
         </div>
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
         {message && <p className="text-sm text-green-600 dark:text-emerald-300">{message}</p>}
-        <button className="btn btn-primary" onClick={handleAssign}>
-          Assign
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            className="btn btn-primary"
+            onClick={handleAssign}
+            disabled={!selectedFile || selectedUsers.length === 0}
+          >
+            Assign
+          </button>
+          <span className="text-xs text-slate-500 dark:text-slate-400">
+            {selectedUsers.length ? `${selectedUsers.length} user(s) selected` : "No users selected"}
+          </span>
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
@@ -161,7 +175,7 @@ export default function AssignmentsClient({ users, files, initialAssignments }: 
                     className="btn btn-secondary px-3 py-1 text-xs"
                     onClick={() => toggleStatus(assignment.id)}
                   >
-                    Toggle
+                    {assignment.status === "UNLOCKED" ? "Lock" : "Unlock"}
                   </button>
                 </td>
               </tr>
