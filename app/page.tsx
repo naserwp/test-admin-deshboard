@@ -449,7 +449,7 @@ export default async function Home() {
                   <Link href="/auth/signup" className="btn btn-secondary">
                     Create workspace
                   </Link>
-                  <Link href="/auth/login" className="btn btn-muted">
+                  <Link href="/talk-to-sales" className="btn btn-muted">
                     Talk to sales
                   </Link>
                 </div>
