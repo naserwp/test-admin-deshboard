@@ -11,7 +11,6 @@ export default async function DocumentRequestPage() {
     session?.user?.userId ?? (session?.user as any)?.name ?? (session?.user as any)?.email ?? "";
   const defaultEmail = (session?.user as any)?.email ?? "";
   const defaultPhone = "";
-  const isLoggedIn = Boolean(session?.user?.id);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
@@ -38,7 +37,6 @@ export default async function DocumentRequestPage() {
               defaultName={defaultName}
               defaultEmail={defaultEmail}
               defaultPhone={defaultPhone}
-              isLoggedIn={isLoggedIn}
             />
           </div>
 

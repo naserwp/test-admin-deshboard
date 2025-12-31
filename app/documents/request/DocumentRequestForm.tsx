@@ -7,7 +7,6 @@ type DocumentRequestFormProps = {
   defaultName: string;
   defaultEmail: string;
   defaultPhone: string;
-  isLoggedIn: boolean;
 };
 
 const initialForm = {
@@ -24,7 +23,6 @@ export default function DocumentRequestForm({
   defaultName,
   defaultEmail,
   defaultPhone,
-  isLoggedIn,
 }: DocumentRequestFormProps) {
   const [form, setForm] = useState({
     ...initialForm,
@@ -117,7 +115,7 @@ export default function DocumentRequestForm({
           <input
             value={form.phone}
             onChange={(event) => handleChange("phone", event.target.value)}
-            required={!isLoggedIn}
+            required
             className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
             placeholder="+1 555 123 4567"
           />

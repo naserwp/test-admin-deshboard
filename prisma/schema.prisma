@@ -355,7 +355,7 @@ model BusinessDocumentRequest {
   userId       String?
   name         String
   email        String
-  phone        String?
+  phone        String
   docType      String
   businessName String
   state        String?

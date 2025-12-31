@@ -18,11 +18,8 @@ export async function POST(request: Request) {
     const state = String(body?.state || "").trim() || null;
     const notes = String(body?.notes || "").trim();
 
-    if (!name || !email || !docType || !businessName || !notes) {
+    if (!name || !email || !phone || !docType || !businessName || !notes) {
       return NextResponse.json({ error: "All required fields must be filled in." }, { status: 400 });
-    }
-    if (!session?.user?.id && !phone) {
-      return NextResponse.json({ error: "Phone is required for guest requests." }, { status: 400 });
     }
     const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!emailValid) {
@@ -34,7 +31,7 @@ export async function POST(request: Request) {
         userId: session?.user?.id ?? null,
         name,
         email,
-        phone: phone || null,
+        phone,
         docType,
         businessName,
         state,
