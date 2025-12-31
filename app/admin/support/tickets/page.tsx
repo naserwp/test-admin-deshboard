@@ -8,13 +8,25 @@ import Link from "next/link";
 export default async function AdminSupportTicketsPage({
   searchParams,
 }: {
-  searchParams?: { status?: string; priority?: string; search?: string };
+  searchParams?: {
+    status?: string;
+    priority?: string;
+    search?: string;
+    leadStatus?: string;
+    leadSearch?: string;
+    docStatus?: string;
+    docSearch?: string;
+  };
 }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id || session.user.role !== "ADMIN") return null;
   const status = searchParams?.status;
   const priority = searchParams?.priority;
   const search = searchParams?.search?.trim();
+  const leadStatus = searchParams?.leadStatus;
+  const leadSearch = searchParams?.leadSearch?.trim();
+  const docStatus = searchParams?.docStatus;
+  const docSearch = searchParams?.docSearch?.trim();
 
   const tickets = await prisma.supportTicket.findMany({
     where: {
@@ -49,6 +61,41 @@ export default async function AdminSupportTicketsPage({
         select: { id: true, content: true, sender: true, createdAt: true },
       },
     },
+  });
+
+  const salesLeads = await prisma.talkToSalesLead.findMany({
+    where: {
+      ...(leadStatus ? { status: leadStatus as any } : {}),
+      ...(leadSearch
+        ? {
+            OR: [
+              { name: { contains: leadSearch, mode: "insensitive" } },
+              { email: { contains: leadSearch, mode: "insensitive" } },
+              { company: { contains: leadSearch, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    },
+    orderBy: { createdAt: "desc" },
+    take: 50,
+  });
+
+  const documentRequests = await prisma.businessDocumentRequest.findMany({
+    where: {
+      ...(docStatus ? { status: docStatus as any } : {}),
+      ...(docSearch
+        ? {
+            OR: [
+              { name: { contains: docSearch, mode: "insensitive" } },
+              { email: { contains: docSearch, mode: "insensitive" } },
+              { docType: { contains: docSearch, mode: "insensitive" } },
+              { businessName: { contains: docSearch, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    },
+    orderBy: { createdAt: "desc" },
+    take: 50,
   });
 
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
@@ -180,6 +227,240 @@ export default async function AdminSupportTicketsPage({
               ) : null}
             </tbody>
           </table>
+        </div>
+
+        <div className="pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-semibold">Talk to Sales leads</h2>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Recent inbound requests from the Talk to Sales form.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            {["NEW", "CONTACTED", "CLOSED"].map((s) => (
+              <Link
+                key={s}
+                href={`/admin/support/tickets?leadStatus=${s}`}
+                className={[
+                  "rounded-full border px-3 py-1 transition hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400",
+                  leadStatus === s
+                    ? "border-slate-900 text-slate-900 dark:border-slate-300 dark:text-slate-100"
+                    : "border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500",
+                ].join(" ")}
+              >
+                {s}
+              </Link>
+            ))}
+            <Link
+              href={`/admin/support/tickets`}
+              className="rounded-full border border-slate-200 px-3 py-1 text-slate-600 transition hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500"
+            >
+              All
+            </Link>
+          </div>
+
+          <form className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+            <input
+              name="leadSearch"
+              defaultValue={leadSearch}
+              placeholder="Search name, email, company"
+              className="rounded-full border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
+            />
+            <button
+              type="submit"
+              className="rounded-full bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300"
+            >
+              Search
+            </button>
+          </form>
+
+          <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
+                <tr>
+                  <th className="px-4 py-3 text-left">Lead</th>
+                  <th className="px-4 py-3 text-left">Company</th>
+                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="px-4 py-3 text-left">Message</th>
+                  <th className="px-4 py-3 text-left">Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {salesLeads.map((lead) => (
+                  <tr
+                    key={lead.id}
+                    className="border-t border-slate-200 hover:bg-slate-50/60 dark:border-slate-800 dark:hover:bg-slate-800/60"
+                  >
+                    <td className="px-4 py-3">
+                      <div className="font-semibold text-slate-900 dark:text-slate-100">
+                        {lead.name}
+                      </div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400">
+                        {lead.email}
+                        {lead.phone ? ` • ${lead.phone}` : ""}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                      {lead.company || "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                        {lead.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                      {lead.message.slice(0, 80)}
+                    </td>
+                    <td className="px-4 py-3 text-xs text-slate-500 dark:text-slate-400">
+                      {new Date(lead.createdAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+                {!salesLeads.length ? (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="px-4 py-6 text-center text-sm text-slate-500 dark:text-slate-400"
+                    >
+                      No Talk to Sales leads found.
+                    </td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-semibold">Document requests</h2>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Business document requests submitted by logged-in or guest users.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            {["NEW", "IN_PROGRESS", "COMPLETED", "CLOSED"].map((s) => (
+              <Link
+                key={s}
+                href={`/admin/support/tickets?docStatus=${s}`}
+                className={[
+                  "rounded-full border px-3 py-1 transition hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400",
+                  docStatus === s
+                    ? "border-slate-900 text-slate-900 dark:border-slate-300 dark:text-slate-100"
+                    : "border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500",
+                ].join(" ")}
+              >
+                {s}
+              </Link>
+            ))}
+            <Link
+              href={`/admin/support/tickets`}
+              className="rounded-full border border-slate-200 px-3 py-1 text-slate-600 transition hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500"
+            >
+              All
+            </Link>
+          </div>
+
+          <form className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+            <input
+              name="docSearch"
+              defaultValue={docSearch}
+              placeholder="Search name, email, document, business"
+              className="rounded-full border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
+            />
+            <button
+              type="submit"
+              className="rounded-full bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300"
+            >
+              Search
+            </button>
+          </form>
+
+          <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
+                <tr>
+                  <th className="px-4 py-3 text-left">Requester</th>
+                  <th className="px-4 py-3 text-left">Document</th>
+                  <th className="px-4 py-3 text-left">Business</th>
+                  <th className="px-4 py-3 text-left">Notes</th>
+                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="px-4 py-3 text-left">Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {documentRequests.map((request) => (
+                  <tr
+                    key={request.id}
+                    className="border-t border-slate-200 hover:bg-slate-50/60 dark:border-slate-800 dark:hover:bg-slate-800/60"
+                  >
+                    <td className="px-4 py-3">
+                      <div className="font-semibold text-slate-900 dark:text-slate-100">
+                        {request.name}
+                      </div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400">
+                        {request.email}
+                        {request.phone ? ` • ${request.phone}` : ""}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                      {request.docType}
+                    </td>
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                      {request.businessName}
+                    </td>
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
+                      {request.notes.slice(0, 80)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <form
+                        action={`/api/admin/document-requests/${request.id}/status`}
+                        method="post"
+                        className="flex items-center gap-2"
+                      >
+                        <select
+                          name="status"
+                          defaultValue={request.status}
+                          className="rounded-full border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700 shadow-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-indigo-500/30"
+                        >
+                          {["NEW", "IN_PROGRESS", "COMPLETED", "CLOSED"].map((statusOption) => (
+                            <option key={statusOption} value={statusOption}>
+                              {statusOption}
+                            </option>
+                          ))}
+                        </select>
+                        <button
+                          type="submit"
+                          className="rounded-full border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-500"
+                        >
+                          Update
+                        </button>
+                      </form>
+                    </td>
+                    <td className="px-4 py-3 text-xs text-slate-500 dark:text-slate-400">
+                      {new Date(request.createdAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+                {!documentRequests.length ? (
+                  <tr>
+                    <td
+                      colSpan={6}
+                      className="px-4 py-6 text-center text-sm text-slate-500 dark:text-slate-400"
+                    >
+                      No document requests found.
+                    </td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

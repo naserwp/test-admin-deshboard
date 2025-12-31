@@ -14,6 +14,11 @@ type TopNavProps = {
   impersonatorUserId?: string | null;
 };
 
+type NavMatch = {
+  href: string;
+  exact?: boolean;
+};
+
 export default function TopNav({
   role,
   userName,
@@ -48,20 +53,22 @@ export default function TopNav({
   const pathname = usePathname();
 
   const isImpersonating = Boolean(impersonatorUserId);
-  const isActive = (match: string | string[]) => {
+  const normalizeMatch = (target: string | NavMatch): NavMatch =>
+    typeof target === "string" ? { href: target } : target;
+  const isActive = (match: string | NavMatch | Array<string | NavMatch>) => {
     const targets = Array.isArray(match) ? match : [match];
-    return targets.some((href) => {
-      if (href === "/admin") return pathname === "/admin";
-      if (href === "/dashboard") return pathname === "/dashboard";
-      return pathname?.startsWith(href);
+    return targets.some((target) => {
+      const { href, exact } = normalizeMatch(target);
+      if (!pathname) return false;
+      return exact ? pathname === href : pathname.startsWith(href);
     });
   };
-  const navItemClass = (match: string | string[]) =>
+  const navItemClass = (match: string | NavMatch | Array<string | NavMatch>) =>
     [
-      "rounded-full px-3 py-1 text-sm font-medium transition",
+      "rounded-full px-3 py-1 text-sm font-medium transition-all duration-200",
       isActive(match)
-        ? "bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900"
-        : "text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white",
+        ? "bg-slate-900 text-white shadow-sm hover:bg-slate-800 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+        : "text-slate-500 hover:text-slate-900 hover:bg-slate-100/80 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/70",
     ].join(" ");
 
   const unseenCount = useMemo(() => {
@@ -193,7 +200,10 @@ export default function TopNav({
 
           {role === "ADMIN" && (
             <div className="hidden items-center gap-2 text-sm md:flex">
-              <Link href="/admin" className={navItemClass("/admin")}>
+              <Link
+                href="/admin"
+                className={navItemClass({ href: "/admin", exact: true })}
+              >
                 Overview
               </Link>
               <Link href="/admin/users" className={navItemClass("/admin/users")}>
@@ -214,16 +224,16 @@ export default function TopNav({
               <Link
                 href="/admin/support/waiting"
                 className={navItemClass([
-                  "/admin/support/waiting",
-                  "/admin/support/conversations",
-                  "/admin/support",
+                  { href: "/admin/support/waiting", exact: true },
+                  { href: "/admin/support/conversations" },
+                  { href: "/admin/support", exact: true },
                 ])}
               >
                 Support queue
               </Link>
               <Link
                 href="/admin/support/tickets"
-                className={navItemClass("/admin/support/tickets")}
+                className={navItemClass({ href: "/admin/support/tickets" })}
               >
                 Tickets
               </Link>
@@ -232,7 +242,10 @@ export default function TopNav({
 
           {role !== "ADMIN" && (
             <div className="hidden items-center gap-2 text-sm md:flex">
-              <Link href="/dashboard" className={navItemClass("/dashboard")}>
+              <Link
+                href="/dashboard"
+                className={navItemClass({ href: "/dashboard", exact: true })}
+              >
                 Dashboard
               </Link>
               <Link href="/leads" className={navItemClass("/leads")}>

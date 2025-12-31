@@ -50,13 +50,13 @@ export default function AgencyPage() {
               <div className="flex flex-wrap gap-3 text-xs font-semibold">
                 <Link
                   href="/auth/signup"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
                 >
                   Launch agency workspace
                 </Link>
                 <Link
                   href="/auth/login"
-                  className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20"
+                  className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20 dark:border-white/30 dark:bg-white/5 dark:hover:bg-white/15"
                 >
                   Enter dashboard
                 </Link>
@@ -132,13 +132,19 @@ export default function AgencyPage() {
             <div className="mt-4 flex flex-wrap gap-3 text-xs font-semibold">
               <Link
                 href="/auth/signup"
-                className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
+                className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
               >
                 Book onboarding
               </Link>
               <Link
+                href="/talk-to-sales"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20 dark:border-white/30 dark:bg-white/5 dark:hover:bg-white/15"
+              >
+                Talk to sales
+              </Link>
+              <Link
                 href="/auth/login"
-                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20 dark:border-white/30 dark:bg-white/5 dark:hover:bg-white/15"
               >
                 View workspace
               </Link>

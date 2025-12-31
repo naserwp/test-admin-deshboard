@@ -60,7 +60,7 @@ export default async function Home() {
             <div className="card p-6 shadow-xl dark:shadow-none">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-200">
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
                     Today&apos;s activity
                   </p>
                   <span className="badge badge-info">Live</span>
@@ -88,10 +88,10 @@ export default async function Home() {
                       className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/60"
                     >
                       <div>
-                        <p className="font-semibold text-slate-800">
+                        <p className="font-semibold text-slate-800 dark:text-slate-100">
                           {item.label}
                         </p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
                           Updated 2 hours ago
                         </p>
                       </div>
@@ -101,7 +101,7 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="card-muted flex items-center justify-between px-4 py-3 text-sm text-slate-600 dark:text-slate-200">
+                <div className="card-muted flex items-center justify-between px-4 py-3 text-sm text-slate-600 dark:text-slate-300">
                   <span>Team storage usage</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-100">68%</span>
                 </div>
@@ -114,13 +114,13 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 lg:grid-cols-[0.4fr_0.6fr]">
               <div className="space-y-4">
-                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
                   Features
                 </p>
                 <h2 className="text-3xl font-semibold">
                   A document hub built for distributed offices.
                 </h2>
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-300">
                   Give every team a home for policies, templates, and critical
                   files while keeping admins fully in control.
                 </p>
@@ -150,7 +150,7 @@ export default async function Home() {
                 ].map((feature) => (
                   <div key={feature.title} className="card p-6">
                     <h3 className="text-lg font-semibold">{feature.title}</h3>
-                    <p className="mt-2 text-sm text-slate-600">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                       {feature.description}
                     </p>
                   </div>
@@ -184,15 +184,15 @@ export default async function Home() {
                 }
               ].map((item) => (
                 <div key={item.step} className="card p-6">
-                  <p className="text-xs font-semibold text-indigo-600">
-                    Step {item.step}
-                  </p>
+                    <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-300">
+                      Step {item.step}
+                    </p>
                   <h3 className="mt-3 text-xl font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm text-slate-600">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
             </div>
           </div>
         </section>
@@ -201,18 +201,18 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 lg:grid-cols-[0.6fr_0.4fr] lg:items-center">
               <div className="space-y-4">
-                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
                   Document security
                 </p>
                 <h2 className="text-3xl font-semibold">
                   Security-first storage for sensitive office data.
                 </h2>
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-300">
                   Keep files protected with access controls, watermarking, and
                   monitored activity. Every download stays tied to a verified
                   employee.
                 </p>
-                <ul className="space-y-3 text-sm text-slate-600">
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
                   <li>• Access-controlled viewing and downloads</li>
                   <li>• Automated lock/unlock workflows</li>
                   <li>• Clear audit trail for compliance reviews</li>
@@ -221,29 +221,29 @@ export default async function Home() {
               <div className="card p-6">
                 <div className="space-y-5">
                   <div>
-                    <p className="text-sm font-semibold text-slate-600">
+                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
                       Security health
                     </p>
-                    <p className="text-3xl font-semibold text-slate-900">
+                    <p className="text-3xl font-semibold text-slate-900 dark:text-slate-100">
                       99.9%
                     </p>
                   </div>
-                  <div className="space-y-3 text-sm text-slate-600">
+                  <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
                     <div className="flex items-center justify-between">
                       <span>Access reviews</span>
-                      <span className="font-semibold text-slate-900">
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">
                         Passed
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Download alerts</span>
-                      <span className="font-semibold text-slate-900">
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">
                         Enabled
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Security backups</span>
-                      <span className="font-semibold text-slate-900">
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">
                         Hourly
                       </span>
                     </div>
@@ -258,23 +258,23 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-8 lg:grid-cols-[0.6fr_0.4fr] lg:items-center">
               <div className="space-y-4">
-                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
                   Pricing teaser
                 </p>
                 <h2 className="text-3xl font-semibold">
                   Flexible plans for growing teams.
                 </h2>
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-300">
                   Start with essentials and scale to full compliance workflows
                   as your virtual office expands.
                 </p>
               </div>
               <div className="card p-6">
-                <p className="text-sm text-slate-500">Starting at</p>
-                <p className="mt-2 text-4xl font-semibold text-slate-900">
+                <p className="text-sm text-slate-500 dark:text-slate-400">Starting at</p>
+                <p className="mt-2 text-4xl font-semibold text-slate-900 dark:text-slate-100">
                   $24<span className="text-lg font-medium">/user</span>
                 </p>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   Includes secure storage, activity logs, and admin controls.
                 </p>
                 <Link
@@ -292,13 +292,13 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-8 lg:grid-cols-[0.4fr_0.6fr] lg:items-center">
               <div className="space-y-4">
-                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
                   Trusted by modern teams
                 </p>
                 <h2 className="text-3xl font-semibold">
                   Leading companies keep documents in sync.
                 </h2>
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-300">
                   From distributed consultancies to global operations, teams
                   rely on Virtual Office Management for document clarity.
                 </p>
@@ -312,7 +312,7 @@ export default async function Home() {
                   "Summit Legal",
                   "Atlas Ventures"
                 ].map((brand) => (
-                  <div key={brand} className="card-muted px-4 py-6 text-center text-sm font-semibold text-slate-600">
+                  <div key={brand} className="card-muted px-4 py-6 text-center text-sm font-semibold text-slate-600 dark:text-slate-300">
                     {brand}
                   </div>
                 ))}
@@ -325,7 +325,7 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-6 lg:grid-cols-[0.4fr_0.6fr]">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
                   FAQ
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold">
@@ -351,10 +351,10 @@ export default async function Home() {
                   }
                 ].map((item) => (
                   <div key={item.question} className="card p-5">
-                    <p className="font-semibold text-slate-900">
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">
                       {item.question}
                     </p>
-                    <p className="mt-2 text-sm text-slate-600">{item.answer}</p>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{item.answer}</p>
                   </div>
                 ))}
               </div>
@@ -366,13 +366,13 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
                   Blog
                 </p>
                 <h2 className="mt-2 text-3xl font-semibold">
                   Read the latest updates
                 </h2>
-                <p className="mt-2 text-slate-600">
+                <p className="mt-2 text-slate-600 dark:text-slate-300">
                   Product tips, compliance guidance, and document workflows
                   tailored for virtual offices.
                 </p>
@@ -393,21 +393,21 @@ export default async function Home() {
                     />
                   )}
                   <div className="mt-4 flex flex-1 flex-col gap-3">
-                    <div className="flex flex-wrap gap-2 text-xs font-semibold text-indigo-700">
+                    <div className="flex flex-wrap gap-2 text-xs font-semibold text-indigo-700 dark:text-indigo-200">
                       {post.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full bg-indigo-50 px-2 py-1"
+                          className="rounded-full bg-indigo-50 px-2 py-1 dark:bg-indigo-900/50"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-slate-600">{post.excerpt}</p>
-                    <div className="mt-auto flex items-center justify-between text-xs text-slate-500">
+                    <p className="text-sm text-slate-600 dark:text-slate-300">{post.excerpt}</p>
+                    <div className="mt-auto flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                       <span>
                         {post.publishedAt
                           ? new Date(post.publishedAt).toLocaleDateString()
@@ -415,7 +415,7 @@ export default async function Home() {
                       </span>
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="text-indigo-600 hover:text-indigo-700"
+                        className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-200"
                       >
                         Read more →
                       </Link>
@@ -424,7 +424,7 @@ export default async function Home() {
                 </article>
               ))}
               {latestPosts.length === 0 && (
-                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500">
+                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500 dark:border-slate-800 dark:text-slate-400">
                   Blog posts will appear here once published.
                 </div>
               )}
@@ -449,7 +449,7 @@ export default async function Home() {
                   <Link href="/auth/signup" className="btn btn-secondary">
                     Create workspace
                   </Link>
-                  <Link href="/auth/login" className="btn btn-muted">
+                  <Link href="/talk-to-sales" className="btn btn-muted">
                     Talk to sales
                   </Link>
                 </div>
