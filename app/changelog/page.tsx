@@ -72,7 +72,7 @@ export default function ChangelogPage() {
                 Follow every release—AI upgrades, admin controls, and lead quality improvements—all in one place.
               </p>
             </div>
-            <div className="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 shadow-sm dark:bg-slate-900/70 dark:text-slate-200 dark:ring-slate-800">
+            <div className="flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-semibold text-slate-800 ring-1 ring-indigo-200/70 shadow-sm dark:bg-slate-900/80 dark:text-slate-100 dark:ring-indigo-500/40">
               <BrandMark className="h-8 w-8" />
               Virtual Office
             </div>

@@ -38,16 +38,16 @@ export default function GlobalHeader() {
   const activeSlide = useMemo(() => slides[index], [index]);
   const headerLinkClass = [
     "relative inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold transition-all duration-200",
-    "text-slate-600 dark:text-slate-200",
+    "text-slate-600 dark:text-slate-100/80",
     "hover:-translate-y-0.5 hover:text-slate-900 hover:bg-white/70 hover:shadow-[0_0_12px_rgba(99,102,241,0.25)]",
-    "dark:hover:text-white dark:hover:bg-white/10 dark:hover:shadow-[0_0_16px_rgba(56,189,248,0.35)]",
+    "dark:hover:text-white dark:hover:bg-indigo-500/15 dark:hover:shadow-[0_0_18px_rgba(56,189,248,0.45)]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60",
   ].join(" ");
   const headerIconClass = [
     "relative inline-flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200",
-    "text-slate-600 dark:text-slate-200",
+    "text-slate-600 dark:text-slate-100/80",
     "hover:-translate-y-0.5 hover:text-slate-900 hover:bg-white/70 hover:shadow-[0_0_12px_rgba(99,102,241,0.25)]",
-    "dark:hover:text-white dark:hover:bg-white/10 dark:hover:shadow-[0_0_16px_rgba(56,189,248,0.35)]",
+    "dark:hover:text-white dark:hover:bg-indigo-500/15 dark:hover:shadow-[0_0_18px_rgba(56,189,248,0.45)]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60",
   ].join(" ");
 
@@ -60,7 +60,7 @@ export default function GlobalHeader() {
       <div className="relative flex flex-col gap-8 p-6 sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <GlobalLogo />
-          <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-600 dark:text-slate-200">
+          <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-600 dark:text-slate-100/80">
             <Link href="/" className={headerLinkClass}>
               Home
             </Link>
