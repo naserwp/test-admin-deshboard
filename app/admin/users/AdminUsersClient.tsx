@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Avatar from "@/app/components/Avatar";
 
 type UserRow = {
   id: string;
@@ -9,6 +10,7 @@ type UserRow = {
   createdAt: string;
   email?: string | null;
   canRequestLeads?: boolean;
+  imageUrl?: string | null;
 };
 
 export default function AdminUsersClient() {
@@ -261,7 +263,7 @@ export default function AdminUsersClient() {
           <table className="w-full text-sm">
             <thead className="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
               <tr>
-                <th className="text-left px-4 py-3">User ID</th>
+                <th className="text-left px-4 py-3">User</th>
                 <th className="text-left px-4 py-3">Email</th>
                 <th className="text-left px-4 py-3">Role</th>
                 <th className="text-left px-4 py-3">Leads access</th>
@@ -272,14 +274,23 @@ export default function AdminUsersClient() {
             <tbody>
               {users.map((u) => (
                 <tr key={u.id} className="border-t border-slate-200 dark:border-slate-800">
-                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">
-                    {u.userId}
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <Avatar
+                        label={u.userId || u.email || "User"}
+                        imageUrl={u.imageUrl}
+                        size={32}
+                      />
+                      <span className="font-medium text-slate-900 dark:text-slate-100">
+                        {u.userId}
+                      </span>
+                    </div>
                   </td>
                   <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                     {u.email ?? "-"}
                   </td>
                   <td className="px-4 py-3">
-                    <span className="inline-flex rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
+                    <span className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                       {u.role}
                     </span>
                   </td>

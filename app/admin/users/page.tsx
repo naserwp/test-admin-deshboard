@@ -67,6 +67,7 @@ export default async function AdminUsersPage() {
         <TopNav
           role={session.user.role}
           userName={session.user.userId ?? "User"}
+          imageUrl={(session.user as any).imageUrl}
           impersonatorUserId={impersonatorUserId}
         />
         <div className="mx-auto max-w-5xl px-6 py-10">
@@ -85,6 +86,7 @@ export default async function AdminUsersPage() {
       <TopNav
         role={session.user.role}
         userName={userName}
+        imageUrl={(session.user as any).imageUrl}
         impersonatorUserId={impersonatorUserId}
       />
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">

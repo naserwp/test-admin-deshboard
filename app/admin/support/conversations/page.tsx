@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
+import Avatar from "@/app/components/Avatar";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -42,6 +43,7 @@ export default async function AdminSupportConversationsPage({
       status: true,
       createdAt: true,
       lastMessageAt: true,
+      user: { select: { userId: true, email: true, imageUrl: true } },
       messages: {
         take: 1,
         orderBy: { createdAt: "desc" },
@@ -55,9 +57,11 @@ export default async function AdminSupportConversationsPage({
 
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
 
+  const imageUrl = (session.user as any).imageUrl;
+
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav role={session.user.role} userName={userName} imageUrl={imageUrl} />
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
         <div>
           <h1 className="text-2xl font-semibold">Support conversations</h1>
@@ -121,23 +125,32 @@ export default async function AdminSupportConversationsPage({
                   className="border-t border-slate-200 hover:bg-slate-50/60 dark:border-slate-800 dark:hover:bg-slate-800/60"
                 >
                   <td className="px-4 py-3">
-                    <Link
-                      href={`/admin/support/conversations/${c.id}`}
-                      className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
-                    >
-                      #{c.id.slice(0, 8)}
-                    </Link>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
-                      {c.email || c.visitorEmail || c.userId || "Visitor"}
-                    </div>
-                    {c.visitorName ? (
-                      <div className="text-[11px] text-slate-400 dark:text-slate-400">
-                        {c.visitorName}
+                    <div className="flex items-center gap-3">
+                      <Avatar
+                        label={c.visitorName || c.email || c.visitorEmail || c.user?.userId || "Visitor"}
+                        imageUrl={c.user?.imageUrl}
+                        size={32}
+                      />
+                      <div>
+                        <Link
+                          href={`/admin/support/conversations/${c.id}`}
+                          className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+                        >
+                          #{c.id.slice(0, 8)}
+                        </Link>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          {c.email || c.visitorEmail || c.user?.email || c.userId || "Visitor"}
+                        </div>
+                        {c.visitorName ? (
+                          <div className="text-[11px] text-slate-400 dark:text-slate-400">
+                            {c.visitorName}
+                          </div>
+                        ) : null}
                       </div>
-                    ) : null}
+                    </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
+                    <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                       {c.status}
                     </span>
                   </td>

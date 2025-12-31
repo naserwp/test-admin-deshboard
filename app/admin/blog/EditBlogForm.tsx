@@ -230,8 +230,8 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
   return (
     <form onSubmit={handleSubmit} className="card space-y-5 p-6 shadow-soft-xl">
       <div className="space-y-2">
-        <p className="text-sm text-slate-500">Editing</p>
-        <h1 className="text-2xl font-semibold text-slate-900">{title}</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Editing</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{title}</h1>
         <div className="flex items-center gap-2 text-xs font-semibold">
           <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
             Autosave
@@ -246,7 +246,7 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Title</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Title</label>
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
@@ -255,7 +255,7 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Slug</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Slug</label>
           <input
             value={slug}
             onChange={(event) => setSlug(slugify(event.target.value))}
@@ -264,7 +264,7 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1 md:col-span-2">
-          <label className="text-sm font-medium">Excerpt</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Excerpt</label>
           <textarea
             value={excerpt}
             onChange={(event) => setExcerpt(event.target.value)}
@@ -274,15 +274,17 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1 md:col-span-2">
-          <label className="text-sm font-medium">Content</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Content</label>
           <RichEditor value={content} onChange={setContent} />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Tags (comma separated)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Tags (comma separated)
+          </label>
           <input value={tags} onChange={(event) => setTags(event.target.value)} className={fieldClass} />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Cover image</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Cover image</label>
           <input
             type="file"
             accept="image/*"
@@ -290,13 +292,13 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
             className={fieldClass}
           />
           {post.coverImageUrl && (
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Current: {post.coverImageUrl}
             </p>
           )}
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Meta title</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Meta title</label>
           <input
             value={metaTitle}
             onChange={(event) => setMetaTitle(event.target.value)}
@@ -304,7 +306,9 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Meta description</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Meta description
+          </label>
           <input
             value={metaDescription}
             onChange={(event) => setMetaDescription(event.target.value)}
@@ -312,7 +316,7 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Meta image URL</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Meta image URL</label>
           <input
             value={metaImageUrl}
             onChange={(event) => setMetaImageUrl(event.target.value)}
@@ -320,7 +324,9 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Categories (comma separated)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Categories (comma separated)
+          </label>
           <input
             value={categories}
             onChange={(event) => setCategories(event.target.value)}
@@ -329,7 +335,9 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Video embed URL (optional)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Video embed URL (optional)
+          </label>
           <input
             value={videoUrl}
             onChange={(event) => setVideoUrl(event.target.value)}
@@ -338,7 +346,7 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Status</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Status</label>
           <select
             value={status}
             onChange={(event) =>
@@ -351,7 +359,7 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           </select>
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Publish date</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Publish date</label>
           <input
             type="datetime-local"
             value={publishedAt}
@@ -360,7 +368,9 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Custom publish label</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Custom publish label
+          </label>
           <input
             value={customPublished}
             onChange={(event) => setCustomPublished(event.target.value)}
@@ -371,7 +381,9 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Read time (minutes)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Read time (minutes)
+          </label>
           <input
             type="number"
             min={1}
@@ -382,7 +394,9 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Custom TOC (one per line, optional)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Custom TOC (one per line, optional)
+          </label>
           <textarea
             value={tocOverride}
             onChange={(event) => setTocOverride(event.target.value)}
@@ -426,8 +440,8 @@ export default function EditBlogForm({ post }: EditBlogFormProps) {
       </div>
       {(message || error) && (
         <div className="text-sm">
-          {message && <p className="text-emerald-600">{message}</p>}
-          {error && <p className="text-rose-600">{error}</p>}
+          {message && <p className="text-emerald-600 dark:text-emerald-300">{message}</p>}
+          {error && <p className="text-rose-600 dark:text-rose-400">{error}</p>}
         </div>
       )}
       <button type="submit" className="btn btn-primary" disabled={loading}>

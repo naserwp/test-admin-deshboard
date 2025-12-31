@@ -24,6 +24,10 @@ export default function ConversationThread({
   const [status, setStatus] = useState(initialStatus);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [closing, setClosing] = useState(false);
+  const [takingOver, setTakingOver] = useState(false);
   const pollRef = useRef<NodeJS.Timeout | null>(null);
   const esRef = useRef<EventSource | null>(null);
 
@@ -88,8 +92,32 @@ export default function ConversationThread({
     }
   };
 
-  const postAction = async (path: string) => {
-    await fetch(path, { method: "POST" });
+  const postAction = async (path: string, nextStatus?: string) => {
+    setActionError("");
+    setActionMessage("");
+    const res = await fetch(path, { method: "POST" });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setActionError(data.error || "Unable to update conversation.");
+      return;
+    }
+    const updatedStatus = data.conversation?.status || nextStatus;
+    if (updatedStatus) setStatus(updatedStatus);
+    setActionMessage(updatedStatus === "CLOSED" ? "Conversation closed." : "Conversation updated.");
+  };
+
+  const handleTakeover = async () => {
+    if (takingOver) return;
+    setTakingOver(true);
+    await postAction(`/api/admin/conversations/${conversationId}/takeover`, "HUMAN_ACTIVE");
+    setTakingOver(false);
+  };
+
+  const handleClose = async () => {
+    if (closing) return;
+    setClosing(true);
+    await postAction(`/api/admin/conversations/${conversationId}/close`, "CLOSED");
+    setClosing(false);
   };
 
   return (
@@ -99,20 +127,32 @@ export default function ConversationThread({
           {status}
         </span>
         <button
-          onClick={() => postAction(`/api/admin/conversations/${conversationId}/takeover`)}
+          onClick={handleTakeover}
           className="rounded-full bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
           type="button"
+          disabled={takingOver}
         >
-          Take Over Live
+          {takingOver ? "Taking over..." : "Take Over Live"}
         </button>
         <button
-          onClick={() => postAction(`/api/admin/conversations/${conversationId}/close`)}
+          onClick={handleClose}
           className="rounded-full border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-500 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
           type="button"
+          disabled={closing}
         >
-          Close
+          {closing ? "Closing..." : "Close"}
         </button>
       </div>
+      {actionMessage ? (
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200">
+          {actionMessage}
+        </div>
+      ) : null}
+      {actionError ? (
+        <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-200">
+          {actionError}
+        </div>
+      ) : null}
 
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <div className="space-y-4">

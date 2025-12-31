@@ -5,6 +5,7 @@ import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
 import ConversationThread from "@/app/admin/support/conversations/ConversationThread";
+import ConversationHeaderActions from "@/app/admin/support/conversations/ConversationHeaderActions";
 
 export default async function AdminConversationDetailPage({
   params,
@@ -38,10 +39,11 @@ export default async function AdminConversationDetailPage({
   if (!conversation) return redirect("/admin/support/conversations");
 
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
+  const imageUrl = (session.user as any).imageUrl;
 
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav role={session.user.role} userName={userName} imageUrl={imageUrl} />
       <div className="mx-auto max-w-5xl px-6 py-8 space-y-6 text-slate-900 dark:text-slate-100">
         <div className="flex items-center justify-between">
           <div>
@@ -59,27 +61,10 @@ export default async function AdminConversationDetailPage({
               {conversation.visitorPhone || "No phone"}
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
-              {conversation.status}
-            </span>
-            <form action={`/api/admin/conversations/${conversation.id}/takeover`} method="post">
-              <button
-                className="rounded-full bg-slate-900 px-3 py-2 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400 dark:focus-visible:ring-sky-300 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
-                type="submit"
-              >
-                Take Over Live
-              </button>
-            </form>
-            <form action={`/api/admin/conversations/${conversation.id}/close`} method="post">
-              <button
-                className="rounded-full border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-500 dark:disabled:bg-slate-800 dark:disabled:text-slate-400"
-                type="submit"
-              >
-                Close
-              </button>
-            </form>
-          </div>
+          <ConversationHeaderActions
+            conversationId={conversation.id}
+            initialStatus={conversation.status}
+          />
         </div>
 
         <ConversationThread

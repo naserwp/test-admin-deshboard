@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
+import Avatar from "@/app/components/Avatar";
 
 export default async function AdminSupportWaitingPage() {
   const session = await getServerSession(authOptions);
@@ -23,6 +24,7 @@ export default async function AdminSupportWaitingPage() {
         createdAt: true,
         lastMessageAt: true,
         status: true,
+        user: { select: { userId: true, email: true, imageUrl: true } },
         messages: {
           take: 1,
           orderBy: { createdAt: "desc" },
@@ -42,6 +44,7 @@ export default async function AdminSupportWaitingPage() {
         visitorEmail: true,
         userId: true,
         updatedAt: true,
+        user: { select: { userId: true, email: true, imageUrl: true } },
         messages: {
           take: 1,
           orderBy: { createdAt: "desc" },
@@ -53,9 +56,11 @@ export default async function AdminSupportWaitingPage() {
 
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
 
+  const imageUrl = (session.user as any).imageUrl;
+
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav role={session.user.role} userName={userName} imageUrl={imageUrl} />
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
         <div className="flex items-center justify-between">
           <div>
@@ -93,17 +98,26 @@ export default async function AdminSupportWaitingPage() {
                   className="border-t border-amber-200 hover:bg-amber-50/50 dark:border-amber-500/30 dark:hover:bg-amber-500/10"
                 >
                   <td className="px-4 py-3">
-                    <div className="font-semibold text-slate-900 dark:text-slate-100">
-                      #{c.id.slice(0, 8)}
-                    </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
-                      {c.email || c.visitorEmail || c.userId || "Visitor"}
-                    </div>
-                    {c.visitorName ? (
-                      <div className="text-[11px] text-slate-400 dark:text-slate-400">
-                        {c.visitorName}
+                    <div className="flex items-center gap-3">
+                      <Avatar
+                        label={c.visitorName || c.email || c.visitorEmail || c.user?.userId || "Visitor"}
+                        imageUrl={c.user?.imageUrl}
+                        size={32}
+                      />
+                      <div>
+                        <div className="font-semibold text-slate-900 dark:text-slate-100">
+                          #{c.id.slice(0, 8)}
+                        </div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          {c.email || c.visitorEmail || c.user?.email || c.userId || "Visitor"}
+                        </div>
+                        {c.visitorName ? (
+                          <div className="text-[11px] text-slate-400 dark:text-slate-400">
+                            {c.visitorName}
+                          </div>
+                        ) : null}
                       </div>
-                    ) : null}
+                    </div>
                   </td>
                   <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                     {c.messages[0]?.content?.slice(0, 80) ?? "No messages"}
@@ -163,18 +177,27 @@ export default async function AdminSupportWaitingPage() {
                     >
                       #{t.id}
                     </Link>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">{t.subject}</div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
-                      {t.visitorEmail || t.userId || "Visitor"}
+                    <div className="mt-2 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                      <Avatar
+                        label={t.visitorEmail || t.user?.userId || "Visitor"}
+                        imageUrl={t.user?.imageUrl}
+                        size={26}
+                      />
+                      <div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">{t.subject}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          {t.visitorEmail || t.user?.email || t.userId || "Visitor"}
+                        </div>
+                      </div>
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
+                    <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                       {t.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:text-slate-200">
+                    <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                       {t.priority}
                     </span>
                   </td>
