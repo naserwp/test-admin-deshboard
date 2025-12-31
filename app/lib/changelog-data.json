@@ -1,0 +1,202 @@
+[
+  {
+    "hash": "64b53c9",
+    "subject": "Add Talk to Sales lead capture flow",
+    "date": "2025-12-31T01:24:36+00:00"
+  },
+  {
+    "hash": "9a0b4ab",
+    "subject": "Update README.md",
+    "date": "2025-12-31T06:24:18+06:00"
+  },
+  {
+    "hash": "3f7216f",
+    "subject": "Merge pull request #13 from naserwp/codex/improve-admin-ui/ux-and-dark-mode",
+    "date": "2025-12-31T06:23:44+06:00"
+  },
+  {
+    "hash": "9114d7a",
+    "subject": "Improve admin UI and support UX",
+    "date": "2025-12-31T06:22:59+06:00"
+  },
+  {
+    "hash": "889c5c6",
+    "subject": "Update README.md",
+    "date": "2025-12-31T05:31:16+06:00"
+  },
+  {
+    "hash": "01576a7",
+    "subject": "Merge pull request #12 from naserwp/codex/investigate-google-oauth-sign-in-issue",
+    "date": "2025-12-31T05:28:55+06:00"
+  },
+  {
+    "hash": "35678a0",
+    "subject": "Adjust NextAuth redirect and logging",
+    "date": "2025-12-31T05:25:14+06:00"
+  },
+  {
+    "hash": "54495d3",
+    "subject": "Merge pull request #10 from naserwp/codex/fix-dark-mode-ui-issues-zx527y",
+    "date": "2025-12-30T23:33:59+06:00"
+  },
+  {
+    "hash": "125bcdf",
+    "subject": "Fix dark mode contrast on admin and account pages",
+    "date": "2025-12-30T23:33:12+06:00"
+  },
+  {
+    "hash": "b8bafe6",
+    "subject": "Merge pull request #9 from naserwp/codex/fix-dark-mode-ui-issues",
+    "date": "2025-12-30T21:55:39+06:00"
+  },
+  {
+    "hash": "47ea11e",
+    "subject": "Increase dark mode button contrast",
+    "date": "2025-12-30T21:55:16+06:00"
+  },
+  {
+    "hash": "bdcb091",
+    "subject": "Merge pull request #8 from naserwp/codex/fix-dark-mode-ui-visibility-issues",
+    "date": "2025-12-30T20:35:07+06:00"
+  },
+  {
+    "hash": "48f472c",
+    "subject": "Improve dark mode contrast on dashboard",
+    "date": "2025-12-30T20:34:10+06:00"
+  },
+  {
+    "hash": "e462c99",
+    "subject": "fix: run prisma generate during build for vercel",
+    "date": "2025-12-30T06:45:57+06:00"
+  },
+  {
+    "hash": "3268b9d",
+    "subject": "fix: build passes",
+    "date": "2025-12-30T06:38:32+06:00"
+  },
+  {
+    "hash": "14ce885",
+    "subject": "fix publish payload variable name",
+    "date": "2025-12-30T06:10:19+06:00"
+  },
+  {
+    "hash": "ec32501",
+    "subject": "fix chat send route + build error",
+    "date": "2025-12-30T06:01:27+06:00"
+  },
+  {
+    "hash": "5311a67",
+    "subject": "chat added",
+    "date": "2025-12-30T05:53:26+06:00"
+  },
+  {
+    "hash": "4a3cbcd",
+    "subject": "WLP Last update before switching michin",
+    "date": "2025-12-29T18:43:56+06:00"
+  },
+  {
+    "hash": "0b1bc14",
+    "subject": "auto save and lots of ai and blogs implements done",
+    "date": "2025-12-27T07:46:00+06:00"
+  },
+  {
+    "hash": "765d083",
+    "subject": "dark buttom fixed and its good now, login and signup page implement, inpute filed done, added privicy and ters buttonm",
+    "date": "2025-12-27T06:28:19+06:00"
+  },
+  {
+    "hash": "4d31501",
+    "subject": "Merge pull request #7 from naserwp/codex/create-leads-feature-ui",
+    "date": "2025-12-27T06:02:17+06:00"
+  },
+  {
+    "hash": "30cc614",
+    "subject": "Add leads UI pages",
+    "date": "2025-12-27T06:01:38+06:00"
+  },
+  {
+    "hash": "700e799",
+    "subject": "drak mode added auto and manual, but there are color combantion issue, we will look on it",
+    "date": "2025-12-27T06:01:06+06:00"
+  },
+  {
+    "hash": "bc0aabb",
+    "subject": "Merge pull request #6 from naserwp/codex/ensure-consistent-header-and-footer",
+    "date": "2025-12-27T05:23:45+06:00"
+  },
+  {
+    "hash": "104262e",
+    "subject": "Add global footer to app layout",
+    "date": "2025-12-27T05:23:22+06:00"
+  },
+  {
+    "hash": "aba1fbe",
+    "subject": "design implement at dec 27 5 am code pushing",
+    "date": "2025-12-27T04:58:16+06:00"
+  },
+  {
+    "hash": "8ab8d80",
+    "subject": "Merge pull request #5 from naserwp/codex/add-seo-friendly-blog-system",
+    "date": "2025-12-26T14:47:58+06:00"
+  },
+  {
+    "hash": "3442e10",
+    "subject": "Add blog system with admin management",
+    "date": "2025-12-26T14:47:04+06:00"
+  },
+  {
+    "hash": "c968508",
+    "subject": "Apply stashed changes",
+    "date": "2025-12-26T14:39:14+06:00"
+  },
+  {
+    "hash": "87b7656",
+    "subject": "Merge pull request #4 from naserwp/codex/implement-phase-1-for-virtual-office-management",
+    "date": "2025-12-26T14:19:18+06:00"
+  },
+  {
+    "hash": "d58b197",
+    "subject": "Resolve Phase 1 UI conflicts and polish dashboards",
+    "date": "2025-12-26T12:52:18+06:00"
+  },
+  {
+    "hash": "de8d57a",
+    "subject": "Merge Phase-1 UI/UX into main",
+    "date": "2025-12-26T12:30:37+06:00"
+  },
+  {
+    "hash": "1fa7135",
+    "subject": "Merge pull request #3 from naserwp/codex/build-production-ready-web-app",
+    "date": "2025-12-26T12:23:24+06:00"
+  },
+  {
+    "hash": "9c0725d",
+    "subject": "Redesign Phase 1 UI and branding",
+    "date": "2025-12-26T12:21:36+06:00"
+  },
+  {
+    "hash": "3c646a6",
+    "subject": "updated avata, signup system, and others",
+    "date": "2025-12-26T11:54:48+06:00"
+  },
+  {
+    "hash": "7ea4cbe",
+    "subject": "project sucessfully runed in local mac",
+    "date": "2025-12-26T10:22:47+06:00"
+  },
+  {
+    "hash": "f24e210",
+    "subject": "Merge pull request #1 from naserwp/codex/build-production-ready-web-app",
+    "date": "2025-12-26T08:26:36+06:00"
+  },
+  {
+    "hash": "6a7c703",
+    "subject": "Add admin PDF dashboard with auth and assignments",
+    "date": "2025-12-26T08:24:02+06:00"
+  },
+  {
+    "hash": "a45230f",
+    "subject": "first commit",
+    "date": "2025-12-26T08:13:10+06:00"
+  }
+]

@@ -66,6 +66,12 @@ enum TicketPriority {
   URGENT
 }
 
+enum TalkToSalesStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
 model User {
   id           String   @id @default(cuid())
   userId       String   @unique
@@ -320,4 +326,18 @@ model Transcript {
   conversationId String
   ticketId       String
   createdAt      DateTime @default(now())
+}
+
+model TalkToSalesLead {
+  id        String           @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  message   String
+  status    TalkToSalesStatus @default(NEW)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([status, createdAt])
 }
