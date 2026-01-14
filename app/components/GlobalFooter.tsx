@@ -1,5 +1,5 @@
 import Link from "next/link";
-import GlobalLogo from "./GlobalLogo";
+import Brand from "./layout/Brand";
 
 const footerLinks = [
   {
@@ -37,7 +37,7 @@ export default function GlobalFooter() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.35),transparent_34%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.28),transparent_30%)]" />
       <div className="relative grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="space-y-4">
-          <GlobalLogo variant="footer" />
+          <Brand variant="footer" />
           <p className="max-w-xl text-sm text-slate-200">
             Virtual Office Management keeps your documents, leads, and admin workflows in one
             polished, secure surface. AI enrichment, impersonation for support, and multi-channel

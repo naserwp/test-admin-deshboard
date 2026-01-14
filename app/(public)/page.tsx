@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/app/lib/prisma";
-import MarketingFooter from "@/app/components/MarketingFooter";
-import GlobalHeader from "@/app/components/GlobalHeader";
-import GlobalFooter from "@/app/components/GlobalFooter";
+import HomeHero from "@/app/components/HomeHero";
+import { PUBLIC_CONTAINER } from "@/app/components/layout/publicNav";
 
 export default async function Home() {
   const latestPosts = await prisma.blogPost.findMany({
@@ -12,14 +11,14 @@ export default async function Home() {
   });
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
-      <div className="mx-auto max-w-6xl px-6">
-        <GlobalHeader />
+    <div>
+      <div className={PUBLIC_CONTAINER}>
+        <HomeHero />
       </div>
 
       <main>
         <section className="bg-gradient-to-br from-white via-slate-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-          <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className={`${PUBLIC_CONTAINER} grid gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center`}>
             <div className="space-y-6">
               <p className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:bg-slate-800 dark:text-slate-100">
                 Virtual Office Documents
@@ -111,7 +110,7 @@ export default async function Home() {
         </section>
 
         <section id="features" className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="grid gap-10 lg:grid-cols-[0.4fr_0.6fr]">
               <div className="space-y-4">
                 <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
@@ -161,7 +160,7 @@ export default async function Home() {
         </section>
 
         <section id="how-it-works" className="bg-slate-50 py-16 dark:bg-slate-900/40">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="grid gap-10 lg:grid-cols-3">
               {[
                 {
@@ -198,7 +197,7 @@ export default async function Home() {
         </section>
 
         <section id="security" className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="grid gap-10 lg:grid-cols-[0.6fr_0.4fr] lg:items-center">
               <div className="space-y-4">
                 <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
@@ -255,7 +254,7 @@ export default async function Home() {
         </section>
 
         <section id="pricing" className="bg-slate-50 py-16 dark:bg-slate-900/40">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="grid gap-8 lg:grid-cols-[0.6fr_0.4fr] lg:items-center">
               <div className="space-y-4">
                 <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
@@ -289,7 +288,7 @@ export default async function Home() {
         </section>
 
         <section className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="grid gap-8 lg:grid-cols-[0.4fr_0.6fr] lg:items-center">
               <div className="space-y-4">
                 <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
@@ -322,7 +321,7 @@ export default async function Home() {
         </section>
 
         <section id="faq" className="bg-slate-50 py-16 dark:bg-slate-900/40">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="grid gap-6 lg:grid-cols-[0.4fr_0.6fr]">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
@@ -363,7 +362,7 @@ export default async function Home() {
         </section>
 
         <section className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
@@ -433,7 +432,7 @@ export default async function Home() {
         </section>
 
         <section className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
+          <div className={PUBLIC_CONTAINER}>
             <div className="card bg-slate-900 p-10 text-white">
               <div className="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-center">
                 <div>
@@ -458,9 +457,6 @@ export default async function Home() {
           </div>
         </section>
       </main>
-      <div className="mx-auto max-w-6xl px-6 pb-10">
-        <GlobalFooter />
-      </div>
     </div>
   );
 }
