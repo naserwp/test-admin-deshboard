@@ -1,7 +1,5 @@
 import Link from "next/link";
 import BrandMark from "@/app/components/BrandMark";
-import GlobalHeader from "@/app/components/GlobalHeader";
-import GlobalFooter from "@/app/components/GlobalFooter";
 import changelogEntries from "@/app/lib/changelog-data.json";
 
 type ChangelogEntry = {
@@ -21,10 +19,6 @@ export default function ChangelogPage() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-32 top-10 h-72 w-72 rounded-full bg-indigo-200/40 blur-3xl dark:bg-indigo-900/30" />
         <div className="absolute -right-32 bottom-10 h-72 w-72 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-900/30" />
-      </div>
-
-      <div className="mx-auto max-w-6xl px-6 pt-6">
-        <GlobalHeader />
       </div>
 
       <div className="relative mx-auto flex max-w-5xl flex-col gap-10 px-6 py-10">
@@ -109,9 +103,6 @@ export default function ChangelogPage() {
         </footer>
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 pb-10">
-        <GlobalFooter />
-      </div>
     </div>
   );
 }

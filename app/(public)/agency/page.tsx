@@ -1,6 +1,4 @@
 import Link from "next/link";
-import GlobalHeader from "@/app/components/GlobalHeader";
-import GlobalFooter from "@/app/components/GlobalFooter";
 
 const pillars = [
   {
@@ -28,10 +26,6 @@ const services = [
 export default function AgencyPage() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white">
-      <div className="mx-auto max-w-6xl px-6 pt-6">
-        <GlobalHeader />
-      </div>
-
       <main className="mx-auto max-w-6xl px-6 py-12 space-y-12">
         <section className="relative overflow-hidden rounded-3xl border border-slate-800/60 bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 p-8 shadow-soft-xl">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.3),transparent_32%),radial-gradient(circle_at_80%_10%,rgba(56,189,248,0.25),transparent_28%)]" />
@@ -153,9 +147,6 @@ export default function AgencyPage() {
         </section>
       </main>
 
-      <div className="mx-auto max-w-6xl px-6 pb-10">
-        <GlobalFooter />
-      </div>
     </div>
   );
 }
