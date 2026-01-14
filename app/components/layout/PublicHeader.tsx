@@ -85,7 +85,7 @@ export default function PublicHeader() {
     <header className="sticky top-0 z-50 min-h-[var(--public-header-height)] rounded-3xl border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/70">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.12),transparent_32%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.1),transparent_28%)]" />
       <div className="relative flex flex-wrap items-center justify-between gap-4 px-6 py-4 sm:px-8">
-        <Brand />
+        <GlobalLogo />
         <nav
           aria-label="Primary"
           className="flex flex-wrap items-center gap-3 text-sm font-semibold text-slate-600 dark:text-slate-100/80"

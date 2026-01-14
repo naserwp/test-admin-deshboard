@@ -4,6 +4,7 @@ import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
 import Avatar from "@/app/components/Avatar";
 import Link from "next/link";
+import TicketsSearchForm from "./TicketsSearchForm";
 
 export default async function AdminSupportTicketsPage({
   searchParams,

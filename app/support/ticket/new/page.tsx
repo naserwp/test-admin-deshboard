@@ -24,6 +24,16 @@ export default async function NewSupportTicketPage() {
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Our team will notify you by email when we reply.
           </p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            Need a business document instead?{" "}
+            <Link
+              href="/documents/request"
+              className="font-semibold text-indigo-700 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+            >
+              Request it here
+            </Link>
+            .
+          </p>
         </div>
         <form
           action="/api/support/tickets"
