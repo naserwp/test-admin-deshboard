@@ -8,6 +8,7 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
+    // All public pages must live under (public) so they inherit consistent header/footer.
     <div
       className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100"
       style={{ "--public-header-height": PUBLIC_HEADER_HEIGHT } as React.CSSProperties}
