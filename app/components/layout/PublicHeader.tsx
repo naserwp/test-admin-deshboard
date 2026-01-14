@@ -2,19 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import GlobalLogo from "./GlobalLogo";
-
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Features", href: "/#features" },
-  { label: "How it works", href: "/#how-it-works" },
-  { label: "Security", href: "/#security" },
-  { label: "Pricing", href: "/#pricing" },
-  { label: "FAQ", href: "/#faq" },
-  { label: "Blog", href: "/blog" },
-  { label: "Changelog", href: "/changelog" },
-  { label: "Agency", href: "/agency" },
-];
+import GlobalLogo from "../GlobalLogo";
+import { publicNavItems } from "./publicNav";
 
 export default function PublicHeader() {
   const pathname = usePathname();
@@ -36,7 +25,7 @@ export default function PublicHeader() {
     [
       "relative inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold transition-all duration-200",
       isActive(href, pathname)
-        ? "bg-white text-slate-900 shadow-sm dark:bg-white/10 dark:text-white"
+        ? "bg-white text-slate-900 shadow-sm underline decoration-2 underline-offset-4 decoration-indigo-400 dark:bg-white/10 dark:text-white"
         : "text-slate-600 dark:text-slate-100/80",
       "hover:-translate-y-0.5 hover:text-slate-900 hover:bg-white/70 hover:shadow-[0_0_12px_rgba(99,102,241,0.25)]",
       "dark:hover:text-white dark:hover:bg-indigo-500/15 dark:hover:shadow-[0_0_18px_rgba(56,189,248,0.45)]",
@@ -56,8 +45,11 @@ export default function PublicHeader() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.12),transparent_32%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.1),transparent_28%)]" />
       <div className="relative flex flex-wrap items-center justify-between gap-4 px-6 py-4 sm:px-8">
         <GlobalLogo />
-        <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold text-slate-600 dark:text-slate-100/80">
-          {navItems.map((item) => (
+        <nav
+          aria-label="Primary"
+          className="flex flex-wrap items-center gap-3 text-sm font-semibold text-slate-600 dark:text-slate-100/80"
+        >
+          {publicNavItems.map((item) => (
             <Link key={item.label} href={item.href} className={headerLinkClass(item.href)}>
               {item.label}
             </Link>

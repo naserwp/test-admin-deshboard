@@ -4,6 +4,7 @@ import { prisma } from "@/app/lib/prisma";
 import { renderMarkdown } from "@/app/lib/markdown";
 import { samplePosts } from "@/app/lib/samplePosts";
 import TOCClient from "@/app/blog/TOCClient";
+import { PUBLIC_CONTAINER } from "@/app/components/layout/publicNav";
 
 type BlogPostPageProps = {
   params: { slug: string };
@@ -112,9 +113,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const related = getRelated(post.slug);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 lg:flex lg:gap-10">
+    <div className={`${PUBLIC_CONTAINER} py-12 lg:flex lg:gap-10`}>
       <article className="flex-1">
         <div className="space-y-4">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+          >
+            <span aria-hidden="true">←</span>
+            Back to blog
+          </Link>
           <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
             Blog
           </p>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/app/lib/prisma";
 import { samplePosts } from "@/app/lib/samplePosts";
+import { PUBLIC_CONTAINER } from "@/app/components/layout/publicNav";
 
 const wordsPerMinute = 180;
 const readingTime = (content: string) =>
@@ -35,12 +36,12 @@ export default async function BlogPage() {
         }));
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12">
+    <div className={`${PUBLIC_CONTAINER} py-12`}>
       <div className="space-y-4">
         <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
           Blog
         </p>
-        <h1 className="text-4xl font-semibold text-slate-900">
+        <h1 className="text-4xl font-semibold text-slate-900 dark:text-slate-100">
           Virtual Office insights
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-300">

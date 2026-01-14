@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandMark from "@/app/components/BrandMark";
 import changelogEntries from "@/app/lib/changelog-data.json";
+import { PUBLIC_CONTAINER } from "@/app/components/layout/publicNav";
 
 type ChangelogEntry = {
   hash: string;
@@ -15,7 +16,7 @@ export default function ChangelogPage() {
   }));
 
   return (
-    <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 py-10">
+    <div className={`relative ${PUBLIC_CONTAINER} flex flex-col gap-10 py-10`}>
       <header className="space-y-4">
         <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 ring-1 ring-indigo-100 shadow-sm dark:bg-slate-900/80 dark:text-indigo-200 dark:ring-slate-800">
           <span className="h-2 w-2 rounded-full bg-green-500" />
