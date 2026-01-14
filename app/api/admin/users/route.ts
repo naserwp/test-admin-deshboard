@@ -19,7 +19,15 @@ export async function GET() {
 
     const users = await prisma.user.findMany({
       orderBy: { createdAt: "desc" },
-      select: { id: true, userId: true, role: true, createdAt: true, email: true, canRequestLeads: true },
+      select: {
+        id: true,
+        userId: true,
+        role: true,
+        createdAt: true,
+        email: true,
+        canRequestLeads: true,
+        imageUrl: true,
+      },
     });
 
     return NextResponse.json({ users });
@@ -54,7 +62,15 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.create({
       data: { userId, passwordHash, role, email, canRequestLeads },
-      select: { id: true, userId: true, role: true, createdAt: true, email: true, canRequestLeads: true },
+      select: {
+        id: true,
+        userId: true,
+        role: true,
+        createdAt: true,
+        email: true,
+        canRequestLeads: true,
+        imageUrl: true,
+      },
     });
 
     return NextResponse.json({ user }, { status: 201 });

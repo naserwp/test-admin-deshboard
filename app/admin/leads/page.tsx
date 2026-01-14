@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 import TopNav from "@/app/components/TopNav";
+import Avatar from "@/app/components/Avatar";
 import Link from "next/link";
 
 export default async function AdminLeadsPage() {
@@ -35,7 +36,7 @@ export default async function AdminLeadsPage() {
 
   const jobs = await prisma.leadJob.findMany({
     orderBy: { createdAt: "desc" },
-    include: { user: { select: { userId: true, email: true } } },
+    include: { user: { select: { userId: true, email: true, imageUrl: true } } },
   });
 
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
@@ -45,6 +46,7 @@ export default async function AdminLeadsPage() {
       <TopNav
         role={session.user.role}
         userName={userName}
+        imageUrl={(session.user as any).imageUrl}
         impersonatorUserId={impersonatorUserId}
       />
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6 text-slate-900 dark:text-slate-100">
@@ -87,9 +89,20 @@ export default async function AdminLeadsPage() {
                       {job.keyword}
                     </td>
                     <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
-                      <div>{job.user.userId}</div>
-                      <div className="text-xs text-slate-400 dark:text-slate-400">
-                        {job.user.email ?? "-"}
+                      <div className="flex items-center gap-3">
+                        <Avatar
+                          label={job.user.userId || job.user.email || "User"}
+                          imageUrl={job.user.imageUrl}
+                          size={32}
+                        />
+                        <div>
+                          <div className="font-semibold text-slate-900 dark:text-slate-100">
+                            {job.user.userId}
+                          </div>
+                          <div className="text-xs text-slate-400 dark:text-slate-400">
+                            {job.user.email ?? "-"}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-slate-600 dark:text-slate-300">

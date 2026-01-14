@@ -99,3 +99,82 @@ export function guestLeadTemplate(params: {
     </div>
   `;
 }
+
+export function talkToSalesAdminTemplate(params: {
+  name: string;
+  email: string;
+  phone?: string | null;
+  company?: string | null;
+  message: string;
+  leadId: string;
+}) {
+  const baseUrl = process.env.NEXTAUTH_URL || "";
+  const adminLink = `${baseUrl}/admin/support/tickets`;
+  return `
+    <div style="font-family: Arial, sans-serif;">
+      <h3>New Talk to Sales lead</h3>
+      <p><strong>Lead ID:</strong> ${params.leadId}</p>
+      <p><strong>Name:</strong> ${params.name}</p>
+      <p><strong>Email:</strong> ${params.email}</p>
+      <p><strong>Phone:</strong> ${params.phone ?? "Not provided"}</p>
+      <p><strong>Company:</strong> ${params.company ?? "Not provided"}</p>
+      <p><strong>Message:</strong> ${params.message}</p>
+      <p><a href="${adminLink}">View in admin</a></p>
+    </div>
+  `;
+}
+
+export function talkToSalesUserTemplate(params: {
+  name: string;
+  company?: string | null;
+}) {
+  return `
+    <div style="font-family: Arial, sans-serif;">
+      <h3>Thanks for reaching out!</h3>
+      <p>Hi ${params.name},</p>
+      <p>We received your Talk to Sales request${
+        params.company ? ` for ${params.company}` : ""
+      }. Our team will follow up shortly.</p>
+      <p>— Virtual Office Team</p>
+    </div>
+  `;
+}
+
+export function businessDocumentAdminTemplate(params: {
+  name: string;
+  email: string;
+  phone?: string | null;
+  docType: string;
+  businessName: string;
+  state?: string | null;
+  notes: string;
+  requestId: string;
+}) {
+  const baseUrl = process.env.NEXTAUTH_URL || "";
+  const adminLink = `${baseUrl}/admin/support/tickets`;
+  return `
+    <div style="font-family: Arial, sans-serif;">
+      <h3>New business document request</h3>
+      <p><strong>Request ID:</strong> ${params.requestId}</p>
+      <p><strong>Name:</strong> ${params.name}</p>
+      <p><strong>Email:</strong> ${params.email}</p>
+      <p><strong>Phone:</strong> ${params.phone ?? "Not provided"}</p>
+      <p><strong>Document type:</strong> ${params.docType}</p>
+      <p><strong>Business name:</strong> ${params.businessName}</p>
+      <p><strong>State:</strong> ${params.state ?? "Not provided"}</p>
+      <p><strong>Notes:</strong> ${params.notes}</p>
+      <p><a href="${adminLink}">View in admin</a></p>
+    </div>
+  `;
+}
+
+export function businessDocumentUserTemplate(params: { name: string }) {
+  return `
+    <div style="font-family: Arial, sans-serif;">
+      <h3>We received your document request</h3>
+      <p>Hi ${params.name},</p>
+      <p>Thanks for your request. Our team will review the details and reach out shortly.</p>
+      <p>— Virtual Office Team</p>
+    </div>
+  `;
+}

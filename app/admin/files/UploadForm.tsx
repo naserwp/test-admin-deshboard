@@ -52,21 +52,29 @@ export default function UploadForm() {
           className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-400 dark:focus:ring-indigo-500/30"
         />
       </div>
-      <div className="space-y-1">
+      <div className="space-y-2">
         <label className="text-sm font-medium text-slate-700 dark:text-slate-200">PDF File</label>
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={(event) => setFile(event.target.files?.[0] || null)}
-          required
-          className="block w-full text-sm text-slate-700 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-slate-800 dark:text-slate-200 dark:file:bg-sky-500 dark:file:text-white dark:hover:file:bg-sky-400"
-        />
+        <div className="flex flex-wrap items-center gap-3">
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={(event) => setFile(event.target.files?.[0] || null)}
+            required
+            className="block w-full flex-1 text-sm text-slate-700 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-slate-800 dark:text-slate-200 dark:file:bg-sky-500 dark:file:text-white dark:hover:file:bg-sky-400"
+          />
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Uploading..." : "Upload"}
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          Choose a PDF and click upload to add it to the library.
+        </p>
       </div>
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
       {message && <p className="text-sm text-green-600 dark:text-emerald-300">{message}</p>}
-      <button type="submit" className="btn btn-primary" disabled={loading}>
-        {loading ? "Uploading..." : "Upload"}
-      </button>
+      <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+        <span>Uploads appear in the table below.</span>
+      </div>
     </form>
   );
 }

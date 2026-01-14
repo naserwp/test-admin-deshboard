@@ -27,6 +27,7 @@ app/
   api/               # Route handlers
   components/        # Shared UI components
   lib/               # Auth, prisma, storage, rate limit helpers
+  (public)/          # Public marketing pages (inherits shared header/footer)
 prisma/              # Prisma schema and seed
 uploads/             # Local PDF storage (dev)
 ```

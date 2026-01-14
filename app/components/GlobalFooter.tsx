@@ -1,35 +1,6 @@
 import Link from "next/link";
-import GlobalLogo from "./GlobalLogo";
-
-const footerLinks = [
-  {
-    title: "Product",
-    items: [
-      { label: "Overview", href: "/" },
-      { label: "Changelog", href: "/changelog" },
-      { label: "Lead jobs", href: "/leads" },
-      { label: "Admin tools", href: "/admin" },
-    ],
-  },
-  {
-    title: "Resources",
-    items: [
-      { label: "Blog", href: "/blog" },
-      { label: "Docs", href: "/docs" },
-      { label: "Security", href: "#security" },
-      { label: "Pricing", href: "#pricing" },
-    ],
-  },
-  {
-    title: "Company",
-    items: [
-      { label: "About", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "/contact" },
-      { label: "Status", href: "/status" },
-    ],
-  },
-];
+import Brand from "./layout/Brand";
+import { publicFooterGroups } from "./layout/publicNav";
 
 export default function GlobalFooter() {
   return (
@@ -37,7 +8,7 @@ export default function GlobalFooter() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.35),transparent_34%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.28),transparent_30%)]" />
       <div className="relative grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="space-y-4">
-          <GlobalLogo variant="footer" />
+          <Brand variant="footer" />
           <p className="max-w-xl text-sm text-slate-200">
             Virtual Office Management keeps your documents, leads, and admin workflows in one
             polished, secure surface. AI enrichment, impersonation for support, and multi-channel
@@ -57,7 +28,7 @@ export default function GlobalFooter() {
         </div>
 
         <div className="grid gap-6 rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 backdrop-blur lg:grid-cols-3">
-          {footerLinks.map((group) => (
+          {publicFooterGroups.map((group) => (
             <div key={group.title} className="space-y-3">
               <p className="text-sm font-semibold text-white/90">{group.title}</p>
               <ul className="space-y-2 text-sm text-slate-200">

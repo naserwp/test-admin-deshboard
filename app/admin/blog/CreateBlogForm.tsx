@@ -282,11 +282,21 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
     <form onSubmit={handleSubmit} className="card space-y-6 p-6 shadow-soft-xl">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Create new post</h2>
-          <p className="text-xs text-slate-500">Visual editor · drag & drop media</p>
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            Create new post
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Visual editor · drag & drop media
+          </p>
         </div>
         <div className="flex items-center gap-2 text-xs font-semibold">
-          <span className={`rounded-full px-3 py-1 ${isSeoStrong ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+          <span
+            className={`rounded-full px-3 py-1 ${
+              isSeoStrong
+                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-200"
+                : "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-200"
+            }`}
+          >
             SEO {estimateSeo()}/100
           </span>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
@@ -305,7 +315,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Title</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Title</label>
           <input
             value={title}
             onChange={(event) => {
@@ -319,7 +329,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Slug</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Slug</label>
           <input
             value={slug}
             onChange={(event) => setSlug(slugify(event.target.value))}
@@ -328,7 +338,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           />
         </div>
         <div className="space-y-1 md:col-span-2">
-          <label className="text-sm font-medium">Excerpt</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Excerpt</label>
           <textarea
             value={excerpt}
             onChange={(event) => setExcerpt(event.target.value)}
@@ -343,7 +353,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Tags (comma separated)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Tags (comma separated)
+          </label>
           <input
             value={tags}
             onChange={(event) => setTags(event.target.value)}
@@ -352,7 +364,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Categories (comma separated)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Categories (comma separated)
+          </label>
           <input
             value={categories}
             onChange={(event) => setCategories(event.target.value)}
@@ -364,7 +378,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-sm font-medium text-slate-700 dark:text-slate-200">
             <span>Cover image</span>
             <div className="flex gap-2 text-xs">
               <label className="inline-flex items-center gap-1">
@@ -405,7 +419,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
         </div>
 
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-sm font-medium text-slate-700 dark:text-slate-200">
             <span>Meta image</span>
             <div className="flex gap-2 text-xs">
               <label className="inline-flex items-center gap-1">
@@ -436,14 +450,16 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
               className={fieldClass}
             />
           ) : (
-            <p className="text-xs text-slate-500">Meta will reuse cover upload when provided.</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Meta will reuse cover upload when provided.
+            </p>
           )}
         </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Meta title</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Meta title</label>
           <input
             value={metaTitle}
             onChange={(event) => setMetaTitle(event.target.value)}
@@ -451,7 +467,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Meta description</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Meta description
+          </label>
           <input
             value={metaDescription}
             onChange={(event) => setMetaDescription(event.target.value)}
@@ -462,7 +480,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-sm font-medium text-slate-700 dark:text-slate-200">
             <span>Video</span>
             <div className="flex gap-2 text-xs">
               <label className="inline-flex items-center gap-1">
@@ -502,7 +520,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           )}
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Custom publish label</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Custom publish label
+          </label>
           <input
             value={customPublished}
             onChange={(event) => setCustomPublished(event.target.value)}
@@ -514,7 +534,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Read time (minutes)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Read time (minutes)
+          </label>
           <input
             type="number"
             min={1}
@@ -525,7 +547,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Custom TOC (one per line, optional)</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Custom TOC (one per line, optional)
+          </label>
           <textarea
             value={tocOverride}
             onChange={(event) => setTocOverride(event.target.value)}
@@ -546,7 +570,7 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium">Status</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Status</label>
           <select
             value={status}
             onChange={(event) =>
@@ -559,7 +583,9 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
           </select>
         </div>
         <div className="space-y-1">
-          <label className="text-sm font-medium">Publish date</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Publish date
+          </label>
           <input
             type="datetime-local"
             value={publishedAt}
@@ -571,8 +597,8 @@ export default function CreateBlogForm({ onCreated }: CreateBlogFormProps) {
 
       {(message || error) && (
         <div className="text-sm">
-          {message && <p className="text-emerald-600">{message}</p>}
-          {error && <p className="text-rose-600">{error}</p>}
+          {message && <p className="text-emerald-600 dark:text-emerald-300">{message}</p>}
+          {error && <p className="text-rose-600 dark:text-rose-400">{error}</p>}
         </div>
       )}
       <button type="submit" className="btn btn-primary" disabled={loading}>

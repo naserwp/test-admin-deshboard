@@ -56,6 +56,11 @@ type GuestProfile = {
   storedAt: string;
 };
 
+type UserProfile = {
+  userId?: string | null;
+  email?: string | null;
+};
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -65,7 +70,6 @@ export default function ChatWidget() {
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
-  const [creatingTicket, setCreatingTicket] = useState(false);
   const [guestProfile, setGuestProfile] = useState<GuestProfile | null>(null);
   const [guestForm, setGuestForm] = useState({ name: "", email: "", phone: "" });
   const [guestSubmitting, setGuestSubmitting] = useState(false);
@@ -73,8 +77,22 @@ export default function ChatWidget() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const [requestingHuman, setRequestingHuman] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [ticketOpen, setTicketOpen] = useState(false);
+  const [ticketSubmitting, setTicketSubmitting] = useState(false);
+  const [ticketError, setTicketError] = useState("");
+  const [ticketCreated, setTicketCreated] = useState<{ id: string; subject: string } | null>(null);
+  const [ticketForm, setTicketForm] = useState({
+    subject: "",
+    message: "",
+    name: "",
+    email: "",
+    attachments: [] as File[],
+  });
   const pollRef = useRef<NodeJS.Timeout | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
+
+  const creatingTicket = ticketOpen || ticketSubmitting;
 
   const badgeText = useMemo(() => {
     const count = messages.filter((m) => m.role !== "user").length;
@@ -122,6 +140,29 @@ export default function ChatWidget() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!authChecked || !isAuthenticated) return;
+    let active = true;
+    const loadProfile = async () => {
+      try {
+        const res = await fetch("/api/account/me", { cache: "no-store" });
+        const data = await res.json().catch(() => null);
+        if (active && data?.user) {
+          setUserProfile({
+            userId: data.user.userId ?? null,
+            email: data.user.email ?? null,
+          });
+        }
+      } catch {
+        // ignore
+      }
+    };
+    loadProfile();
+    return () => {
+      active = false;
+    };
+  }, [authChecked, isAuthenticated]);
 
   const needsGuestProfile = authChecked && !isAuthenticated && !guestProfile;
 
@@ -353,25 +394,65 @@ export default function ChatWidget() {
     }
   };
 
-  const handleCreateTicket = async () => {
-    if (!conversationId || creatingTicket) return;
-    const subject = typeof window !== "undefined" ? window.prompt("Add a subject for this ticket (optional):", "") : "";
-    setCreatingTicket(true);
-    setError("");
+  const handleCreateTicket = () => {
+    if (!conversationId || ticketOpen || ticketSubmitting) return;
+    const fallbackName = guestProfile?.name || guestForm.name || "";
+    const fallbackEmail = guestProfile?.email || guestForm.email || "";
+    const profileName = userProfile?.userId || fallbackName;
+    const profileEmail = userProfile?.email || fallbackEmail;
+    setTicketForm({
+      subject: "",
+      message: "",
+      name: profileName || "",
+      email: profileEmail || "",
+      attachments: [],
+    });
+    setTicketCreated(null);
+    setTicketError("");
+    setTicketOpen(true);
+  };
+
+  const handleTicketSubmit = async () => {
+    if (ticketSubmitting) return;
+    if (!ticketForm.subject.trim() || !ticketForm.message.trim()) {
+      setTicketError("Subject and description are required.");
+      return;
+    }
+    if (!isAuthenticated) {
+      if (!ticketForm.name.trim()) {
+        setTicketError("Name is required.");
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketForm.email.trim())) {
+        setTicketError("Valid email is required.");
+        return;
+      }
+    }
+    setTicketSubmitting(true);
+    setTicketError("");
     try {
-      const res = await fetch("/api/tickets/from-chat", {
+      const formData = new FormData();
+      formData.append("subject", ticketForm.subject.trim());
+      formData.append("message", ticketForm.message.trim());
+      if (ticketForm.name.trim()) formData.append("name", ticketForm.name.trim());
+      if (ticketForm.email.trim()) formData.append("email", ticketForm.email.trim());
+      ticketForm.attachments.forEach((file) => formData.append("attachments", file));
+
+      const res = await fetch("/api/support/tickets", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversationId, ...(subject ? { subject } : {}) }),
+        body: formData,
       });
+      const data = await res.json().catch(() => null);
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
         throw new Error(data?.error || "Ticket create failed");
       }
+      if (data?.ticket?.id) {
+        setTicketCreated({ id: data.ticket.id, subject: data.ticket.subject });
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Ticket create failed");
+      setTicketError(err instanceof Error ? err.message : "Ticket create failed");
     } finally {
-      setCreatingTicket(false);
+      setTicketSubmitting(false);
     }
   };
 
@@ -430,6 +511,22 @@ export default function ChatWidget() {
         conversationId={conversationId}
         creatingTicket={creatingTicket}
         onCreateTicket={handleCreateTicket}
+        ticketOpen={ticketOpen}
+        ticketValues={ticketForm}
+        onTicketChange={(field, value) =>
+          setTicketForm((prev) => ({
+            ...prev,
+            [field]: value as any,
+          }))
+        }
+        onTicketClose={() => {
+          setTicketOpen(false);
+          setTicketError("");
+        }}
+        onTicketSubmit={handleTicketSubmit}
+        ticketSubmitting={ticketSubmitting}
+        ticketError={ticketError}
+        ticketCreated={ticketCreated}
         requireGuestProfile={needsGuestProfile}
         guestValues={guestForm}
         onGuestChange={(field, value) =>

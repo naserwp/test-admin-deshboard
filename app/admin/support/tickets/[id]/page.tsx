@@ -34,10 +34,11 @@ export default async function AdminTicketDetailPage({
   if (!ticket) return redirect("/admin/support/tickets");
 
   const userName = session.user.userId ?? (session.user as any).email ?? "Admin";
+  const imageUrl = (session.user as any).imageUrl;
 
   return (
     <div>
-      <TopNav role={session.user.role} userName={userName} />
+      <TopNav role={session.user.role} userName={userName} imageUrl={imageUrl} />
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 space-y-6 text-slate-900 dark:text-slate-100">
         <div className="flex items-center justify-between">
           <div>
@@ -54,10 +55,10 @@ export default async function AdminTicketDetailPage({
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
+            <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               {ticket.status}
             </span>
-            <span className="rounded-full border border-slate-200 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
+            <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               {ticket.priority}
             </span>
           </div>
