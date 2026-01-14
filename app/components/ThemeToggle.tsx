@@ -25,7 +25,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={nextMode}
-      className="flex h-11 min-w-[2.75rem] items-center justify-center rounded-full border border-slate-300 bg-white/90 px-3 text-[11px] font-semibold uppercase tracking-wide text-slate-700 shadow-md backdrop-blur dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100 hover:border-slate-400 dark:hover:border-slate-500"
+      className="flex h-11 min-w-[2.75rem] items-center justify-center rounded-full border border-slate-300 bg-white/90 px-3 text-[11px] font-semibold uppercase tracking-wide text-slate-700 shadow-md backdrop-blur transition hover:border-slate-400 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60 dark:border-slate-600 dark:bg-slate-800/95 dark:text-slate-100 dark:hover:border-slate-400 dark:hover:bg-slate-800/80"
       aria-label="Toggle theme"
     >
       <span
