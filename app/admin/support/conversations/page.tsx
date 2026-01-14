@@ -13,9 +13,10 @@ export default async function AdminSupportConversationsPage({
 }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id || session.user.role !== "ADMIN") return redirect("/dashboard");
-  const status = searchParams?.status;
-  const cursor = searchParams?.cursor;
-  const search = searchParams?.search?.trim();
+  const sp = await Promise.resolve(searchParams);
+  const status = sp?.status;
+  const cursor = sp?.cursor;
+  const search = sp?.search?.trim();
 
   const conversations = await prisma.conversation.findMany({
     where: {
