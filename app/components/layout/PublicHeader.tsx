@@ -10,6 +10,7 @@ import {
   publicTopNavItems,
   type PublicNavItem,
 } from "./publicNav";
+import GlobalLogo from "../GlobalLogo";
 
 const PRODUCT_MENU_ID = "product-menu";
 
