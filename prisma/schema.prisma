@@ -23,11 +23,13 @@ enum PostStatus {
   PUBLISHED
 }
 
+
+
 enum BusinessDocumentRequestStatus {
   NEW
-  IN_REVIEW
+  IN_PROGRESS
   COMPLETED
-  REJECTED
+  CLOSED
 }
 
 enum LeadJobStatus {
@@ -78,12 +80,7 @@ enum TalkToSalesStatus {
   CLOSED
 }
 
-enum BusinessDocumentRequestStatus {
-  NEW
-  IN_PROGRESS
-  COMPLETED
-  CLOSED
-}
+
 
 model User {
   id               String                    @id @default(cuid())
