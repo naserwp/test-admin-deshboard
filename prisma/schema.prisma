@@ -72,6 +72,13 @@ enum TalkToSalesStatus {
   CLOSED
 }
 
+enum BusinessDocumentRequestStatus {
+  NEW
+  IN_REVIEW
+  COMPLETED
+  REJECTED
+}
+
 model User {
   id           String   @id @default(cuid())
   userId       String   @unique
