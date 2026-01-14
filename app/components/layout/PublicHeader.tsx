@@ -24,8 +24,8 @@ export default function PublicHeader() {
   const headerLinkClass = (href: string) =>
     [
       "relative inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold transition-all duration-200",
-      isActive(href, pathname)
-        ? "bg-white text-slate-900 shadow-sm underline decoration-2 underline-offset-4 decoration-indigo-400 dark:bg-white/10 dark:text-white"
+      active
+        ? "bg-indigo-100/80 text-slate-900 shadow-sm dark:bg-indigo-500/20 dark:text-white"
         : "text-slate-600 dark:text-slate-100/80",
       "hover:-translate-y-0.5 hover:text-slate-900 hover:bg-white/70 hover:shadow-[0_0_12px_rgba(99,102,241,0.25)]",
       "dark:hover:text-white dark:hover:bg-indigo-500/15 dark:hover:shadow-[0_0_18px_rgba(56,189,248,0.45)]",
@@ -41,7 +41,7 @@ export default function PublicHeader() {
   ].join(" ");
 
   return (
-    <header className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/70">
+    <header className="sticky top-0 z-50 min-h-[var(--public-header-height)] rounded-3xl border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/70">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.12),transparent_32%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.1),transparent_28%)]" />
       <div className="relative flex flex-wrap items-center justify-between gap-4 px-6 py-4 sm:px-8">
         <GlobalLogo />
