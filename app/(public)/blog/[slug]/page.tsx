@@ -3,8 +3,9 @@ import Link from "next/link";
 import { prisma } from "@/app/lib/prisma";
 import { renderMarkdown } from "@/app/lib/markdown";
 import { samplePosts } from "@/app/lib/samplePosts";
-import TOCClient from "@/app/blog/TOCClient";
+
 import { PUBLIC_CONTAINER } from "@/app/components/layout/publicNav";
+import TOCClient from "../TOCClient";
 
 type BlogPostPageProps = {
   params: { slug: string };
