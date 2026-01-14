@@ -1,35 +1,6 @@
 import Link from "next/link";
 import Brand from "./layout/Brand";
-
-const footerLinks = [
-  {
-    title: "Product",
-    items: [
-      { label: "Overview", href: "/" },
-      { label: "Changelog", href: "/changelog" },
-      { label: "Lead jobs", href: "/leads" },
-      { label: "Admin tools", href: "/admin" },
-    ],
-  },
-  {
-    title: "Resources",
-    items: [
-      { label: "Blog", href: "/blog" },
-      { label: "Docs", href: "/docs" },
-      { label: "Security", href: "#security" },
-      { label: "Pricing", href: "#pricing" },
-    ],
-  },
-  {
-    title: "Company",
-    items: [
-      { label: "About", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "/contact" },
-      { label: "Status", href: "/status" },
-    ],
-  },
-];
+import { publicFooterGroups } from "./layout/publicNav";
 
 export default function GlobalFooter() {
   return (
@@ -57,7 +28,7 @@ export default function GlobalFooter() {
         </div>
 
         <div className="grid gap-6 rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 backdrop-blur lg:grid-cols-3">
-          {footerLinks.map((group) => (
+          {publicFooterGroups.map((group) => (
             <div key={group.title} className="space-y-3">
               <p className="text-sm font-semibold text-white/90">{group.title}</p>
               <ul className="space-y-2 text-sm text-slate-200">
