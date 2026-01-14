@@ -1,6 +1,4 @@
 import Link from "next/link";
-import MarketingNav from "@/app/components/MarketingNav";
-import MarketingFooter from "@/app/components/MarketingFooter";
 import { prisma } from "@/app/lib/prisma";
 import { samplePosts } from "@/app/lib/samplePosts";
 
@@ -38,9 +36,6 @@ export default async function BlogPage() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
-      <div className="mx-auto max-w-6xl px-6">
-        <MarketingNav />
-      </div>
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="space-y-4">
           <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
@@ -125,7 +120,6 @@ export default async function BlogPage() {
           )}
         </div>
       </div>
-      <MarketingFooter />
     </div>
   );
 }

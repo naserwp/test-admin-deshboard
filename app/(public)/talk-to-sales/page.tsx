@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import MarketingNav from "@/app/components/MarketingNav";
-import GlobalFooter from "@/app/components/GlobalFooter";
 
 const initialForm = {
   name: "",
@@ -63,10 +61,6 @@ export default function TalkToSalesPage() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.18),transparent_34%),radial-gradient(circle_at_80%_0%,rgba(129,140,248,0.15),transparent_30%)] opacity-70 dark:opacity-50" />
-      <div className="relative mx-auto max-w-6xl px-6 pt-6">
-        <MarketingNav />
-      </div>
-
       <main className="relative mx-auto max-w-5xl px-6 py-12">
         <div className="grid gap-8 lg:grid-cols-[0.6fr_0.4fr] lg:items-start">
           <div className="space-y-6">
@@ -190,9 +184,6 @@ export default function TalkToSalesPage() {
         </div>
       </main>
 
-      <div className="mx-auto max-w-6xl px-6 pb-10">
-        <GlobalFooter />
-      </div>
     </div>
   );
 }

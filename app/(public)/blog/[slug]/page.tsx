@@ -1,11 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import MarketingNav from "@/app/components/MarketingNav";
-import MarketingFooter from "@/app/components/MarketingFooter";
 import { prisma } from "@/app/lib/prisma";
 import { renderMarkdown } from "@/app/lib/markdown";
 import { samplePosts } from "@/app/lib/samplePosts";
-import TOCClient from "@/app/blog/TOCClient";
+import TOCClient from "../TOCClient";
 
 type BlogPostPageProps = {
   params: { slug: string };
@@ -115,9 +113,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
-      <div className="mx-auto max-w-6xl px-6">
-        <MarketingNav />
-      </div>
       <div className="mx-auto max-w-6xl px-6 py-12 lg:flex lg:gap-10">
         <article className="flex-1">
           <div className="space-y-4">
@@ -226,7 +221,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </aside>
       </div>
-      <MarketingFooter />
     </div>
   );
 }
