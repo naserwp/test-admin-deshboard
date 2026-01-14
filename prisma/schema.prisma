@@ -81,9 +81,9 @@ enum TalkToSalesStatus {
 
 enum BusinessDocumentRequestStatus {
   NEW
-  IN_REVIEW
+  IN_PROGRESS
   COMPLETED
-  REJECTED
+  CLOSED
 }
 
 model User {
