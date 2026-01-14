@@ -31,7 +31,7 @@ export const publicProductItems = [
   { label: "Security", href: "/security" },
 ];
 
-export const publicFooterGroups: PublicNavGroup[] = [
+export const publicNavItems: PublicNavGroup[] = [
   {
     title: "Product",
     items: [
@@ -61,3 +61,5 @@ export const publicFooterGroups: PublicNavGroup[] = [
     ],
   },
 ];
+
+export const publicFooterGroups = publicNavItems;

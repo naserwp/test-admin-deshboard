@@ -46,11 +46,19 @@ npm install
 cp .env.example .env
 ```
 
-3. Run migrations:
+3. Run migrations (local disposable DBs can use `migrate dev`; shared/remote DBs should use `migrate deploy`):
 
 ```bash
 npx prisma migrate dev
 ```
+
+For shared/remote databases (like Neon), use:
+
+```bash
+npx prisma migrate deploy
+```
+
+Only use `npx prisma migrate reset` for local, disposable development databases.
 
 4. Seed the admin user:
 
