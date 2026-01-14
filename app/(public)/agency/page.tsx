@@ -1,6 +1,4 @@
 import Link from "next/link";
-import GlobalHeader from "@/app/components/GlobalHeader";
-import GlobalFooter from "@/app/components/GlobalFooter";
 
 const pillars = [
   {
@@ -27,41 +25,36 @@ const services = [
 
 export default function AgencyPage() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white">
-      <div className="mx-auto max-w-6xl px-6 pt-6">
-        <GlobalHeader />
-      </div>
-
-      <main className="mx-auto max-w-6xl px-6 py-12 space-y-12">
-        <section className="relative overflow-hidden rounded-3xl border border-slate-800/60 bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 p-8 shadow-soft-xl">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.3),transparent_32%),radial-gradient(circle_at_80%_10%,rgba(56,189,248,0.25),transparent_28%)]" />
-          <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-indigo-100 ring-1 ring-white/10">
-                Agency mode • New
-              </div>
-              <h1 className="text-4xl font-semibold leading-tight">
-                Dark-mode growth studio powered by Virtual Office.
-              </h1>
-              <p className="text-sm text-slate-200">
-                Build campaigns, validate leads, and share client-ready workspaces with a single,
-                animated surface. Every touchpoint stays on-brand, auditable, and instantly editable.
-              </p>
-              <div className="flex flex-wrap gap-3 text-xs font-semibold">
-                <Link
-                  href="/auth/signup"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
-                >
-                  Launch agency workspace
-                </Link>
-                <Link
-                  href="/auth/login"
-                  className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20 dark:border-white/30 dark:bg-white/5 dark:hover:bg-white/15"
-                >
-                  Enter dashboard
-                </Link>
-              </div>
+    <main className="mx-auto max-w-6xl space-y-12 px-6 py-12">
+      <section className="relative overflow-hidden rounded-3xl border border-slate-800/60 bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 p-8 shadow-soft-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.3),transparent_32%),radial-gradient(circle_at_80%_10%,rgba(56,189,248,0.25),transparent_28%)]" />
+        <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-indigo-100 ring-1 ring-white/10">
+              Agency mode • New
             </div>
+            <h1 className="text-4xl font-semibold leading-tight">
+              Dark-mode growth studio powered by Virtual Office.
+            </h1>
+            <p className="text-sm text-slate-200">
+              Build campaigns, validate leads, and share client-ready workspaces with a single,
+              animated surface. Every touchpoint stays on-brand, auditable, and instantly editable.
+            </p>
+            <div className="flex flex-wrap gap-3 text-xs font-semibold">
+              <Link
+                href="/auth/signup"
+                className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-slate-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
+              >
+                Launch agency workspace
+              </Link>
+              <Link
+                href="/auth/login"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/20 dark:border-white/30 dark:bg-white/5 dark:hover:bg-white/15"
+              >
+                Enter dashboard
+              </Link>
+            </div>
+          </div>
 
             <div className="relative overflow-hidden rounded-2xl border border-indigo-400/30 bg-gradient-to-br from-indigo-800/50 via-slate-900/60 to-slate-950/80 p-6 shadow-lg ring-1 ring-indigo-200/30">
               <div className="absolute -left-8 -top-8 h-24 w-24 rounded-full bg-indigo-500/30 blur-3xl" />
@@ -95,7 +88,7 @@ export default function AgencyPage() {
               </div>
             </div>
           </div>
-        </section>
+      </section>
 
         <section className="grid gap-4 md:grid-cols-3">
           {pillars.map((pillar) => (
@@ -152,10 +145,5 @@ export default function AgencyPage() {
           </div>
         </section>
       </main>
-
-      <div className="mx-auto max-w-6xl px-6 pb-10">
-        <GlobalFooter />
-      </div>
-    </div>
   );
 }
