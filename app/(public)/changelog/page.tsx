@@ -1,5 +1,4 @@
 import Link from "next/link";
-import BrandMark from "@/app/components/BrandMark";
 import changelogEntries from "@/app/lib/changelog-data.json";
 import { PUBLIC_CONTAINER } from "@/app/components/layout/publicNav";
 
