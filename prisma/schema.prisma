@@ -23,8 +23,6 @@ enum PostStatus {
   PUBLISHED
 }
 
-
-
 enum BusinessDocumentRequestStatus {
   NEW
   IN_PROGRESS
